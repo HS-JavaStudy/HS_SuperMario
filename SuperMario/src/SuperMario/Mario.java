@@ -65,28 +65,28 @@ public class Mario extends JFrame implements KeyListener {
 	public void paint(Graphics g) {
 		switch (sel) {
 		case 1:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.png");
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
 			// 고양이 이미지1 - 폴더는 개별로 다시 지정해야 됨
 			break;
 		case 2:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.png");
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
 			// 고양이 이미지2 - 폴더는 개별로 다시 지정해야 됨
 			break;
 
 		case 3:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.png");
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
 			// 고양이 이미지3 - 폴더는 개별로 다시 지정해야 됨
 			break;
 
 		case 4:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.png");
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
 			// 고양이 이미지4 - 폴더는 개별로 다시 지정해야 됨
 			break;
 		}
 
 		g.clearRect(0, 0, getWidth(), getHeight()); // 화면의 잔상 클리어하고 프로그램 시작
 
-		g.drawImage(image, x - 17, y - 25, x + 17, y + 25, 0, 0, 4096, 4096, this); // img의 (0,0)에서 image(4096,4096)부분을
+		g.drawImage(image, x - 17, y - 25, x + 17, y + 25, 0, 0, 1280, 1280, this); // img의 (0,0)에서 image(4096,4096)부분을
 																					// 좌표에 따라 구현
 	}
 
