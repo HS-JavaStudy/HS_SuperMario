@@ -17,7 +17,7 @@ public class Mario extends JFrame implements KeyListener {
 		super("마리오"); // 프로그램 명
 		setLayout(null); // 레이아웃 매니저 사용 안함
 		setResizable(false); // 창 크기 고정
-		setSize(1000, 1000);// 창 크기 지정
+		setSize(816, 678);// 창 크기 지정
 		setBackground(Color.WHITE); // 창 배경 색상 지정
 		setVisible(true);
 
