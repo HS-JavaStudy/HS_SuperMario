@@ -34,19 +34,21 @@ public class Mario extends JFrame implements KeyListener {
 		int key = e.getKeyCode();
 		if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_NUMPAD6 || // 숫자키 NUMPAD
 				key == KeyEvent.VK_KP_RIGHT) {
-			sel = (sel == 1) ? 2 : 1; // 삼항연산자
+			sel =  1; // 오른쪽
 			x = (x < getWidth()) ? x + 10 : -image.getWidth(this);
 		} else {
 			int key1 = e.getKeyCode();
 			if (key1 == KeyEvent.VK_LEFT || key1 == KeyEvent.VK_NUMPAD4 || // 숫자키 NUMPAD
 					key1 == KeyEvent.VK_KP_LEFT) {
-				sel = (sel == 1) ? 3 : 1; // 삼항연산자
+				//sel = (sel == 1) ? 3 : 1; // 삼항연산자
+				sel =  2 ; //왼쪽
 				x = (x > 0) ? x - 10 : getWidth() + image.getWidth(this);
 			}
 			int key2 = e.getKeyCode();
 			if (key2 == KeyEvent.VK_UP || key2 == KeyEvent.VK_NUMPAD8 || // 숫자키 NUMPAD
 					key2 == KeyEvent.VK_KP_UP) {
-				sel = (sel == 1) ? 4 : 1; // 삼항연산자
+				sel = (sel == 1) ? 3 : 4; // 삼항연산자
+				//sel = 3;
 				y = (y > 0) ? y - 10 : getHeight() + image.getHeight(this);
 
 			}
@@ -64,22 +66,22 @@ public class Mario extends JFrame implements KeyListener {
 	@Override
 	public void paint(Graphics g) {
 		switch (sel) {
-		case 1:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
-			// 고양이 이미지1 - 폴더는 개별로 다시 지정해야 됨
+		case 1: // 오른쪽
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallRightMario.jpg"); // 툴킷 클래스의 도움을 받아 이미지 클래스 생성
+			// 서있는 오른쪽 마리오
 			break;
-		case 2:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
-			// 고양이 이미지2 - 폴더는 개별로 다시 지정해야 됨
-			break;
-
-		case 3:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
-			// 고양이 이미지3 - 폴더는 개별로 다시 지정해야 됨
+		case 2:  //왼쪽
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallLeftMario.jpg");
+			// 서있는 왼쪽 마리오
 			break;
 
-		case 4:
-			image = Toolkit.getDefaultToolkit().getImage("src/images/smallMario.jpg");
+		case 3: //위 오른
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallJumpRightMario.jpg");
+			// 점프하는 마리오
+			break;
+
+		case 4: //위 왼쪽
+			image = Toolkit.getDefaultToolkit().getImage("src/images/smallJumpLeftMario.jpg");
 			// 고양이 이미지4 - 폴더는 개별로 다시 지정해야 됨
 			break;
 		}
