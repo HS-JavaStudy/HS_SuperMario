@@ -7,14 +7,14 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public class Mario extends Thread{
+public class Mario extends Thread{ //스레드 상속
 
 	private int delay = 20;
 	private long pretime;
 	private int cnt; // 프로그램 상 시간
 	private int score; // 점수
 	
-	boolean up;
+	private boolean up;
 	private boolean down;
 	private boolean left;
 	private boolean right;
@@ -24,13 +24,15 @@ public class Mario extends Thread{
 	private Image smallLeftMario = new ImageIcon("src/images/smallLeftMario.png").getImage();
 	private Image smallJumpRightMario = new ImageIcon("src/images/smallJumpRightMario.png").getImage();
 	private Image smallJumpLeftMario = new ImageIcon("src/images/smallJumpLeftMario%20.png").getImage();
-	private Image currentImage;
+	private Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
 	private int marioX, marioY;
 	private int marioWidth = 35;
 	private int marioHeight = 50;
 	private int marioSpeed = 7;
-	private int marioHp = 30;
+	private int marioLife;
+	private int marioJump;
+	private int imageX,imageY;
 
 
 
@@ -86,16 +88,30 @@ public class Mario extends Thread{
 
 		public void playerDraw(Graphics g) { //마리오의 좌표에 따라 그 좌표에 그려지도록 구현
 			
-			// smallJumpRightMario
-			//smallLeftMario 
-			if(left) 
-				currentImage = smallLeftMario;
-			if(right)
-				currentImage = smallRightMario;
+			imageX = 176; //서있는 좌표
+			imageY = 32;
+			if(up) { // 점프 애니메이션 구현해야함.
+				//143
+				if(right) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 143, 32, 158, 48, null); 
+				if(left) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 158, 32, 143, 48, null); 
+			}
+			else if(left) 
+				{
+				if(cnt % 12 >=0 && cnt % 12 <3) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 95, 32, 79, 48, null); 				
+				else if(cnt % 12 >=3 && cnt % 12 <6) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight,110, 32, 95, 48,  null);
+				else g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 125, 32,110, 48,  null);
+				}
+			else if(right)
+				 {
+				// cnt % 3으로 했더니 이미지 변화가 너무 빨라 적당한 값 12를 기준으로 함. 변경 가능 
+				//전체 이미지 파일을 써 그려야 되는 이미지의 좌표를 바꿔줌 x축으로 약 15, y축으로 약 16 
+				// 걷는게 뭔가 이상
+					if(cnt % 12 >=0 && cnt % 12 <3) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 79, 32, 95, 48, null); 
+					else if(cnt % 12 >=3 && cnt % 12 <6) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 95, 32, 110, 48, null);
+					else g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 110, 32, 125, 48, null);
+				 }
 			
-			 g.drawImage(currentImage  , marioX, marioY, //  해당 위치부터
-					marioX + marioWidth, marioY + marioHeight, // 이 위치 까지
-					0, 0, 1280, 1280, null); //마리오 사진의 (0,0) (1280, 1280)까지의 이미지를 그리기
+			if(!right && !left && !up && !down) g.drawImage(allImage  , marioX, marioY,marioX + marioWidth, marioY + marioHeight, imageX, imageY, imageX + 15, imageY + 16, null); 
 			
 		        
 		}

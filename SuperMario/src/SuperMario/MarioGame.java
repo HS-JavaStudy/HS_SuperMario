@@ -65,7 +65,7 @@ public class MarioGame extends JFrame{
     	
         public void keyPressed(KeyEvent e) { // 키를 눌렀을 때
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP:
+                case KeyEvent.VK_SPACE:
                     mario.setUp(true); // Mario.setUp == true;
                     break;
                 case KeyEvent.VK_DOWN:
@@ -91,7 +91,7 @@ public class MarioGame extends JFrame{
 
         public void keyReleased(KeyEvent e) { //키를 뗴었을 때
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP:
+                case KeyEvent.VK_SPACE:
                 	mario.setUp(false); // Mario.setUp == flase;
                     break;
                 case KeyEvent.VK_DOWN:
@@ -103,9 +103,9 @@ public class MarioGame extends JFrame{
                 case KeyEvent.VK_RIGHT:
                 	mario.setRight(false);
                     break;
-                case KeyEvent.VK_SPACE:
+               
                 	
-                    break;
+                   
             }
         }
     }
