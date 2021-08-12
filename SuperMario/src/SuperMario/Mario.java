@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import SuperMario.Mario.OperationTread;
+
 public class Mario extends Thread{ //스레드 상속
 
 	private int delay = 20;
@@ -34,13 +36,40 @@ public class Mario extends Thread{ //스레드 상속
 	private int imageX,imageY;
 	private int time;
 	private int marioDirection= 1;
+	private int jumpFlag = 1;
+	
 	static MarioJump marioJump;
 
 	public Mario() {
 		 marioX = 10;
 		 marioY= (MarioGame.SCREEN_HEIGHT - marioHeight) / 2;
+		 OperationTread op = new OperationTread();
+		 op.start();
 	}
-
+	
+	
+	public class OperationTread extends Thread {
+		
+		public void run() {
+			
+			try {
+				
+				if(!jump) {
+					
+					setJump(true);
+					marioJump.interrupt();
+				}
+				
+				Thread.sleep(1000);
+				 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	
+	}
+	
+	
 	public void run() { //스레드를 시작할 떄 실행하는 코드. Mario.start()로 호출 가능
 
 		reset();
@@ -80,9 +109,9 @@ public class Mario extends Thread{ //스레드 상속
 	 private void keyProcess() {
 		 // 각 속성의 true, false 상태에 따라 결과 지정
 	        if (up && marioY - marioSpeed > 0) {
-	        	if(marioDirection == 1 ||marioDirection == -1 && up ) {
+	        	if(marioDirection == 1 ||marioDirection == -1 || marioDirection == 0 && up ) {
 	        		marioDirection = 0;
-
+	        		 System.out.println("여기!1111");
 		        	if(jump) {
 		        		setJump(false);
 		        		marioJump = new MarioJump();
@@ -90,10 +119,12 @@ public class Mario extends Thread{ //스레드 상속
 		        	}
 	        	}
 	        	else if (marioDirection == 1 && right && up) {
+	        		 System.out.println("여기!2222");
 	        		marioJump = new MarioJump();
 		        	marioJump.start();
 	        	}
-	        		
+	        	else
+	        	 System.out.println("여기33333");
 	        	//marioJump = new MarioJump();
 	        	//marioJump.start();
 	        }
@@ -122,6 +153,14 @@ public class Mario extends Thread{ //스레드 상속
 			getLocation ();
 		}
 		
+		void finishCheck() {
+			
+			if(basicY == marioY) { 
+				setJump(false);
+				System.out.println("같다");
+			}
+		}
+		
 		public void getLocation () {
 			basicX = marioX;
 			basicY = marioY;
@@ -132,27 +171,26 @@ public class Mario extends Thread{ //스레드 상속
 	
 				while(true) {
 					
-					//if(up && basicY - jumpMax < marioY) 
-					//{
 								 marioY -= 1;
 								 System.out.println("marioY = "+marioY);
 								 if (marioY <= 170) {
 									 
-									 while(marioY != 300) {
+									 while(marioY <= 300) {
+										 
 										 System.out.println("dddd marioY = "+marioY);
 										 marioY += 1;
 										 try {
+											 
+											 finishCheck();
 											 Thread.sleep(1);
-										 }catch(InterruptedException e) {}
+											 
+										 }catch(InterruptedException e) { return; }
 										 
 									 }
-									 setJump(true);
+									setJump(true);
 									break;
 								}								 
-						//}
-					//else {
-					//	break;
-					//}
+		
 					try {
 						Thread.sleep(1);
 						}
