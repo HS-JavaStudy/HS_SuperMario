@@ -27,20 +27,22 @@ public class Mario extends Thread{ //스레드 상속
 		
 	private Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
-	private int marioX, marioY;
-	private int marioWidth = 30;
-	private int marioHeight = marioWidth + 2;
-	private int marioSpeed = 5;
+	int marioX, marioY;
+	private int marioWidth = 42;
+	private int marioHeight = marioWidth + 5;
+	private int marioSpeed = 2;
 	private int marioLife;
 	private int jumpMax;
+	
+	
 	private int imageX,imageY;
 	private int marioDirection= 1;
 	
 	static MarioJump marioJump;
 
 	public Mario() {
-		 marioX = 10;
-		 marioY= (MarioGame.SCREEN_HEIGHT - marioHeight) / 2 + 100;
+		 marioX = 30;
+		 marioY= MarioGame.SCREEN_HEIGHT -118; //임의값
 		 OperationTread op = new OperationTread();
 		 op.start();
 	}
@@ -79,32 +81,37 @@ public class Mario extends Thread{ //스레드 상속
 	        isOver = false;
 	        cnt = 0;
 	        score = 0;
-	        marioX = 10;
-	        marioY = (MarioGame.SCREEN_HEIGHT - marioHeight) / 2 + 100;
+	        marioX = 30;
+	        marioY = MarioGame.SCREEN_HEIGHT - 118;
 	        		//(MarioGame.SCREEN_HEIGHT - marioHeight) / 2;
 	    }
 	 
 	 private void keyProcess() {
-		 // 각 속성의 true, false 상태에 따라 결과 지정
-        if (up && marioY - marioSpeed > 0) {
-//	        	if(marioDirection == 1 ||marioDirection == -1 || marioDirection == 0 && up ) {
-//	        		marioDirection = 0;
-//	     
-		        	if(jump) {
-		        		setJump(false);
-		        		marioJump = new MarioJump();
-		        		marioJump.start();
-	        	}
-//	        	
-       }
-	        if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT) marioY += marioSpeed;
-	        if (left && marioX - marioSpeed > 0) {
-	        	marioX -= marioSpeed;
-	        	marioDirection = -1;
-	        }
-	        if (right && marioX + marioWidth + marioSpeed < MarioGame.SCREEN_WIDTH) {
-	        	marioX += marioSpeed;
-	        	marioDirection = 1;
+			// 각 속성의 true, false 상태에 따라 결과 지정
+			if (up && marioY - marioSpeed > 0) {
+				if (jump) {
+					setJump(false);
+					marioJump = new MarioJump();
+					marioJump.start();
+				}
+
+			}
+			if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
+				marioY += marioSpeed;
+			if (left && marioX - marioSpeed > 0) {
+				marioX -= marioSpeed;
+				marioDirection = -1;
+			}
+			if (right && marioX + marioWidth + marioSpeed < MarioGame.SCREEN_WIDTH) {
+				marioX += marioSpeed;
+				marioDirection = 1;
+			}
+			if (marioX + MarioGame.SCREEN_WIDTH / 2 > MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
+	        	
+	        	
+	        		MarioGame.realX += marioSpeed;
+	        		marioX -= marioSpeed;
+	        	
 	        }
 	      
 	    }
@@ -158,17 +165,17 @@ public class Mario extends Thread{ //스레드 상속
 		
 		public void run() {
 			
-			jumpMax = 60;
+			jumpMax = 100;
 			
 			while (true) {
 
 				marioY -= 1;
-				if(marioY == basicY - jumpMax && up && jumpMax < 120) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
+				if(marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax +=15;
 				
 				System.out.println("marioY = " + marioY);
 				if (marioY < basicY - jumpMax) { // 최대높이만큼 점프한다면	
-					setFalling(true); //떨어지는 중
+					setFalling(true); //떨어지는 중. 마리오 그리기 위해 추가
 					while (marioY <  basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 
 						System.out.println("dddd marioY = " + marioY);
@@ -188,7 +195,7 @@ public class Mario extends Thread{ //스레드 상속
 				}
 
 				try { // 위로 솟구치는 것을 천천히
-					Thread.sleep(2);
+					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -228,11 +235,11 @@ public class Mario extends Thread{ //스레드 상속
 				//전체 이미지 파일을 써, 그려야 되는 이미지의 좌표를 바꿔줌 x축으로 약 15, y축으로 약 16 
 				// 걷는게 뭔가 이상
 					if(cnt % 12 >=0 && cnt % 12 <3) 
-						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 79, 32, 95, 48, null); 
+						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 79, 32, 96, 48, null); 
 					else if(cnt % 12 >=3 && cnt % 12 <6)
-						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 95, 32, 110, 48, null);
+						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 95, 32, 111, 48, null);
 					else 
-						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 110, 32, 125, 48, null);
+						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 110, 32, 126, 48, null);
 				 }
 			
 			if(!right && !left && !up && !down && !falling) // 가만히 있을 경우

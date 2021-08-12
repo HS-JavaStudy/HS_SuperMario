@@ -16,13 +16,13 @@ public class MarioGame extends JFrame{
    // 초기 이미지
    private Image introBackground = new ImageIcon("src/images/introBackground.jpg").getImage();
    private Image titleImage = new ImageIcon("src/images/title.png").getImage();
-   
+   static public Image mapImage = new ImageIcon("src/images/map.png").getImage();
    // 사이즈 설정 이미지
    private Image resizeIntroBackground= introBackground.getScaledInstance(MarioGame.SCREEN_WIDTH, MarioGame.SCREEN_HEIGHT, Image.SCALE_SMOOTH);
    private Image resizeTitleImage = titleImage.getScaledInstance(MarioGame.SCREEN_WIDTH/2, MarioGame.SCREEN_HEIGHT/4, Image.SCALE_SMOOTH);
    
    // Section2: 게임 배경음악 설정
-         Music backgroundMusic = new Music("backgroundMusic.mp3",true); // 배경음악 객체 생성
+   Music backgroundMusic = new Music("backgroundMusic.mp3",true); // 배경음악 객체 생성
          
          
    private Font font;
@@ -34,6 +34,8 @@ public class MarioGame extends JFrame{
    static boolean isMainScreen;
    static boolean isLoadingScreen;
    static boolean isGameScreen;
+   
+   static public int realX;
    public static final int SCREEN_WIDTH = 816;
     public static final int SCREEN_HEIGHT = 678;
     
@@ -44,8 +46,10 @@ public class MarioGame extends JFrame{
     public MarioGame() {
        // 게임을 출력할 창 지정
        init();
+       realX = 0;
        setSize(SCREEN_WIDTH, SCREEN_HEIGHT); 
        setTitle("Super Mario!");
+       setLocation(200,0);
        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLayout(null);
@@ -83,27 +87,32 @@ public class MarioGame extends JFrame{
               
     }
 
-    public void screenDraw(Graphics g) {
-       
-       if(isMainScreen) {
-          
-       g.drawImage(resizeIntroBackground,0,0,null);
-         g.drawImage(resizeTitleImage,210,175,null);
-         
-         
-         font = new Font("Monospaced",Font.BOLD,22); // 폰트 설정
-         g.setFont(font); 
-         g.setColor(Color.WHITE); // 글씨 색 설정
+	public void screenDraw(Graphics g) {
 
-         g.drawString("< Press Enter to Start Game >",242 ,382);
-         
-            
-         
-       }
+		if (isMainScreen) {
+
+			g.drawImage(resizeIntroBackground, 0, 0, null);
+			g.drawImage(resizeTitleImage, 210, 175, null);
+
+			font = new Font("Monospaced", Font.BOLD, 22); // 폰트 설정
+			g.setFont(font);
+			g.setColor(Color.WHITE); // 글씨 색 설정
+
+			g.drawString("< Press Enter to Start Game >", 242, 382);
+
+		}
+		
        else if(isGameScreen) {
-          //setContentPane(this.getContentPane());
+    	  //224 : 맵 높이
           super.paint(g);
-         // gameStart();
+         
+          // 값 임의로 넣은거라서 바꿔도 됨  
+          // 그릴 사이즈는 SCREEN_WIDTH X SCREEN_HEIGHT 사이즈
+          // realX 는 실제 이동거리를 나타냄
+          //마리오가 일정 x좌표에 도달하면(정중앙) 마리오의 x좌표는 스피드만큼 감소시키고, realX는 스피드만큼 계속 증가    
+          // 그림이 끝나는 지점이 문제..
+         g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, //맵 
+        		  mario.marioX + realX , 0, mario.marioX + realX + SCREEN_WIDTH/3, mapImage.getHeight(rootPane), null);
           mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
           //isGameScreen = false;
           
