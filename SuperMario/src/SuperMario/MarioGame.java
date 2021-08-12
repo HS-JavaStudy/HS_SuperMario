@@ -93,6 +93,7 @@ public class MarioGame extends JFrame{
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE:
                 	mario.setUp(false); // Mario.setUp == flase;
+                	
                     break;
                 case KeyEvent.VK_DOWN:
                 	mario.setDown(false);
