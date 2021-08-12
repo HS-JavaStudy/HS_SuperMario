@@ -23,50 +23,29 @@ public class Mario extends Thread{ //스레드 상속
 	private boolean right;
 	private boolean isOver;
 	private boolean jump = true;
+	private boolean falling;
 		
 	private Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
 	private int marioX, marioY;
-	private int marioWidth = 35;
-	private int marioHeight = 50;
+	private int marioWidth = 30;
+	private int marioHeight = marioWidth + 2;
 	private int marioSpeed = 5;
 	private int marioLife;
-	private int jumpMax = 150;
-	private int jumpWidth;
+	private int jumpMax;
 	private int imageX,imageY;
-	private int time;
 	private int marioDirection= 1;
-	private int jumpFlag = 1;
 	
 	static MarioJump marioJump;
 
 	public Mario() {
 		 marioX = 10;
-		 marioY= (MarioGame.SCREEN_HEIGHT - marioHeight) / 2;
+		 marioY= (MarioGame.SCREEN_HEIGHT - marioHeight) / 2 + 100;
 		 OperationTread op = new OperationTread();
 		 op.start();
 	}
 	
-	//점프스레드를 중단하는 스레드
-	public class OperationTread extends Thread {
-		
-		public void run() {
-			
-			try {
-				
-				if(!jump) {	//점프가 끝났으면				
-					setJump(true); //다시 점프할 수 있게 하고
-					marioJump.interrupt(); 	//점프스레드를 종료
-				}
-				
-				Thread.sleep(1000);
-				 
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
 	
-	}
 	
 	//마리오 스레드
 	public void run() { //스레드를 시작할 떄 실행하는 코드. Mario.start()로 호출 가능
@@ -101,7 +80,7 @@ public class Mario extends Thread{ //스레드 상속
 	        cnt = 0;
 	        score = 0;
 	        marioX = 10;
-	        marioY = (MarioGame.SCREEN_HEIGHT - marioHeight) / 2;
+	        marioY = (MarioGame.SCREEN_HEIGHT - marioHeight) / 2 + 100;
 	        		//(MarioGame.SCREEN_HEIGHT - marioHeight) / 2;
 	    }
 	 
@@ -134,56 +113,82 @@ public class Mario extends Thread{ //스레드 상속
 	        playerDraw(g); // MarioGame 클라스의 paint()함수 안에 있는 gameDraw() 함수
 	       
 	    }
+	//점프스레드를 중단하는 스레드
+		public class OperationTread extends Thread {
+			
+			public void run() {
+				
+				try {
+					
+					if(!jump) {	//점프가 끝났으면				
+						//setJump(true); // 점프 스레드에서 최대 높이에 다다를 때 setJump(true)를 호출해서 여기는 지움
+						marioJump.interrupt(); 	//점프스레드를 종료
+					}
+					
+					Thread.sleep(100);
+					 
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		
+		}
 
 	class MarioJump extends Thread {
 		
 		private int basicX, basicY;
 		
 		MarioJump(){
-			getLocation ();
+			basicX = marioX;
+			basicY = marioY;
 		}
 		
-		void finishCheck() {
-			
-			if(basicY == marioY) { 
+		public void setLocation () {
+			basicX = marioX;
+			basicY = marioY;
+		}
+		
+		void finishCheck() {			
+			if(basicY <= marioY) { // 블럭위에 있는 경우 등은 basic 바꾸거나 추가 기능 필요
 				setJump(false);
 				System.out.println("같다");
 			}
 		}
 		
-		public void getLocation () {
-			basicX = marioX;
-			basicY = marioY;
-		}
+		
 		public void run() {
 			
-			//if(marioDirection == 0) {
-	
+			jumpMax = 60;
+			
 			while (true) {
 
 				marioY -= 1;
+				if(marioY == basicY - jumpMax && up && jumpMax < 120) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
+					jumpMax +=15;
+				
 				System.out.println("marioY = " + marioY);
-				if (marioY < basicY - jumpMax) { // 최대높이만큼 점프한다면
-
+				if (marioY < basicY - jumpMax) { // 최대높이만큼 점프한다면	
+					setFalling(true); //떨어지는 중
 					while (marioY <  basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 
 						System.out.println("dddd marioY = " + marioY);
 						marioY += 1;
 						try {
 							finishCheck();
-							Thread.sleep(2);
+							Thread.sleep(1);
 
 						} catch (InterruptedException e) {
 							return;
 						}
 
 					}
+					setFalling(false);
 					setJump(true);
 					break;
 				}
 
 				try { // 위로 솟구치는 것을 천천히
-					Thread.sleep(1);
+					Thread.sleep(2);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -198,23 +203,25 @@ public class Mario extends Thread{ //스레드 상속
 			
 			imageX = 176; //서있는 마리오 좌표
 			imageY = 32;
-			if(up) { // 점프 애니메이션 구현해야함.
-				
-				 
-					if(marioDirection == 1) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 143, 32, 158, 48, null); 
-					else  g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 158, 32, 143, 48, null); 
-				}
-				
+			
+			if(up  || falling) { 
+				if(marioDirection == 1) g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 143, 32, 158, 48, null); 
+				else  g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 158, 32, 143, 48, null); 
+				}			
 			
 			else if(left) 
 				{
-				if(cnt % 12 >=0 && cnt % 12 <3) 
-					g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 95, 32, 79, 48, null); 				
-				else if(cnt % 12 >=3 && cnt % 12 <6) 
-					g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight,110, 32, 95, 48,  null);
-				else 
-					g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 125, 32,110, 48,  null);
+					if (cnt % 12 >= 0 && cnt % 12 < 3)
+						g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 95, 32, 79, 48,
+								null);
+					else if (cnt % 12 >= 3 && cnt % 12 < 6)
+						g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 110, 32, 95,
+								48, null);
+					else
+						g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 125, 32, 110,
+								48, null);
 				}
+			
 			else if(right)
 				 {
 				// cnt % 3으로 했더니 이미지 변화가 너무 빨라 적당한 값 12를 기준으로 함. 변경 가능 
@@ -228,7 +235,7 @@ public class Mario extends Thread{ //스레드 상속
 						g.drawImage(allImage , marioX, marioY,marioX + marioWidth, marioY + marioHeight, 110, 32, 125, 48, null);
 				 }
 			
-			if(!right && !left && !up && !down) // 가만히 있을 경우
+			if(!right && !left && !up && !down && !falling) // 가만히 있을 경우
 				if(marioDirection == 1) g.drawImage(allImage  , marioX, marioY,marioX + marioWidth, marioY + marioHeight, imageX, imageY, imageX + 15, imageY + 16, null); 
 				else g.drawImage(allImage  , marioX, marioY,marioX + marioWidth, marioY + marioHeight, imageX + 15, imageY , imageX, imageY + 16,  null); 
 			
@@ -257,6 +264,9 @@ public class Mario extends Thread{ //스레드 상속
 	    
 	    public void setJump(boolean jump) {
 	        this.jump = jump;
+	    }
+	    public void setFalling(boolean falling) {
+	        this.falling = falling;
 	    }
 
 
