@@ -69,7 +69,7 @@ public class MarioGame extends JFrame{
                 mario.start(); //Mario mario 스레드 실행을 시작하도록 요청
             } 
         };
-        loadingTimer.schedule(loadingTask, 3000);
+        loadingTimer.schedule(loadingTask, 1000);
     }
  
 
@@ -153,7 +153,7 @@ public class MarioGame extends JFrame{
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE:
                    mario.setUp(false); // Mario.setUp == flase;
-                   MarioJump.interrupted();
+                   //MarioJump.interrupted();
                     break;
                 case KeyEvent.VK_DOWN:
                    mario.setDown(false);
