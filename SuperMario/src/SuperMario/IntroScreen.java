@@ -72,6 +72,7 @@ public class IntroScreen extends JFrame {
 			if(key == KeyEvent.VK_ENTER) {
 				
 				setVisible(false);
+				
 				new MarioGame();
 				
 			}

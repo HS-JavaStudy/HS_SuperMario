@@ -5,8 +5,7 @@ public class MainMario {
 
 	public static void main(String[] args) {
 		
-		new IntroScreen();
-		//new MarioGame();
+		new MarioGame();
 		
 	}
 }

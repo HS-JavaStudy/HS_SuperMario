@@ -45,7 +45,7 @@ public class Mario extends Thread{ //스레드 상속
 
 		reset();
 		while (true) {
-			while (!isOver) {
+      			while (!isOver) {
 				pretime = System.currentTimeMillis();
 				if (System.currentTimeMillis() - pretime < delay) {
 					try {
@@ -94,8 +94,8 @@ public class Mario extends Thread{ //스레드 상속
 		        	marioJump.start();
 	        	}
 	        		
-	        	marioJump = new MarioJump();
-	        	marioJump.start();
+	        	//marioJump = new MarioJump();
+	        	//marioJump.start();
 	        }
 	        if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT) marioY += marioSpeed;
 	        if (left && marioX - marioSpeed > 0) {
@@ -129,19 +129,32 @@ public class Mario extends Thread{ //스레드 상속
 		public void run() {
 			
 			if(marioDirection == 0) {
+	
 				while(true) {
 					
-					if(up && basicY - jumpMax < marioY) 
-					{
-							 
+					//if(up && basicY - jumpMax < marioY) 
+					//{
 								 marioY -= 1;
-							
-						}
-					else {
-						
-					}
+								 System.out.println("marioY = "+marioY);
+								 if (marioY <= 170) {
+									 
+									 while(marioY != 300) {
+										 System.out.println("dddd marioY = "+marioY);
+										 marioY += 1;
+										 try {
+											 Thread.sleep(1);
+										 }catch(InterruptedException e) {}
+										 
+									 }
+									 setJump(true);
+									break;
+								}								 
+						//}
+					//else {
+					//	break;
+					//}
 					try {
-						Thread.sleep(100);
+						Thread.sleep(1);
 						}
 					catch (InterruptedException e) {
 						e.printStackTrace();
