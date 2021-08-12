@@ -1,6 +1,10 @@
 package SuperMario;
 import java.awt.*;
 import javax.swing.*;
+
+import SuperMario.Mario.MarioJump;
+import SuperMario.Mario.OperationTread;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Timer;
@@ -33,6 +37,8 @@ public class MarioGame extends JFrame{
    public static final int SCREEN_WIDTH = 816;
     public static final int SCREEN_HEIGHT = 678;
     
+   
+    
     private Mario mario = new Mario();
     
     public MarioGame() {
@@ -54,9 +60,10 @@ public class MarioGame extends JFrame{
        isGameScreen = false;
     }
     private void gameStart() {
-       
-        Timer loadingTimer = new Timer();
+    	
+    	Timer loadingTimer = new Timer();
         TimerTask loadingTask = new TimerTask() {
+        	
             @Override
             public void run() { //스레드 코드로서 JVM에 의해 호출. 반드시 오버라이딩 하여 스레드 코드를 작성하여야 한다
                 mario.start(); //Mario mario 스레드 실행을 시작하도록 요청
@@ -96,8 +103,9 @@ public class MarioGame extends JFrame{
        else if(isGameScreen) {
           //setContentPane(this.getContentPane());
           super.paint(g);
-          gameStart();
+         // gameStart();
           mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
+          //isGameScreen = false;
           
        }
       
@@ -128,6 +136,7 @@ public class MarioGame extends JFrame{
                     if(isMainScreen) {                
                     isMainScreen =false;
                     isGameScreen = true;
+                    gameStart();
                     }
                     break;
                 case KeyEvent.VK_ESCAPE:
@@ -144,7 +153,7 @@ public class MarioGame extends JFrame{
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE:
                    mario.setUp(false); // Mario.setUp == flase;
-                   
+                   MarioJump.interrupted();
                     break;
                 case KeyEvent.VK_DOWN:
                    mario.setDown(false);
