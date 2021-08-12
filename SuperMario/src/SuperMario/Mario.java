@@ -70,7 +70,6 @@ public class Mario extends Thread{ //스레드 상속
 	}
 	
 	
-	
 	public void run() { //스레드를 시작할 떄 실행하는 코드. Mario.start()로 호출 가능
 
 		reset();
@@ -172,8 +171,6 @@ public class Mario extends Thread{ //스레드 상속
 	
 				while(true) {
 					
-					//if(up && basicY - jumpMax < marioY) 
-					//{
 								 marioY -= 1;
 								 System.out.println("marioY = "+marioY);
 								 if (marioY <= 170) {
@@ -193,10 +190,7 @@ public class Mario extends Thread{ //스레드 상속
 									setJump(true);
 									break;
 								}								 
-						//}
-					//else {
-					//	break;
-					//}
+		
 					try {
 						Thread.sleep(1);
 						}
