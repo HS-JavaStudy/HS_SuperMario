@@ -45,7 +45,7 @@ public class Mario extends Thread{ //스레드 상속
 	public Mario() {
 		 marioX = 30;
 		 marioY= MarioGame.SCREEN_HEIGHT -118; //임의값
-		 op.start();
+		 //op.start();
 	}
 	
 	
@@ -117,7 +117,7 @@ public class Mario extends Thread{ //스레드 상속
 			if(blocking) {
 				if(right) marioX -= marioSpeed;
 				if(left) marioX += marioSpeed;
-				if(!jump) marioY  += marioSpeed;
+				//if(!jump) marioY  += marioSpeed;
 				
 			}
 	      
