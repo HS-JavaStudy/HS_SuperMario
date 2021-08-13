@@ -7,6 +7,7 @@ import SuperMario.Mario.OperationTread;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.*;
@@ -40,9 +41,9 @@ public class MarioGame extends JFrame{
     public static final int SCREEN_HEIGHT = 678;
     
    
-    
-    private Mario mario = new Mario();
-    
+    private Blocks blocks = new Blocks();
+    public  Mario mario = new Mario();
+   
     public MarioGame() {
        // 게임을 출력할 창 지정
        init();
@@ -71,6 +72,9 @@ public class MarioGame extends JFrame{
             @Override
             public void run() { //스레드 코드로서 JVM에 의해 호출. 반드시 오버라이딩 하여 스레드 코드를 작성하여야 한다
                 mario.start(); //Mario mario 스레드 실행을 시작하도록 요청
+                blocks.start();
+                
+       		 
             } 
         };
         loadingTimer.schedule(loadingTask, 1000);
@@ -113,7 +117,9 @@ public class MarioGame extends JFrame{
           // 그림이 끝나는 지점이 문제..
          g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, //맵 
         		  mario.marioX + realX , 0, mario.marioX + realX + SCREEN_WIDTH/3, mapImage.getHeight(rootPane), null);
+        // System.out.println("marioX : " + mario.marioX + " realX : " + realX + " marioX + realX = "+ ((int)mario.marioX + (int)realX));
           mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
+          
           //isGameScreen = false;
           
        }
@@ -179,6 +185,112 @@ public class MarioGame extends JFrame{
             }
         }
     }
+     class Blocks extends Thread {
 
+    	private ArrayList<Block> blocks;
+    	private ArrayList<Block> currentBlocks;
+    	
+    	
+    	private Block currenBlock = new Block();
+    	
+    	public Blocks() {
+    		 blocks = new ArrayList<Block>();
+    		 blocks.add( new Block(190, 459, 3));
+    		 blocks.add( new Block(210, 500, 3));
+    		 currentBlocks = new  ArrayList<Block>();
+    	}
+    	
+    	
+    	public void run() {
+    		
+			while (true) {
+				blockProcess();
+				try {
+					Thread.sleep(50); // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭 실행한다
+
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	
+    	
+    		public void blockDraw(Graphics g) {
+    			
+    		}
+    		public void blockProcess() {
+    			int i;
+    			for(i=0; i< blocks.size(); i++) {
+    				currenBlock = blocks.get(i);
+    				if(currenBlock.x >  (MarioGame.realX + mario.marioX) - MarioGame.SCREEN_WIDTH &&
+    						currenBlock.x < MarioGame.realX + mario.marioX) //일정 범위 안 블럭
+    				{
+    					if(!currentBlocks.contains(currenBlock))
+    					{
+    						blockActive(currenBlock);
+    						currentBlocks.add(currenBlock);
+        					System.out.println(">>>>>>>>>1111");
+    					}
+    					
+    					
+    					
+    				}
+					else {
+						if (!currentBlocks.isEmpty())
+							if (currentBlocks.contains(currenBlock))
+								 currentBlocks.remove(currenBlock);
+								//System.out.println(">>>>>>>>>222222");
+					}
+    			}
+    			
+    			for(i =0; i< currentBlocks.size(); i++) {
+    				currenBlock = currentBlocks.get(i);
+    				if(currenBlock.exist) {
+    					if(mario.marioX + realX >= currenBlock.x 
+    							&&  mario.marioX + realX <= currenBlock.x + 15 &&
+    							currenBlock.y >= mario.marioY && currenBlock.y + 15>= mario.marioY ) 
+    							{
+    						
+    							
+    						mario.setBlcoking(true);
+    						System.out.println(">>>>>>>>>33333");
+    					}
+    					else
+    						{
+    							mario.setBlcoking(false);
+    							//System.out.println(">>>>>>>>>4444");
+    						}
+    				}
+    			}
+    		}
+    		public void blockActive(Block block) {
+    			
+    			switch(block.state) {
+    			case 1:
+    				block.setBroken(false);
+    				block.setItem(false);
+    				block.setExist(true);
+    				break;
+    			case 2:
+    				block.setBroken(true);
+    				block.setItem(false);
+    				block.setExist(true);
+    			 	break;
+    			case 3:
+    				block.setBroken(false);
+    				block.setItem(true);
+    				block.setExist(true);
+    				break;
+    			default :
+    				break;
+    			}
+    			
+    		}
+    		
+    	
+
+    }
+
+ 	
     
 }

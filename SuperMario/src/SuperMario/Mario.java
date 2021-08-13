@@ -24,6 +24,7 @@ public class Mario extends Thread{ //스레드 상속
 	private boolean isOver;
 	private boolean jump = true;
 	private boolean falling;
+	private boolean blocking;
 		
 	private Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
@@ -39,11 +40,11 @@ public class Mario extends Thread{ //스레드 상속
 	private int marioDirection= 1;
 	
 	static MarioJump marioJump;
-
+	public OperationTread op = new OperationTread();
+	
 	public Mario() {
 		 marioX = 30;
 		 marioY= MarioGame.SCREEN_HEIGHT -118; //임의값
-		 OperationTread op = new OperationTread();
 		 op.start();
 	}
 	
@@ -113,6 +114,12 @@ public class Mario extends Thread{ //스레드 상속
 	        		marioX -= marioSpeed;
 	        	
 	        }
+			if(blocking) {
+				if(right) marioX -= marioSpeed;
+				if(left) marioX += marioSpeed;
+				if(!jump) marioY  += marioSpeed;
+				
+			}
 	      
 	    }
 	 
@@ -124,19 +131,22 @@ public class Mario extends Thread{ //스레드 상속
 		public class OperationTread extends Thread {
 			
 			public void run() {
-				
-				try {
-					
-					if(!jump) {	//점프가 끝났으면				
-						//setJump(true); // 점프 스레드에서 최대 높이에 다다를 때 setJump(true)를 호출해서 여기는 지움
-						marioJump.interrupt(); 	//점프스레드를 종료
+				while(true) {
+					System.out.println("점프중단");
+					try {
+						
+						if(!jump) {	//점프가 끝났으면				
+							setJump(true); // 점프 스레드에서 최대 높이에 다다를 때 setJump(true)를 호출해서 여기는 지움
+							marioJump.interrupt(); 	//점프스레드를 종료
+						}
+						
+						Thread.sleep(1000);
+						 
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
-					
-					Thread.sleep(100);
-					 
-				} catch (InterruptedException e) {
-					e.printStackTrace();
 				}
+				
 			}
 		
 		}
@@ -173,7 +183,7 @@ public class Mario extends Thread{ //스레드 상속
 				if(marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax +=15;
 				
-				System.out.println("marioY = " + marioY);
+				System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX) +" marioY = " + marioY  + " " + jump );
 				if (marioY < basicY - jumpMax) { // 최대높이만큼 점프한다면	
 					setFalling(true); //떨어지는 중. 마리오 그리기 위해 추가
 					while (marioY <  basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
@@ -274,6 +284,9 @@ public class Mario extends Thread{ //스레드 상속
 	    }
 	    public void setFalling(boolean falling) {
 	        this.falling = falling;
+	    }
+	    public void setBlcoking(boolean blocking) {
+	        this.blocking = blocking;
 	    }
 
 
