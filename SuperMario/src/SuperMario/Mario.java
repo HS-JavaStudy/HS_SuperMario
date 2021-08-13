@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import SuperMario.Mario.OperationTread;
+//import SuperMario.Mario.OperationTread;
 
 public class Mario extends Thread{ //스레드 상속
 
@@ -40,7 +40,7 @@ public class Mario extends Thread{ //스레드 상속
 	private int marioDirection= 1;
 	
 	static MarioJump marioJump;
-	public OperationTread op = new OperationTread();
+	//public OperationTread op = new OperationTread();
 	
 	public Mario() {
 		 marioX = 30;
@@ -117,7 +117,7 @@ public class Mario extends Thread{ //스레드 상속
 			if(blocking) {
 				if(right) marioX -= marioSpeed;
 				if(left) marioX += marioSpeed;
-				//if(!jump) marioY  += marioSpeed;
+				//if(!jump) setFalling(true); //점프 트루는 점프를 안하고 있을 때
 				
 			}
 	      
@@ -127,29 +127,35 @@ public class Mario extends Thread{ //스레드 상속
 	        playerDraw(g); // MarioGame 클라스의 paint()함수 안에 있는 gameDraw() 함수
 	       
 	    }
-	//점프스레드를 중단하는 스레드
-		public class OperationTread extends Thread {
-			
-			public void run() {
-				while(true) {
-					System.out.println("점프중단");
-					try {
-						
-						if(!jump) {	//점프가 끝났으면				
-							setJump(true); // 점프 스레드에서 최대 높이에 다다를 때 setJump(true)를 호출해서 여기는 지움
-							marioJump.interrupt(); 	//점프스레드를 종료
-						}
-						
-						Thread.sleep(1000);
-						 
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				
-			}
-		
-		}
+	  
+	  
+	// ************점프 상태 값이 계속 false여서 이 스레드가 호출되지 않고 있음을 알았다가
+	  //************* while로 무한 반복을 안해줘서가 문제였음
+	  // **************하지만 막상 잘 돌아가니깐 스레드 interrupt 오류가 발생
+	  //**************** 없어도 잘 돌아가서 지우긴 했는데 수정필요
+//	//점프스레드를 중단하는 스레드
+//		public class OperationTread extends Thread {
+//			
+//			public void run() {
+//				while(true) {
+//					System.out.println("점프중단");
+//					try {
+//						
+//						if(!jump) {	//점프가 끝났으면				
+//							setJump(true); // 점프 스레드에서 최대 높이에 다다를 때 setJump(true)를 호출해서 여기는 지움
+//							marioJump.interrupt(); 	//점프스레드를 종료
+//						}
+//						
+//						Thread.sleep(1000);
+//						 
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//				
+//			}
+//		
+//		}
 
 	class MarioJump extends Thread {
 		
@@ -182,13 +188,15 @@ public class Mario extends Thread{ //스레드 상속
 				marioY -= 1;
 				if(marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax +=15;
-				
-				System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX) +" marioY = " + marioY  + " " + jump );
-				if (marioY < basicY - jumpMax) { // 최대높이만큼 점프한다면	
+				if(blocking) setFalling(true);
+				//setJump(true);
+				//System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX) +" marioY = " + marioY  + " " + jump );
+				if (marioY < basicY - jumpMax || falling) { // 최대높이만큼 점프한다면	
 					setFalling(true); //떨어지는 중. 마리오 그리기 위해 추가
+					//setJump(true);
 					while (marioY <  basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
-
-						System.out.println("dddd marioY = " + marioY);
+						
+						//System.out.println("dddd  marioX + realX = "+ ((int)marioX + (int)MarioGame.realX) + "marioY = " + marioY);
 						marioY += 1;
 						try {
 							finishCheck();

@@ -3,10 +3,12 @@ import java.awt.*;
 import javax.swing.*;
 
 import SuperMario.Mario.MarioJump;
-import SuperMario.Mario.OperationTread;
+//import SuperMario.Mario.OperationTread;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,10 +57,19 @@ public class MarioGame extends JFrame{
         setVisible(true);
         setLayout(null);
         addKeyListener(new KeyListener()); // 마우스 이벤트 추가
+        addMouseListener(new MouseAdapter() { // 마우스 이벤트 
+    		@Override 
+    		public void mouseClicked(MouseEvent e) { // 마우스 움직일때. 
+    			System.out.println(e.getX()+" "+e.getY());//x좌표,y좌표 출력
+    		} 
+    	});
         //gameStart(); // 바로 게임 스타트
         backgroundMusic.start(); // 배경음악 시작
     }
     
+    public void mgps() {
+    	
+    }
     void init() {
        isMainScreen = true;
        isLoadingScreen= false;
@@ -119,7 +130,7 @@ public class MarioGame extends JFrame{
         		  mario.marioX + realX , 0, mario.marioX + realX + SCREEN_WIDTH/3, mapImage.getHeight(rootPane), null);
         // System.out.println("marioX : " + mario.marioX + " realX : " + realX + " marioX + realX = "+ ((int)mario.marioX + (int)realX));
           mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
-          
+          blocks.blockDraw(g);
           //isGameScreen = false;
           
        }
@@ -166,6 +177,7 @@ public class MarioGame extends JFrame{
 
         public void keyReleased(KeyEvent e) { //키를 뗴었을 때
             switch (e.getKeyCode()) {
+            
                 case KeyEvent.VK_SPACE:
                    mario.setUp(false); // Mario.setUp == flase;
                    //MarioJump.interrupted();
@@ -185,18 +197,20 @@ public class MarioGame extends JFrame{
             }
         }
     }
+    
+    //블록들의 상태, 그리기 등 블록의 모든것에 관한 클래스 // 이 클래스 위치 애매, 처음에 따로 클래스 생성했다가 마리오 좌표를 얻을 수 없어 여기에 만듦.
      class Blocks extends Thread {
 
-    	private ArrayList<Block> blocks;
-    	private ArrayList<Block> currentBlocks;
+    	private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
+    	private ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
     	
-    	
-    	private Block currenBlock = new Block();
+    	private static int blockSize = 43;
+    	private Block currenBlock = new Block(); // 현재 블록
     	
     	public Blocks() {
     		 blocks = new ArrayList<Block>();
-    		 blocks.add( new Block(190, 459, 3));
-    		 blocks.add( new Block(210, 500, 3));
+    		 blocks.add( new Block(196, 413, 3));	// 테스트용 블록 좌표
+    		// blocks.add( new Block(210, 500, 3));
     		 currentBlocks = new  ArrayList<Block>();
     	}
     	
@@ -216,39 +230,61 @@ public class MarioGame extends JFrame{
     	
     	
     		public void blockDraw(Graphics g) {
+    			// 살아있는 블럭대로 사각형 그려보면 수월할 것 같아 그려봤는데 좌표를 마리오 따라 그리는게 너무 어려워서 포기
+    			/// 스크린상의 좌표와 마리오 좌표가 아예 틀려서 큰일 ...
+    			int i;
+    			Block b = new Block();
+    			for(i =0; i< currentBlocks.size(); i++) {
+    				b = currentBlocks.get(i);
+    				
+        				g.drawRect(b.x  - (realX + mario.marioX - b.x), b.y, blockSize, blockSize);
+    				
+    			}
     			
     		}
+    		
     		public void blockProcess() {
     			int i;
     			for(i=0; i< blocks.size(); i++) {
     				currenBlock = blocks.get(i);
-    				if(currenBlock.x >  (MarioGame.realX + mario.marioX) - MarioGame.SCREEN_WIDTH &&
-    						currenBlock.x < MarioGame.realX + mario.marioX) //일정 범위 안 블럭
+    				if(currenBlock.x >  (MarioGame.realX + mario.marioX) - MarioGame.SCREEN_WIDTH/2 &&
+    						currenBlock.x < (MarioGame.realX + mario.marioX) +  MarioGame.SCREEN_WIDTH/2 ) //미리 구현해둔 블럭배열에서 일정 범위 안에 있는 블럭을 꺼내기 
     				{
-    					if(!currentBlocks.contains(currenBlock))
+//    					System.out.println((MarioGame.realX + mario.marioX) - MarioGame.SCREEN_WIDTH/2 +"  " +
+//    					(int)( MarioGame.realX + mario.marioX) +(int)( MarioGame.SCREEN_WIDTH/2));
+    					
+    					if(!currentBlocks.contains(currenBlock)) // 현재블럭들 리스트에 포함되지 않았다면 
     					{
-    						blockActive(currenBlock);
-    						currentBlocks.add(currenBlock);
-        					System.out.println(">>>>>>>>>1111");
+    						blockActive(currenBlock); // 현재 블럭을 활성화
+    						currentBlocks.add(currenBlock); // 현재블럭 리스트에 추가
+        					System.out.println(">>>>>>>>>1111"); 
+        					System.out.println("marioX + realX = "+ ((int)mario.marioX + (int)MarioGame.realX) + "marioY = " + mario.marioY);
     					}
     					
     					
     					
     				}
 					else {
-						if (!currentBlocks.isEmpty())
-							if (currentBlocks.contains(currenBlock))
-								 currentBlocks.remove(currenBlock);
-								//System.out.println(">>>>>>>>>222222");
+						if (!currentBlocks.isEmpty()) // 범위 안에 포함된게 아니라면
+							if (currentBlocks.contains(currenBlock)) // 만약 현재 블럭들 리스트에 있다
+							{
+								currentBlocks.remove(currenBlock); //리스트에서 없앤다 ++ 생각보다 너무 늦게 사라짐. 한참 가야 사라진다.
+								System.out.println("dddd  marioX + realX = "+ ((int)mario.marioX + (int)MarioGame.realX) + "marioY = " + mario.marioY);
+							}
+						
 					}
     			}
     			
+    			// 게임 상에서 살아있는 블럭과 마리오의 행동 처리
     			for(i =0; i< currentBlocks.size(); i++) {
-    				currenBlock = currentBlocks.get(i);
-    				if(currenBlock.exist) {
+    				
+    				currenBlock = currentBlocks.get(i); //하나씩 블록 꺼낸다
+    				
+    				if(currenBlock.exist) {//존재한다면 (깨진 블럭과 구별위해)
+    					// currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요...  점프못하게는 가능( 첫 이벤트 블록 주변)
     					if(mario.marioX + realX >= currenBlock.x 
-    							&&  mario.marioX + realX <= currenBlock.x + 15 &&
-    							currenBlock.y >= mario.marioY && currenBlock.y + 15>= mario.marioY ) 
+    							&&  mario.marioX + realX <= currenBlock.x + blockSize &&
+    							currenBlock.y+ blockSize > mario.marioY && currenBlock.y <= mario.marioY ) 
     							{
     						
     							
