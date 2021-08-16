@@ -73,7 +73,7 @@ public class Blocks extends Thread {
 						if (currentBlocks.contains(currenBlock)) // 만약 현재 블럭들 리스트에 있다
 						{
 							currentBlocks.remove(currenBlock); // 그 블럭 지운다
-							System.out.println("dddd  realX = " + MarioGame.realX + "marioY = " + mario.marioY);
+							//System.out.println("dddd  realX = " + MarioGame.realX + "marioY = " + mario.marioY);
 						}
 
 				}
@@ -86,22 +86,28 @@ public class Blocks extends Thread {
 
 				if (currenBlock.exist) {// 존재한다면 (깨진 블럭과 구별위해)
 					//currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
-					if(MarioGame.realX +5 >= currenBlock.x&& MarioGame.realX -5 <= currenBlock.x && mario.marioY >550)
-	                     //currenBlock.y + blockYsize > mario.marioY &&  
-	                     //currenBlock.y  < mario.marioY)  // 왼쪽 벽 막힘
+					if(MarioGame.realX +5 >= currenBlock.x && 
+							MarioGame.realX +5 <= currenBlock.x + blockXsize  && 
+							  mario.marioY + mario.marioHeight > currenBlock.y &&  mario.marioY + mario.marioHeight < currenBlock.y + blockYsize )
 	                  {
-	                     mario.setBlcoking1(true);
+						while(!(MarioGame.realX +5 >= currenBlock.x) ||!(MarioGame.realX +5 <= currenBlock.x + blockXsize) )
+								{
+									mario.setBlcoking1(true);
+									mario.setRight(true);
+								}
 	                     System.out.println(">>>>>>>>>11111");
 	                  }
 	               //else mario.setBlcoking1(false);
+					
+					
 	               
-	               else if (MarioGame.realX >= currenBlock.x &&
-	                     MarioGame.realX <= currenBlock.x + blockXsize &&
+	               else if (MarioGame.realX + mario.marioWidth >= currenBlock.x &&
+	                     MarioGame.realX   + mario.marioWidth <= currenBlock.x + blockXsize&&
 	               currenBlock.y + blockYsize >= mario.marioY)
 	                  {
 	                  mario.setBlcoking3(true);
 	                  System.out.println(">>>>>>>>>33333");
-	                  System.out.println("realX : " + MarioGame.realX + " marioY : " + mario.marioY);
+	                  //System.out.println("realX : " + MarioGame.realX + " marioY : " + mario.marioY);
 //	                      
 	                  }
 	         
