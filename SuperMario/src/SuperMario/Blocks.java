@@ -9,15 +9,15 @@ public class Blocks extends Thread {
 
 		Mario mario = MarioGame.mario;
 		private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
-		private ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
+		public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
 
-		private static int blockYsize = 50;
-		private static int blockXsize = 10;
+		public static int blockYsize = 50;
+		public static int blockXsize = 10;
 		private Block currenBlock = new Block(); // 현재 블록
 
 		public Blocks() {
 			blocks = new ArrayList<Block>();
-			blocks.add(new Block(522, 480, 3)); // 테스트용 블록 좌표
+			blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
 			// blocks.add( new Block(210, 500, 3));
 			currentBlocks = new ArrayList<Block>();
 		}
