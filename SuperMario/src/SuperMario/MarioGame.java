@@ -33,6 +33,7 @@ public class MarioGame extends JFrame {
 	Music backgroundMusic = new Music("backgroundMusic.mp3", true); // 배경음악 객체 생성
 
 	private Font font;
+	//폰트
 
 	private Image bufferImage; // 더블 버퍼링을 위한 전체 이미지를 담는 변수
 	private Graphics screenGraphic;
