@@ -63,7 +63,13 @@ public class MarioGame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) { // 마우스 움직일때.
 				System.out.println("스크린상 좌표 : " + e.getX() + " ," + e.getY());// x좌표,y좌표 출력
-				System.out.println("marioX : " + mario.marioX + " realX : " + realX);
+				
+				
+				//mario.marioX = e.getX();
+				//mario.marioY = e.getY();
+				System.out.println("marioX : " + mario.marioX + " realX : " + realX +"marioY : "
+						+ mario.marioY);
+				
 			}
 		});
 		// gameStart(); // 바로 게임 스타트
@@ -130,11 +136,14 @@ public class MarioGame extends JFrame {
 			// 마리오가 일정 x좌표에 도달하면(정중앙) 마리오의 x좌표는 스피드만큼 감소시키고, realX는 스피드만큼 계속 증가
 			// 그림이 끝나는 지점이 문제..
 
-			g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
-					realX, 0, realX + SCREEN_WIDTH / 3, mapImage.getHeight(rootPane), null);
+			if(mario.moveS)g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
+					realX - 408, 0, realX + SCREEN_WIDTH/3 - 408, mapImage.getHeight(rootPane), null);
+			else
+				g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
+						0, 0, SCREEN_WIDTH/3 , mapImage.getHeight(rootPane), null);
 			//
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
-			blocks.blockDraw(g);
+			//blocks.blockDraw(g);
 			// isGameScreen = false;
 
 		}
@@ -203,12 +212,13 @@ public class MarioGame extends JFrame {
 		private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
 		private ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
 
-		private static int blockSize = 50;
+		private static int blockYsize = 50;
+		private static int blockXsize = 5;
 		private Block currenBlock = new Block(); // 현재 블록
 
 		public Blocks() {
 			blocks = new ArrayList<Block>();
-			blocks.add(new Block(190, 413, 3)); // 테스트용 블록 좌표
+			blocks.add(new Block(522, 480, 3)); // 테스트용 블록 좌표
 			// blocks.add( new Block(210, 500, 3));
 			currentBlocks = new ArrayList<Block>();
 		}
@@ -226,19 +236,19 @@ public class MarioGame extends JFrame {
 			}
 		}
 
-		public void blockDraw(Graphics g) {
-			// 살아있는 블럭대로 사각형 그려보면 수월할 것 같아 그려봤는데 좌표를 마리오 따라 그리는게 너무 어려워서 포기
-			/// 스크린상의 좌표와 마리오 좌표가 아예 틀려서 큰일 ...
-			int i;
-			Block b = new Block();
-			for (i = 0; i < currentBlocks.size(); i++) {
-				b = currentBlocks.get(i);
-
-				g.drawRect((b.x - (realX * 2)) + 400, b.y, blockSize, blockSize);
-
-			}
-
-		}
+//		public void blockDraw(Graphics g) {
+//			// 살아있는 블럭대로 사각형 그려보면 수월할 것 같아 그려봤는데 좌표를 마리오 따라 그리는게 너무 어려워서 포기
+//			/// 스크린상의 좌표와 마리오 좌표가 아예 틀려서 큰일 ...
+//			int i;
+//			Block b = new Block();
+//			for (i = 0; i < currentBlocks.size(); i++) {
+//				b = currentBlocks.get(i);
+//
+//				g.drawRect((b.x - (realX * 2)) + 400, b.y, blockSize, blockSize);
+//
+//			}
+//
+//		}
 
 		public void blockProcess() {
 			int i;
@@ -276,13 +286,18 @@ public class MarioGame extends JFrame {
 				currenBlock = currentBlocks.get(i); // 하나씩 블록 꺼낸다
 
 				if (currenBlock.exist) {// 존재한다면 (깨진 블럭과 구별위해)
-					// currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
-					if (realX >= currenBlock.x && realX <= currenBlock.x + blockSize &&
-							 currenBlock.y + blockSize > mario.marioY && currenBlock.y <= mario.marioY)
+					//currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
+					if (//realX >= currenBlock.x) 
+							realX >= currenBlock.x + blockXsize )
+							// currenBlock.y + blockSize > mario.marioY &&
+							// currenBlock.y >=
+							 		//		 mario.marioY)
 							{
 
 						mario.setBlcoking(true);
 						System.out.println(">>>>>>>>>33333");
+						System.out.println("realX : " + realX + " marioY : " + mario.marioY);
+//		    					
 					} else {
 						mario.setBlcoking(false);
 						//System.out.println(">>>>>>>>>4444");

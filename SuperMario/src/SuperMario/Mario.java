@@ -25,6 +25,7 @@ public class Mario extends Thread { // 스레드 상속
 	private boolean jump = true;
 	private boolean falling;
 	private boolean blocking;
+	boolean moveS;
 
 	private Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
@@ -39,11 +40,12 @@ public class Mario extends Thread { // 스레드 상속
 	private int marioDirection = 1;
 
 	static MarioJump marioJump;
-	// public OperationTread op = new OperationTread();
+//	 public OperationTread op = new OperationTread();
 
 	public Mario() {
 		marioX = 30;
 		marioY = MarioGame.SCREEN_HEIGHT - 118; // 임의값
+		moveS = false;
 		// op.start();
 	}
 
@@ -110,11 +112,16 @@ public class Mario extends Thread { // 스레드 상속
 			MarioGame.realX += marioSpeed;
 			marioDirection = 1;
 		}
-		if (marioX + MarioGame.SCREEN_WIDTH / 2 > MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
-
+		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
+			setMoveS(true);
+			System.out.println(marioX +" " + MarioGame.realX);
+			marioSpeed = 2;
 			if (right)
 				marioX -= marioSpeed;
 
+		}
+		if(!moveS) {
+			marioSpeed = 4;
 		}
 		if (blocking) {
 			if (right)
@@ -139,8 +146,8 @@ public class Mario extends Thread { // 스레드 상속
 //	//점프스레드를 중단하는 스레드
 //		public class OperationTread extends Thread {
 //			
-//			public void run() {
-//				while(true) {
+//		public void run() {
+//			while(true) {
 //					System.out.println("점프중단");
 //					try {
 //						
@@ -234,11 +241,17 @@ public class Mario extends Thread { // 스레드 상속
 
 		if (up || falling) {
 			if (marioDirection == 1)
+				{
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 143, 32, 158, 48,
 						null);
-			else
+				
+				}
+			else {
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 158, 32, 143, 48,
 						null);
+				
+			}
+				
 		}
 
 		else if (left) {
@@ -263,6 +276,9 @@ public class Mario extends Thread { // 스레드 상속
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 110, 32, 126, 48,
 						null);
 		}
+		else {
+			g.drawRect(marioX, marioY, marioWidth, marioHeight);
+		}
 
 		if (!right && !left && !up && !down && !falling) // 가만히 있을 경우
 			if (marioDirection == 1)
@@ -271,7 +287,9 @@ public class Mario extends Thread { // 스레드 상속
 			else
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, imageX + 15, imageY,
 						imageX, imageY + 16, null);
-
+		else {
+			g.drawRect(marioX, marioY, marioWidth, marioHeight);
+		}
 	}
 
 	public boolean isOver() {
@@ -304,6 +322,9 @@ public class Mario extends Thread { // 스레드 상속
 
 	public void setBlcoking(boolean blocking) {
 		this.blocking = blocking;
+	}
+	public void setMoveS(boolean moveS) {
+		this.moveS = moveS;
 	}
 
 }
