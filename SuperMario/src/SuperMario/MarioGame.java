@@ -27,7 +27,7 @@ public class MarioGame extends JFrame {
 	private Image resizeIntroBackground = introBackground.getScaledInstance(MarioGame.SCREEN_WIDTH,
 			MarioGame.SCREEN_HEIGHT, Image.SCALE_SMOOTH);
 	private Image resizeTitleImage = titleImage.getScaledInstance(MarioGame.SCREEN_WIDTH / 2,
-			MarioGame.SCREEN_HEIGHT / 4, Image.SCALE_SMOOTH);
+			MarioGame.SCREEN_HEIGHT / 4, Image.SCALE_SMOOTH); //ddddd
 
 	// Section2: 게임 배경음악 설정
 	Music backgroundMusic = new Music("backgroundMusic.mp3", true); // 배경음악 객체 생성
