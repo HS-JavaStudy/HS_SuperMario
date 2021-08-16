@@ -63,9 +63,9 @@ public class Blocks extends Thread {
 					{
 						blockActive(currenBlock); // 현재 블럭을 활성화
 						currentBlocks.add(currenBlock); // 현재블럭 리스트에 추가
-						System.out.println(">>>>>>>>>1111");
-						System.out.println("marioX + realX = " + ((int) mario.marioX + (int) MarioGame.realX)
-								+ "marioY = " + mario.marioY);
+						//System.out.println(">>>>>>>>>1111");
+						//System.out.println("marioX + realX = " + ((int) mario.marioX + (int) MarioGame.realX)
+						//		+ "marioY = " + mario.marioY);
 					}
 
 				} else {
@@ -86,8 +86,9 @@ public class Blocks extends Thread {
 
 				if (currenBlock.exist) {// 존재한다면 (깨진 블럭과 구별위해)
 					//currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
-					if(MarioGame.realX + mario.marioWidth >= currenBlock.x)//&& MarioGame.realX == currenBlock.x +blockXsize)
-	                     //&&  currenBlock.y + blockYsize > mario.marioY  )  // 왼쪽 벽 막힘
+					if(MarioGame.realX +5 >= currenBlock.x&& MarioGame.realX -5 <= currenBlock.x && mario.marioY >550)
+	                     //currenBlock.y + blockYsize > mario.marioY &&  
+	                     //currenBlock.y  < mario.marioY)  // 왼쪽 벽 막힘
 	                  {
 	                     mario.setBlcoking1(true);
 	                     System.out.println(">>>>>>>>>11111");
