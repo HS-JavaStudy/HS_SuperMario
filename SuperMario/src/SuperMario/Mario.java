@@ -35,7 +35,7 @@ public class Mario extends Thread { // 스레드 상속
 	private Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
 	int marioX, marioY;
-	private int marioWidth = 42;
+    int marioWidth = 42;
 	private int marioHeight = marioWidth + 5;
 	private int marioSpeed = 2;
 	private int marioLife;
@@ -102,6 +102,15 @@ public class Mario extends Thread { // 스레드 상속
 			}
 
 		}
+		if (blocking1) {
+	         
+	         if(!jump) // 점프중이다         
+	            setFalling(true);
+	         
+	         MarioGame.realX -= 2*marioSpeed;
+	         //marioX -= 2*marioSpeed;
+	                  
+	      }
 		if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
 			marioY += marioSpeed;
 		if (left && marioX - marioSpeed > 0) {
@@ -207,7 +216,7 @@ public class Mario extends Thread { // 스레드 상속
 				marioY -= 1;
 				if (marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
-				if (blocking)
+				if (blocking3)
 					setFalling(true);
 				// setJump(true);
 				// System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX)
