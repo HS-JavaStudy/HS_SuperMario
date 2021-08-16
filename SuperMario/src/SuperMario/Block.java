@@ -10,6 +10,7 @@ class Block {
 
 	int x, y;
 	int state;
+	
 
 	public Block() {
 	};
