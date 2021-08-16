@@ -106,13 +106,15 @@ public class Mario extends Thread { // 스레드 상속
 	         
 	         if(!jump) // 점프중이다         
 	            setFalling(true);
-	         
-	         MarioGame.realX -= 2*marioSpeed;
+	         if(right)
+	        	 MarioGame.realX -= marioSpeed;
+	         if(left)
+	        	 MarioGame.realX += marioSpeed;
 	         //marioX -= 2*marioSpeed;
 	                  
 	      }
-		if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
-			marioY += marioSpeed;
+//		if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
+//			marioY += marioSpeed;
 		if (left && marioX - marioSpeed > 0) {
 			marioX -= marioSpeed;
 			marioDirection = -1;
@@ -137,15 +139,7 @@ public class Mario extends Thread { // 스레드 상속
 		if(!moveS) {
 			marioSpeed = 4;
 		}
-		if (blocking) {
-			if (right)
-				marioX -= marioSpeed;
-			if (left)
-				marioX += marioSpeed;
-			// if(!jump) setFalling(true); //점프 트루는 점프를 안하고 있을 때
-
-		}
-
+		
 	}
 
 	public void gameDraw(Graphics g) {
@@ -200,8 +194,8 @@ public class Mario extends Thread { // 스레드 상속
 				setJump(false);
 				System.out.println("같다");
 				
-				if (blocking4)
-					setFalling(false);
+//				if (blocking4)
+//					setFalling(false);
 					
 			}
 		
@@ -228,12 +222,12 @@ public class Mario extends Thread { // 스레드 상속
 
 						// System.out.println("dddd marioX + realX = "+ ((int)marioX +
 						// (int)MarioGame.realX) + "marioY = " + marioY);
-						if(marioY == 413 - marioHeight && MarioGame.realX >= 522 && MarioGame.realX <= 522 + Blocks.blockXsize) {
-							System.out.println("marioY = "+ marioY);
-							setBlcoking4(true);
-						
-						}
-						else 
+//						if(marioY == 413 - marioHeight && MarioGame.realX >= 522 && MarioGame.realX <= 522 + Blocks.blockXsize) {
+//							System.out.println("marioY = "+ marioY);
+//							setBlcoking4(true);
+//						
+//						}
+	//					else 
 							marioY += 1;
 						try {
 							finishCheck();
@@ -244,7 +238,7 @@ public class Mario extends Thread { // 스레드 상속
 						}
 
 					}
-					setBlcoking4(false);
+	//				setBlcoking4(false);
 					setFalling(false);
 					setJump(true);
 					break;
