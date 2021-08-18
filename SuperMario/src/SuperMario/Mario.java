@@ -19,8 +19,8 @@ public class Mario extends Thread { // 스레드 상속
 
 	private boolean up; // 키보드의 상태를 나타내는 bloolean 변수
 	private boolean down;
-	private boolean left;
-	private boolean right;
+	 boolean left;
+	 boolean right;
 	private boolean isOver;
 	private boolean jump = true;
 	private boolean falling;
@@ -37,7 +37,7 @@ public class Mario extends Thread { // 스레드 상속
 	int marioX, marioY;
 	int marioWidth = 42;
 	 int marioHeight = marioWidth + 5;
-	private int marioSpeed = 2;
+	 int marioSpeed = 2;
 	private int marioLife;
 	private int jumpMax;
 
@@ -102,41 +102,42 @@ public class Mario extends Thread { // 스레드 상속
 			}
 
 		}
-		if (blocking1) {
-			System.out.println("Jump : " + jump);
-			if (!jump) // 점프중이다
-				setFalling(true);
-			if (right)
-				MarioGame.realX -= marioSpeed;
-			if (left)
-				MarioGame.realX += marioSpeed;
-			
+//		if (blocking1) {
+//			System.out.println("Jump : " + jump);
+//			if (!jump) // 점프중이다
+//				setFalling(true);
+//			if (right)
+//				MarioGame.realX -= marioSpeed;
+//			if (left)
+//				MarioGame.realX += marioSpeed;
+//			
 			// marioX -= 2*marioSpeed;
 
-		}
+//		}
 //		if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
 //			marioY += marioSpeed;
-		if (left && marioX - marioSpeed > 0) {
-			marioX -= marioSpeed;
+		if (left && marioX - marioSpeed > 0) {			
+			if(!moveS) 
+				marioX -= marioSpeed;
+			
+			MarioGame.realX -= marioSpeed;
 			marioDirection = -1;
-			if (MarioGame.realX > 0) {
-				MarioGame.realX -= marioSpeed;
-			}
 			System.out.println( "llllllllllll marioX : " +marioX + " realX : " + MarioGame.realX);
 
 		}
+		
 		if (right && marioX + marioWidth + marioSpeed < MarioGame.SCREEN_WIDTH) {
-			marioX += marioSpeed;
+			if(!moveS)
+				marioX += marioSpeed;
+			
 			MarioGame.realX += marioSpeed;
 			marioDirection = 1;
-			System.out.println( "marioX : " +marioX + " realX : " + MarioGame.realX);
+			System.out.println( "marioX : " +marioX + " realX : " + MarioGame.realX );
 		}
 		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
 			setMoveS(true);
 			//System.out.println(marioX + " " + MarioGame.realX);
 			marioSpeed = 2;
-			if (right)
-				marioX -= marioSpeed;
 
 		}
 		if (!moveS) {
