@@ -21,13 +21,14 @@ public class Mario extends Thread { // 스레드 상속
 
 	private boolean up; // 키보드의 상태를 나타내는 bloolean 변수
 	private boolean down;
-	private boolean left;
-	private boolean right;
+	 boolean left;
+	 boolean right;
 	private boolean isOver;
 	private boolean jump = true;
 	private boolean falling;
 	private boolean blocking;
 	boolean moveS;
+
 
 	   private boolean blocking1 = false;
 	   private boolean blocking2= false;
@@ -41,6 +42,7 @@ public class Mario extends Thread { // 스레드 상속
 	int marioHeight = marioWidth + 5;
 	private int marioSpeed = 2;
 	public int marioLife = 3;
+
 	private int jumpMax;
 
 	private int imageX, imageY;
@@ -105,47 +107,52 @@ public class Mario extends Thread { // 스레드 상속
 			}
 
 		}
-//		if (blocking1) {
-//	         
-//	         if(!jump) // 점프중이다         
-//	            setFalling(true);
-//	         if(right)
-//	        	 MarioGame.realX -= marioSpeed;
-//	         if(left)
-//	        	 MarioGame.realX += marioSpeed;
-//	         //marioX -= 2*marioSpeed;
-//	                  
-//	      }
+
+		if (blocking1) {
+			//System.out.println("Jump : " + jump);
+			if (!jump) // 점프중이다
+				setFalling(true);
+			if (right)
+				MarioGame.realX -= marioSpeed;
+			if (left)
+				MarioGame.realX += marioSpeed;
+			
+			 //marioX -= 2*marioSpeed;
+
+	}
 //		if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
 //			marioY += marioSpeed;
-		if (left && marioX - marioSpeed > 0) {
-			
-			if(!moveS)
+		if (left && marioX - marioSpeed > 0) {			
+			if(!moveS) 
+
 				marioX -= marioSpeed;
 			
 			MarioGame.realX -= marioSpeed;
 			marioDirection = -1;
-			System.out.println("1111111111 marioX: " + marioX+"realX : " +MarioGame.realX);
+
+			//System.out.println( "llllllllllll marioX : " +marioX + " realX : " + MarioGame.realX);
+
 		}
+		
 		if (right && marioX + marioWidth + marioSpeed < MarioGame.SCREEN_WIDTH) {
 			if(!moveS)
 				marioX += marioSpeed;
 			
 			MarioGame.realX += marioSpeed;
 			marioDirection = 1;
-			System.out.println("marioX: " + marioX+"realX : " +MarioGame.realX);
-			
+
+			//System.out.println( "marioX : " +marioX + " realX : " + MarioGame.realX );
 		}
 		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
 			setMoveS(true);
-			//System.out.println(marioX +" " + MarioGame.realX);
+			//System.out.println(marioX + " " + MarioGame.realX);
 			marioSpeed = 2;
 
 		}
-		if(!moveS) {
+		if (!moveS) {
 			marioSpeed = 4;
 		}
-		
+
 	}
 
 	public void gameDraw(Graphics g) {
@@ -196,7 +203,7 @@ public class Mario extends Thread { // 스레드 상속
 		}
 
 		void finishCheck() {
-			
+	
 			
 //			if (basicY <= marioY) { // 블럭위에 있는 경우 등은 basic 바꾸거나 추가 기능 필요
 //				setJump(false);
@@ -221,6 +228,7 @@ public class Mario extends Thread { // 스레드 상속
 				marioY -= 1;
 				if (marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
+
 				if (blocking3)
 					setFalling(true);
 				// setJump(true);
@@ -235,42 +243,45 @@ public class Mario extends Thread { // 스레드 상속
 						 System.out.println("while문 marioY = "+ marioY);
 						 System.out.println("dddd marioX + realX = "+ ((int)marioX +
 						 (int)MarioGame.realX) + "marioY = " + marioY);
+						
 						 
 						for (int i = 0; i < BLK.currentBlocks.size(); i++) {
 							
-							System.out.println("block size = "+ BLK.currentBlocks.size());
-							BLK.currenBlock = BLK.currentBlocks.get(i);
+							//System.out.println("block size = "+ BLK.currentBlocks.size());
+							BLK.currentBlock = BLK.currentBlocks.get(i);
 						 
-						 if(BLK.currenBlock.exist && marioY == BLK.currenBlock.y - marioHeight && MarioGame.realX >= BLK.currenBlock.x && MarioGame.realX <= BLK.currenBlock.x + Blocks.blockXsize) {
-							System.out.println("blocking4 marioY = "+ marioY + "currentBlock "+ i + "= "+BLK.currenBlock.x);
-							setBlcoking4(true);
+						 if(BLK.currentBlock.exist && marioY == BLK.currentBlock.y - marioHeight && MarioGame.realX >= BLK.currentBlock.x && MarioGame.realX <= BLK.currentBlock.x + Blocks.blockXsize) {
+							System.out.println("blocking4 marioY = "+ marioY + "currentBlock "+ i + "= "+BLK.currentBlock.x);
+							setBlocking4(true);
 							//setFalling(false);
 							
 						 }
 						else {
 							
 						  marioY += 1;
-						  setBlcoking4(false);
+						  setBlocking4(false);
 						  //setFalling(true);
 						}
+
 						try {
 							finishCheck();
-							Thread.sleep(1);
+							Thread.sleep(2);
 
 						} catch (InterruptedException e) {
 							return;
 						}
+
 					}// end of for..
 				 }
 					
-					setBlcoking4(false);
+					setBlocking4(false);
 					setFalling(false);
 					setJump(true);
 					break;
 				}
 
 				try { // 위로 솟구치는 것을 천천히
-					Thread.sleep(1);
+					Thread.sleep(2);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -285,18 +296,16 @@ public class Mario extends Thread { // 스레드 상속
 		imageY = 32;
 
 		if (up || falling) {
-			if (marioDirection == 1)
-				{
+			if (marioDirection == 1) {
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 143, 32, 158, 48,
 						null);
-				
-				}
-			else {
+
+			} else {
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 158, 32, 143, 48,
 						null);
-				
+
 			}
-				
+
 		}
 
 		else if (left) {
@@ -320,8 +329,7 @@ public class Mario extends Thread { // 스레드 상속
 			else
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 110, 32, 126, 48,
 						null);
-		}
-		else {
+		} else {
 			g.drawRect(marioX, marioY, marioWidth, marioHeight);
 		}
 
@@ -368,20 +376,24 @@ public class Mario extends Thread { // 스레드 상속
 	public void setBlcoking(boolean blocking) {
 		this.blocking = blocking;
 	}
+
 	public void setMoveS(boolean moveS) {
 		this.moveS = moveS;
 	}
 
-	public void setBlcoking1(boolean blocking1) {
-	      this.blocking1 = blocking1;
-	   }
-	   public void setBlcoking2(boolean blocking2) {
-	      this.blocking2 = blocking2;
-	   }
-	   public void setBlcoking3(boolean blocking3) {
-	      this.blocking3 = blocking3;
-	   }
-	   public void setBlcoking4(boolean blocking4) {
-	      this.blocking4 = blocking4;
-	   }
+	public void setBlocking1(boolean blocking1) {
+		this.blocking1 = blocking1;
+	}
+
+	public void setBlocking2(boolean blocking2) {
+		this.blocking2 = blocking2;
+	}
+
+	public void setBlocking3(boolean blocking3) {
+		this.blocking3 = blocking3;
+	}
+
+	public void setBlocking4(boolean blocking4) {
+		this.blocking4 = blocking4;
+	}
 }

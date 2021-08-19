@@ -46,7 +46,9 @@ public class MarioGame extends JFrame {
 	public static final int SCREEN_WIDTH = 816;
 	public static final int SCREEN_HEIGHT = 678;
 
+	private int screenX = 0;
 	public static Blocks blocks = new Blocks();
+
 	static public Mario mario = new Mario();
 
 	public MarioGame() {
@@ -77,10 +79,7 @@ public class MarioGame extends JFrame {
 		backgroundMusic.start(); // 배경음악 시작
 	}
 
-	public void mgps() {
-
-	}
-
+	
 	void init() {
 		isMainScreen = true;
 		isLoadingScreen = false;
@@ -170,12 +169,12 @@ public class MarioGame extends JFrame {
 			// realX 는 실제 이동거리를 나타냄
 			// 마리오가 일정 x좌표에 도달하면(정중앙) 마리오의 x좌표는 스피드만큼 감소시키고, realX는 스피드만큼 계속 증가
 			// 그림이 끝나는 지점이 문제..
-
 			if(mario.moveS)g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
 					realX - 408, 0, realX + SCREEN_WIDTH/3 - 408, mapImage.getHeight(rootPane), null);
 			else
 				g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
 						0, 0, SCREEN_WIDTH/3 , mapImage.getHeight(rootPane), null);
+				
 			//
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
 			//blocks.blockDraw(g);
