@@ -13,13 +13,15 @@ public class Blocks extends Thread {
 
 		public static int blockYsize = 50;
 		public static int blockXsize = 10;
-		private Block currenBlock = new Block(); // 현재 블록
+		Block currenBlock = new Block(); // 현재 블록
 
 		public Blocks() {
 			blocks = new ArrayList<Block>();
-			blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
-			// blocks.add( new Block(210, 500, 3));
+		    blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
+			blocks.add( new Block(592, 413, 3));
+			//System.out.println("Blocks size1! = "+ currentBlocks.size());
 			currentBlocks = new ArrayList<Block>();
+			System.out.println("Blocks size1! = "+ currentBlocks.size());
 		}
 
 		public void run() {

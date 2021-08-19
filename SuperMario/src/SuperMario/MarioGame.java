@@ -46,7 +46,7 @@ public class MarioGame extends JFrame {
 	public static final int SCREEN_WIDTH = 816;
 	public static final int SCREEN_HEIGHT = 678;
 
-	private Blocks blocks = new Blocks();
+	public static Blocks blocks = new Blocks();
 	static public Mario mario = new Mario();
 
 	public MarioGame() {
@@ -124,7 +124,41 @@ public class MarioGame extends JFrame {
 			g.setColor(Color.WHITE); // 글씨 색 설정
 
 			g.drawString("< Press Enter to Start Game >", 242, 382);
-
+		
+			font = new Font("Monospaced", Font.BOLD, 30);
+			g.setFont(font);
+			
+			g.drawString("MARIO", 90, 65);
+			g.drawString(String.format("%06d",Mario.score), 90, 90);
+			g.drawString(String.format("X %02d",Mario.coin), 300, 90);
+			g.drawString("WORLD", 450, 65);
+			g.drawString("1-1", 460, 90);
+			g.drawString("TIME", 630, 65);
+			
+			
+			
+		}
+		else if (isLoadingScreen) {
+			
+			this.setBackground(Color.BLACK);
+			font = new Font("Monospaced", Font.BOLD, 30);
+			g.setFont(font);
+			g.setColor(Color.WHITE); 
+			
+			
+			g.drawString("MARIO", 90, 65);
+			g.drawString(String.format("%06d",Mario.score), 90, 90);
+			g.drawString(String.format("X %02d",Mario.coin), 300, 90);
+			g.drawString("WORLD", 450, 65);
+			g.drawString("1-1", 460, 90);
+			g.drawString("TIME", 630, 65);
+			
+			g.drawImage(mario.allImage,SCREEN_WIDTH/3 + 50, SCREEN_HEIGHT/2-45, SCREEN_WIDTH/3 + 50 + mario.marioWidth, SCREEN_HEIGHT/2-45 + mario.marioHeight,176, 32,
+					176 + 15, 32 + 16, null);
+			
+			g.drawString("WORLD 1-1", SCREEN_WIDTH/3 + 40, SCREEN_HEIGHT/2-80);
+			g.drawString(String.format("x  %d", mario.marioLife), SCREEN_WIDTH/3 + 110, SCREEN_HEIGHT/2 - 10 );
+			
 		}
 
 		else if (isGameScreen) {
@@ -146,6 +180,19 @@ public class MarioGame extends JFrame {
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
 			//blocks.blockDraw(g);
 			// isGameScreen = false;
+			
+			font = new Font("Monospaced", Font.BOLD, 30);
+			g.setFont(font);
+			g.setColor(Color.WHITE); 
+			
+			g.drawString("MARIO", 90, 65);
+			g.drawString(String.format("%06d",Mario.score), 90, 90);
+			g.drawString(String.format("X%02d",Mario.coin), 300, 90);
+			g.drawString("WORLD", 450, 65);
+			g.drawString("1-1", 460, 90);
+			g.drawString("TIME", 630, 65);
+			g.drawString(String.format("%04d",Mario.cnt), 628, 90);
+			
 
 		}
 
@@ -175,6 +222,13 @@ public class MarioGame extends JFrame {
 			case KeyEvent.VK_ENTER:
 				if (isMainScreen) {
 					isMainScreen = false;
+					isLoadingScreen = true;
+					//isGameScreen = true;
+					//gameStart();
+				}
+				else if (isLoadingScreen) {
+					isMainScreen = false;
+					isLoadingScreen = false;
 					isGameScreen = true;
 					gameStart();
 				}
