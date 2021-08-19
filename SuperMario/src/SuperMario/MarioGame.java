@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.*;
 
 public class MarioGame extends JFrame {
@@ -157,6 +159,18 @@ public class MarioGame extends JFrame {
 			
 			g.drawString("WORLD 1-1", SCREEN_WIDTH/3 + 40, SCREEN_HEIGHT/2-80);
 			g.drawString(String.format("x  %d", mario.marioLife), SCREEN_WIDTH/3 + 110, SCREEN_HEIGHT/2 - 10 );
+			
+			Timer loadingTimer = new Timer();
+			TimerTask loadingTask = new TimerTask() {
+				public void run() { // 스레드 코드로서 JVM에 의해 호출. 반드시 오버라이딩 하여 스레드 코드를 작성하여야 한다
+					
+					isLoadingScreen = false;
+					isGameScreen = true;
+					gameStart();
+				}
+				
+			};
+			loadingTimer.schedule(loadingTask, 1000);
 			
 		}
 

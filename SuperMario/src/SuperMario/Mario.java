@@ -214,7 +214,7 @@ public class Mario extends Thread { // 스레드 상속
 				setFalling(false);
 				setJump(true);
 			}
-			else
+			
 				setFalling(true);
 		
 		}
@@ -256,12 +256,12 @@ public class Mario extends Thread { // 스레드 상속
 							//setFalling(false);
 							
 						 }
-						else {
+						
 							
 						  marioY += 1;
 						  setBlocking4(false);
 						  //setFalling(true);
-						}
+						
 
 						try {
 							finishCheck();
