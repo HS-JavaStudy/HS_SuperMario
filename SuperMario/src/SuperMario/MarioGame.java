@@ -31,7 +31,7 @@ public class MarioGame extends JFrame {
 	private Image resizeTitleImage = titleImage.getScaledInstance(MarioGame.SCREEN_WIDTH / 2,
 			MarioGame.SCREEN_HEIGHT / 4, Image.SCALE_SMOOTH); //ddddd
 
-	// Section2: 게임 배경음악 설정
+	
 	Music backgroundMusic = new Music("backgroundMusic.mp3", true); // 배경음악 객체 생성
 
 	private Font font;
@@ -199,21 +199,7 @@ public class MarioGame extends JFrame {
 				
 			//
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
-			//blocks.blockDraw(g);
-			// isGameScreen = false;
-			
-			font = new Font("Monospaced", Font.BOLD, 30);
-			g.setFont(font);
-			g.setColor(Color.WHITE); 
-			
-			g.drawString("MARIO", 90, 65);
-			g.drawString(String.format("%06d",Mario.score), 90, 90);
-			g.drawString(String.format("X%02d",Mario.coin), 300, 90);
-			g.drawString("WORLD", 450, 65);
-			g.drawString("1-1", 460, 90);
-			g.drawString("TIME", 630, 65);
-			g.drawString(String.format("%04d",Mario.cnt), 628, 90);
-			
+		
 
 		}
 

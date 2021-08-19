@@ -8,8 +8,8 @@ class Block {
 	static int blcok_Width = 15;
 	static int block_Height = 15;
 
-	int x, y;
-	int state;
+	public int x, y;
+	public int state;
 	
 
 	public Block() {

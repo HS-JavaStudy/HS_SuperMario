@@ -14,6 +14,7 @@ public class Blocks extends Thread {
 	public static int blockYsize = 50;
 	public static int blockXsize = 20;
 	public Block currentBlock = new Block(); // 현재 블록
+	public item item = new item();
 
 	public Blocks() {
 		blocks = new ArrayList<Block>();
@@ -90,7 +91,7 @@ public class Blocks extends Thread {
 				// currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
 				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX <= currentBlock.x + blockXsize) {
-					if (MarioGame.mario.marioY +1 <= currentBlock.y + blockYsize) {
+					if (MarioGame.mario.marioY + 1 <= currentBlock.y + blockYsize) {
 
 						if (MarioGame.mario.marioY == currentBlock.y + blockYsize) { // 블럭 아래에서 점프 막히는 기능
 							mario.setBlocking3(true);
@@ -99,20 +100,20 @@ public class Blocks extends Thread {
 						if (MarioGame.mario.marioY < currentBlock.y + blockYsize
 								&& MarioGame.mario.marioY + MarioGame.mario.marioHeight > currentBlock.y) {
 							MarioGame.mario.setBlocking1(true); // 블럭과 부딪히는 기능 양옆
-							System.out.println(">>>>>>>>>1111"); //이것만 호출되는데 돌아가긴 하는듯..?
+							System.out.println(">>>>>>>>>1111"); // 이것만 호출되는데 돌아가긴 하는듯..?
 						}
 
 					} else {
 						MarioGame.mario.setBlocking1(false);
 						MarioGame.mario.setFalling(false);
 						// mario.setBlcoking3(false);
-						//System.out.println(">>>>>>>>>4444");
+						// System.out.println(">>>>>>>>>4444");
 					}
 				}
 
 			}
-
 		}
+
 	}
 
 	public void blockActive(Block block) {
