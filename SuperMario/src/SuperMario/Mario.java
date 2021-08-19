@@ -130,7 +130,7 @@ public class Mario extends Thread { // 스레드 상속
 		}
 		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
 			setMoveS(true);
-			System.out.println(marioX +" " + MarioGame.realX);
+			System.out.println(marioX +" " + MarioGame.realX + " " + marioY);
 			marioSpeed = 2;
 			if (right)
 				marioX -= marioSpeed;

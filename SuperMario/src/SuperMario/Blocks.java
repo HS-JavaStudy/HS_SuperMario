@@ -21,7 +21,6 @@ public class Blocks extends Thread {
 			// blocks.add( new Block(210, 500, 3));
 			currentBlocks = new ArrayList<Block>();
 		}
-
 		public void run() {
 
 			while (true) {
