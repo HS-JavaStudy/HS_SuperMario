@@ -27,6 +27,8 @@ public class Mario extends Thread { // 스레드 상속
 	private boolean jump = true;
 	private boolean falling;
 	private boolean blocking;
+	private boolean bigMario ;
+	private boolean smallMario ;
 	boolean moveS;
 
 
@@ -47,6 +49,8 @@ public class Mario extends Thread { // 스레드 상속
 
 	private int imageX, imageY;
 	private int marioDirection = 1;
+	private int extraY1, extraY2;
+	
 
 	static MarioJump marioJump;
 //	 public OperationTread op = new OperationTread();
@@ -55,6 +59,8 @@ public class Mario extends Thread { // 스레드 상속
 		marioX = 30;
 		marioY = MarioGame.SCREEN_HEIGHT - 118; // 임의값
 		moveS = false;
+		setbigMario(true);
+		//changeBig();
 		// op.start();
 	}
 
@@ -71,6 +77,7 @@ public class Mario extends Thread { // 스레드 상속
 						Thread.sleep(delay - System.currentTimeMillis() + pretime); // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭
 																					// 실행한다
 						keyProcess(); // 키 프로세스 실행
+						state();
 						// 이외에 여러가지 프로세스 실행하도록 할 예정
 						// playerAttackProcess();
 
@@ -97,8 +104,44 @@ public class Mario extends Thread { // 스레드 상속
 		// (MarioGame.SCREEN_HEIGHT - marioHeight) / 2;
 	}
 
+	public void state() {
+
+		if (bigMario) {
+			changeBig();
+			extraY1 = 32;
+			extraY2 = 16;
+			setbigMario(false);
+		}
+		if (smallMario) {
+			changeSmall();
+			extraY1 = 0;
+			extraY2 = 0;
+			setsmallMario(false);
+		}
+	}
+
+	public void changeBig() {
+		
+			marioWidth = 42;
+			marioHeight = 84;
+			if(marioY == MarioGame.SCREEN_HEIGHT - 118)
+				marioY = marioY-37 ;
+			
+		
+		
+	}
+	public void changeSmall() {
+		
+			marioWidth = 42;
+			marioHeight = 47;
+			if(marioY == MarioGame.SCREEN_HEIGHT - 155)
+			marioY = marioY+37 ;
+		
+		
+	}
 	private void keyProcess() {
 		// 각 속성의 true, false 상태에 따라 결과 지정
+		
 		if (up && marioY - marioSpeed > 0) {
 			if (jump) {
 				setJump(false);
@@ -188,6 +231,7 @@ public class Mario extends Thread { // 스레드 상속
 //		
 //		}
 
+
 	class MarioJump extends Thread {
 
 		private int basicX, basicY;
@@ -240,9 +284,9 @@ public class Mario extends Thread { // 스레드 상속
 					
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 						
-						 System.out.println("while문 marioY = "+ marioY);
-						 System.out.println("dddd marioX + realX = "+ ((int)marioX +
-						 (int)MarioGame.realX) + "marioY = " + marioY);
+						// System.out.println("while문 marioY = "+ marioY);
+						// System.out.println("dddd marioX + realX = "+ ((int)marioX +
+						// (int)MarioGame.realX) + "marioY = " + marioY);
 						
 						 
 						for (int i = 0; i < BLK.currentBlocks.size(); i++) {
@@ -264,7 +308,7 @@ public class Mario extends Thread { // 스레드 상속
 						
 
 						try {
-							finishCheck();
+							//finishCheck();
 							Thread.sleep(2);
 
 						} catch (InterruptedException e) {
@@ -294,14 +338,17 @@ public class Mario extends Thread { // 스레드 상속
 
 		imageX = 176; // 서있는 마리오 좌표
 		imageY = 32;
-
+		
+//x80 , y 플러스 32
 		if (up || falling) {
 			if (marioDirection == 1) {
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 143, 32, 158, 48,
+				
+				
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 144, 32 -extraY1, 158, 48 -extraY2 ,
 						null);
 
 			} else {
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 158, 32, 143, 48,
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 158, 32 -extraY1, 144, 48 -extraY2 ,
 						null);
 
 			}
@@ -309,25 +356,24 @@ public class Mario extends Thread { // 스레드 상속
 		}
 
 		else if (left) {
+			//System.out.println("LLLLL  big : " + bigMario + " small : " + smallMario + " extraY1 = " + extraY1 +  " extraY2 = " + extraY2 );
 			if (cnt % 12 >= 0 && cnt % 12 < 3)
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 95, 32, 79, 48, null);
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 95, 32 -extraY1, 80, 48  -extraY2, null);
 			else if (cnt % 12 >= 3 && cnt % 12 < 6)
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 110, 32, 95, 48, null);
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 110, 32 -extraY1, 96, 48  -extraY2, null);
 			else
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 125, 32, 110, 48,
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 125, 32 -extraY1, 111, 48 -extraY2 ,
 						null);
 		}
 
 		else if (right) {
-			// cnt % 3으로 했더니 이미지 변화가 너무 빨라 적당한 값 12를 기준으로 함. 변경 가능
-			// 전체 이미지 파일을 써, 그려야 되는 이미지의 좌표를 바꿔줌 x축으로 약 15, y축으로 약 16
-			// 걷는게 뭔가 이상
+			//System.out.println("RRRRR  big : " + bigMario + " small : " + smallMario + " extraY1 = " + extraY1 +  " extraY2 = " + extraY2 );
 			if (cnt % 12 >= 0 && cnt % 12 < 3)
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 79, 32, 96, 48, null);
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 80, 32 -extraY1, 96, 48 -extraY2 , null);
 			else if (cnt % 12 >= 3 && cnt % 12 < 6)
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 95, 32, 111, 48, null);
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 96, 32 -extraY1, 111, 48 -extraY2 , null);
 			else
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 110, 32, 126, 48,
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 111, 32 -extraY1, 126, 48 -extraY2 ,
 						null);
 		} else {
 			g.drawRect(marioX, marioY, marioWidth, marioHeight);
@@ -335,11 +381,11 @@ public class Mario extends Thread { // 스레드 상속
 
 		if (!right && !left && !up && !down && !falling) // 가만히 있을 경우
 			if (marioDirection == 1)
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, imageX, imageY,
-						imageX + 15, imageY + 16, null);
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, imageX, imageY-extraY1 ,
+						imageX + 15, imageY + 16  -extraY2, null);
 			else
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, imageX + 15, imageY,
-						imageX, imageY + 16, null);
+				g.drawImage(allImage, marioX, marioY, marioX + marioWidth , marioY + marioHeight , imageX + 15, imageY-extraY1,
+						imageX, imageY + 16  -extraY2, null);
 		else {
 			g.drawRect(marioX, marioY, marioWidth, marioHeight);
 		}
@@ -392,8 +438,18 @@ public class Mario extends Thread { // 스레드 상속
 	public void setBlocking3(boolean blocking3) {
 		this.blocking3 = blocking3;
 	}
-
 	public void setBlocking4(boolean blocking4) {
 		this.blocking4 = blocking4;
 	}
+
+	public void setbigMario(boolean bigMario) {
+		this.bigMario = bigMario;
+		//setsmallMario(false);
+	}
+	
+	public void setsmallMario(boolean smallMario) {
+		this.smallMario = smallMario;
+		//setbigMario(false);
+	}
+	
 }
