@@ -46,7 +46,9 @@ public class MarioGame extends JFrame {
 	public static final int SCREEN_WIDTH = 816;
 	public static final int SCREEN_HEIGHT = 678;
 
-	private Blocks blocks = new Blocks();
+	private int screenX = 0;
+	public static Blocks blocks = new Blocks();
+
 	static public Mario mario = new Mario();
 
 	public MarioGame() {
@@ -77,10 +79,7 @@ public class MarioGame extends JFrame {
 		backgroundMusic.start(); // 배경음악 시작
 	}
 
-	public void mgps() {
-
-	}
-
+	
 	void init() {
 		isMainScreen = true;
 		isLoadingScreen = false;
@@ -96,7 +95,7 @@ public class MarioGame extends JFrame {
 			public void run() { // 스레드 코드로서 JVM에 의해 호출. 반드시 오버라이딩 하여 스레드 코드를 작성하여야 한다
 				mario.start(); // Mario mario 스레드 실행을 시작하도록 요청
 				blocks.start();
-
+				
 			}
 		};
 		loadingTimer.schedule(loadingTask, 1000);
@@ -124,7 +123,41 @@ public class MarioGame extends JFrame {
 			g.setColor(Color.WHITE); // 글씨 색 설정
 
 			g.drawString("< Press Enter to Start Game >", 242, 382);
-
+		
+			font = new Font("Monospaced", Font.BOLD, 30);
+			g.setFont(font);
+			
+			g.drawString("MARIO", 90, 65);
+			g.drawString(String.format("%06d",Mario.score), 90, 90);
+			g.drawString(String.format("X %02d",Mario.coin), 300, 90);
+			g.drawString("WORLD", 450, 65);
+			g.drawString("1-1", 460, 90);
+			g.drawString("TIME", 630, 65);
+			
+			
+			
+		}
+		else if (isLoadingScreen) {
+			
+			this.setBackground(Color.BLACK);
+			font = new Font("Monospaced", Font.BOLD, 30);
+			g.setFont(font);
+			g.setColor(Color.WHITE); 
+			
+			
+			g.drawString("MARIO", 90, 65);
+			g.drawString(String.format("%06d",Mario.score), 90, 90);
+			g.drawString(String.format("X %02d",Mario.coin), 300, 90);
+			g.drawString("WORLD", 450, 65);
+			g.drawString("1-1", 460, 90);
+			g.drawString("TIME", 630, 65);
+			
+			g.drawImage(mario.allImage,SCREEN_WIDTH/3 + 50, SCREEN_HEIGHT/2-45, SCREEN_WIDTH/3 + 50 + mario.marioWidth, SCREEN_HEIGHT/2-45 + mario.marioHeight,176, 32,
+					176 + 15, 32 + 16, null);
+			
+			g.drawString("WORLD 1-1", SCREEN_WIDTH/3 + 40, SCREEN_HEIGHT/2-80);
+			g.drawString(String.format("x  %d", mario.marioLife), SCREEN_WIDTH/3 + 110, SCREEN_HEIGHT/2 - 10 );
+			
 		}
 
 		else if (isGameScreen) {
@@ -136,16 +169,29 @@ public class MarioGame extends JFrame {
 			// realX 는 실제 이동거리를 나타냄
 			// 마리오가 일정 x좌표에 도달하면(정중앙) 마리오의 x좌표는 스피드만큼 감소시키고, realX는 스피드만큼 계속 증가
 			// 그림이 끝나는 지점이 문제..
-
 			if(mario.moveS)g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
 					realX - 408, 0, realX + SCREEN_WIDTH/3 - 408, mapImage.getHeight(rootPane), null);
 			else
 				g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
 						0, 0, SCREEN_WIDTH/3 , mapImage.getHeight(rootPane), null);
+				
 			//
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
 			//blocks.blockDraw(g);
 			// isGameScreen = false;
+			
+			font = new Font("Monospaced", Font.BOLD, 30);
+			g.setFont(font);
+			g.setColor(Color.WHITE); 
+			
+			g.drawString("MARIO", 90, 65);
+			g.drawString(String.format("%06d",Mario.score), 90, 90);
+			g.drawString(String.format("X%02d",Mario.coin), 300, 90);
+			g.drawString("WORLD", 450, 65);
+			g.drawString("1-1", 460, 90);
+			g.drawString("TIME", 630, 65);
+			g.drawString(String.format("%04d",Mario.cnt), 628, 90);
+			
 
 		}
 
@@ -175,6 +221,13 @@ public class MarioGame extends JFrame {
 			case KeyEvent.VK_ENTER:
 				if (isMainScreen) {
 					isMainScreen = false;
+					isLoadingScreen = true;
+					//isGameScreen = true;
+					//gameStart();
+				}
+				else if (isLoadingScreen) {
+					isMainScreen = false;
+					isLoadingScreen = false;
 					isGameScreen = true;
 					gameStart();
 				}
