@@ -109,6 +109,9 @@ public class Mario extends Thread { // 스레드 상속
 		}
 
 		if (blocking1) {
+			
+			System.out.println("blocking 1 입니다");
+		
 			//System.out.println("Jump : " + jump);
 			if (!jump) // 점프중이다
 				setFalling(true);
@@ -229,8 +232,14 @@ public class Mario extends Thread { // 스레드 상속
 				if (marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
 
-				if (blocking3)
+				if (blocking3) {
+					
+					System.out.println("blocking 3 입니다");
 					setFalling(true);
+				}
+				 if(blocking4) 
+					 setFalling(false);
+				 
 				// setJump(true);
 				// System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX)
 				// +" marioY = " + marioY + " " + jump );
@@ -240,41 +249,29 @@ public class Mario extends Thread { // 스레드 상속
 					
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 						
+						//setBlocking4(false);
+						
 						 System.out.println("while문 marioY = "+ marioY);
 						 System.out.println("dddd marioX + realX = "+ ((int)marioX +
 						 (int)MarioGame.realX) + "marioY = " + marioY);
 						
-						 
-						for (int i = 0; i < BLK.currentBlocks.size(); i++) {
-							
-							//System.out.println("block size = "+ BLK.currentBlocks.size());
-							BLK.currentBlock = BLK.currentBlocks.get(i);
-						 
-						 if(BLK.currentBlock.exist && marioY == BLK.currentBlock.y - marioHeight && MarioGame.realX >= BLK.currentBlock.x && MarioGame.realX <= BLK.currentBlock.x + Blocks.blockXsize) {
-							System.out.println("blocking4 marioY = "+ marioY + "currentBlock "+ i + "= "+BLK.currentBlock.x);
-							setBlocking4(true);
-							//setFalling(false);
-							
-						 }
-						else {
-							
-						  marioY += 1;
-						  setBlocking4(false);
-						  //setFalling(true);
-						}
 
+						  marioY += 1;
+						  //setBlocking4(false);
+						
+			
 						try {
-							finishCheck();
+							//finishCheck();
 							Thread.sleep(2);
 
 						} catch (InterruptedException e) {
 							return;
 						}
 
-					}// end of for..
-				 }
+					}
+				 
 					
-					setBlocking4(false);
+//					setBlocking4(false);
 					setFalling(false);
 					setJump(true);
 					break;

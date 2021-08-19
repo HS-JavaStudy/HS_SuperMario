@@ -88,6 +88,14 @@ public class Blocks extends Thread {
 
 			if (currentBlock.exist) {// 존재한다면 (깨진 블럭과 구별위해)
 				// currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
+				System.out.println("current block i = "+ i);
+				
+//				 if(mario.marioY == currentBlock.y - mario.marioHeight /*&& MarioGame.realX >= currentBlock.x && MarioGame.realX <= currentBlock.x + Blocks.blockXsize*/) {
+//						System.out.println("blocking4 marioY = "+ mario.marioY + "currentBlock "+ i + "= "+ currentBlock.x);
+//						mario.setBlocking4(true);
+//						System.out.println("blocking4 true");
+//				 }
+				 
 				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX <= currentBlock.x + blockXsize) {
 					if (mario.marioY +1 <= currentBlock.y + blockYsize) {
@@ -101,14 +109,18 @@ public class Blocks extends Thread {
 							mario.setBlocking1(true); // 블럭과 부딪히는 기능 양옆
 							System.out.println(">>>>>>>>>1111"); //이것만 호출되는데 돌아가긴 하는듯..?
 						}
+						
 
 					} else {
+						System.out.println("여기 들어옴!!!!!!!!!");
 						mario.setBlocking1(false);
 						mario.setFalling(false);
 						// mario.setBlcoking3(false);
 						//System.out.println(">>>>>>>>>4444");
 					}
+					
 				}
+				
 
 			}
 
