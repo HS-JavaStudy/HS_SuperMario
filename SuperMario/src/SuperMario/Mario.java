@@ -150,7 +150,7 @@ public class Mario extends Thread { // 스레드 상속
 
 		if (blocking1) {
 <<<<<<< HEAD
-			// System.out.println("Jump : " + jump);
+			
 =======
 			
 			System.out.println("blocking 1 입니다");
@@ -277,8 +277,7 @@ public class Mario extends Thread { // 스레드 상속
 					jumpMax += 15;
 
 <<<<<<< HEAD
-			//if (blocking3)
-				//	setFalling(true);
+			
 =======
 				if (blocking3) {
 					
@@ -299,41 +298,7 @@ public class Mario extends Thread { // 스레드 상속
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 <<<<<<< HEAD
 
-						// System.out.println("while문 marioY = "+ marioY);
-						// System.out.println("dddd marioX + realX = "+ ((int)marioX +
-						// (int)MarioGame.realX) + "marioY = " + marioY);
-
-//						for (int i = 0; i < BLK.currentBlocks.size(); i++) {
-//
-//							// System.out.println("block size = "+ BLK.currentBlocks.size());
-//							BLK.currentBlock = BLK.currentBlocks.get(i);
-//
-//							if (BLK.currentBlock.exist && marioY == BLK.currentBlock.y - marioHeight
-//									&& MarioGame.realX >= BLK.currentBlock.x
-//									&& MarioGame.realX <= BLK.currentBlock.x + Blocks.blockXsize) {
-//								System.out.println("blocking4 marioY = " + marioY + "currentBlock " + i + "= "
-//										+ BLK.currentBlock.x);
-//								setBlocking4(true);
-//								// setFalling(false);
-//
-//							}
-
-							marioY += 1;
-							//setBlocking4(false);
-							 setFalling(true);
-
-							try {
-								// finishCheck();
-								Thread.sleep(2);
-
-							} catch (InterruptedException e) {
-								return;
-							}
-
-						} // end of for..
-					}
-
-					setBlocking4(false);
+					
 =======
 						
 						//setBlocking4(false);

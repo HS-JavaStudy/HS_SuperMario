@@ -1,4 +1,4 @@
-package SuperMario;
+package src.SuperMario;
 
 import java.util.ArrayList;
 
@@ -103,7 +103,7 @@ public class Blocks extends Thread {
 				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX <= currentBlock.x + blockXsize) {
 <<<<<<< HEAD
-					if (MarioGame.mario.marioY + 1 <= currentBlock.y + blockYsize) {
+					
 =======
 					
 					if (MarioGame.mario.marioY +1 <= currentBlock.y + blockYsize) {
@@ -117,7 +117,7 @@ public class Blocks extends Thread {
 								&& MarioGame.mario.marioY + MarioGame.mario.marioHeight > currentBlock.y) {
 							MarioGame.mario.setBlocking1(true); // 블럭과 부딪히는 기능 양옆
 <<<<<<< HEAD
-							System.out.println(">>>>>>>>>1111"); // 이것만 호출되는데 돌아가긴 하는듯..?
+							
 =======
 							System.out.println(">>>>>>>>>1111"); //이것만 호출되는데 돌아가긴 하는듯..?
 >>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
@@ -125,8 +125,7 @@ public class Blocks extends Thread {
 						
 
 					} else {
-<<<<<<< HEAD
-=======
+<<<<<<< HEAD=======
 						System.out.println("여기 들어옴!!!!!!!!!");
 >>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
 						MarioGame.mario.setBlocking1(false);
