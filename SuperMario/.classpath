@@ -6,6 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/kuj/OneDrive/바탕 화면/자바프로젝트/HS_SuperMario/SuperMario/jlayer1.0.1/JLayer1.0.1/jl1.0.1.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/ysm07/OneDrive/바탕 화면/마리오/HS_SuperMario/SuperMario/jlayer1.0.1/JLayer1.0.1/jl1.0.1.jar"/>
+>>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
 	<classpathentry kind="output" path="bin"/>
 </classpath>
