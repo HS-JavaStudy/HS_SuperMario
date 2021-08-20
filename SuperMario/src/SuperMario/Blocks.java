@@ -1,4 +1,4 @@
-package src.SuperMario;
+package SuperMario;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class Blocks extends Thread {
 	public static int blockYsize = 50;
 	public static int blockXsize = 20;
 	public Block currentBlock = new Block(); // 현재 블록
-	public item item = new item();
+//	public item item = new item();
 
 	public Blocks() {
 		
@@ -102,12 +102,9 @@ public class Blocks extends Thread {
 				 
 				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX <= currentBlock.x + blockXsize) {
-<<<<<<< HEAD
-					
-=======
+
 					
 					if (MarioGame.mario.marioY +1 <= currentBlock.y + blockYsize) {
->>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
 
 						if (MarioGame.mario.marioY == currentBlock.y + blockYsize) { // 블럭 아래에서 점프 막히는 기능
 							mario.setBlocking3(true);
@@ -116,18 +113,16 @@ public class Blocks extends Thread {
 						if (MarioGame.mario.marioY < currentBlock.y + blockYsize
 								&& MarioGame.mario.marioY + MarioGame.mario.marioHeight > currentBlock.y) {
 							MarioGame.mario.setBlocking1(true); // 블럭과 부딪히는 기능 양옆
-<<<<<<< HEAD
-							
-=======
+
 							System.out.println(">>>>>>>>>1111"); //이것만 호출되는데 돌아가긴 하는듯..?
->>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
+
 						}
 						
 
 					} else {
-<<<<<<< HEAD=======
+
 						System.out.println("여기 들어옴!!!!!!!!!");
->>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
+
 						MarioGame.mario.setBlocking1(false);
 						MarioGame.mario.setFalling(false);
 						// mario.setBlcoking3(false);

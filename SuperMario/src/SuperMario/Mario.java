@@ -8,6 +8,9 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import SuperMario.Blocks;
+import SuperMario.MarioGame;
+
 //import SuperMario.Mario.OperationTread;
 
 public class Mario extends Thread { // 스레드 상속
@@ -149,14 +152,12 @@ public class Mario extends Thread { // 스레드 상속
 		}
 
 		if (blocking1) {
-<<<<<<< HEAD
-			
-=======
+
 			
 			System.out.println("blocking 1 입니다");
 		
 			//System.out.println("Jump : " + jump);
->>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
+
 			if (!jump) // 점프중이다
 				setFalling(true);
 			if (right)
@@ -276,9 +277,7 @@ public class Mario extends Thread { // 스레드 상속
 				if (marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
 
-<<<<<<< HEAD
-			
-=======
+
 				if (blocking3) {
 					
 					System.out.println("blocking 3 입니다");
@@ -287,7 +286,7 @@ public class Mario extends Thread { // 스레드 상속
 				 if(blocking4) 
 					 setFalling(false);
 				 
->>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
+
 				// setJump(true);
 				// System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX)
 				// +" marioY = " + marioY + " " + jump );
@@ -296,10 +295,7 @@ public class Mario extends Thread { // 스레드 상속
 					// setJump(true);
 
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
-<<<<<<< HEAD
 
-					
-=======
 						
 						//setBlocking4(false);
 						
@@ -324,7 +320,7 @@ public class Mario extends Thread { // 스레드 상속
 				 
 					
 //					setBlocking4(false);
->>>>>>> be9309b1cdd1d86e874a513c21a087f52000b468
+
 					setFalling(false);
 					setJump(true);
 					break;
@@ -337,7 +333,7 @@ public class Mario extends Thread { // 스레드 상속
 				}
 			}
 		}
-
+	}
 	
 
 	public void playerDraw(Graphics g) { // 마리오의 좌표에 따라 그 좌표에 그려지도록 구현
