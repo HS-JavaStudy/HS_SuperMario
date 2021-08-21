@@ -44,7 +44,7 @@ public class Mario extends Thread { // 스레드 상속
 	int marioX, marioY;
 	int marioWidth = 42;
 	int marioHeight = marioWidth + 5;
-	private int marioSpeed = 2;
+	int marioSpeed = 2;
 	public int marioLife = 3;
 
 	private int jumpMax;
@@ -299,9 +299,9 @@ public class Mario extends Thread { // 스레드 상속
 						
 						//setBlocking4(false);
 						
-						 System.out.println("while문 marioY = "+ marioY);
-						 System.out.println("dddd marioX + realX = "+ ((int)marioX +
-						 (int)MarioGame.realX) + "marioY = " + marioY);
+	//					 System.out.println("while문 marioY = "+ marioY);
+	//					 System.out.println("dddd marioX + realX = "+ ((int)marioX +
+	//					 (int)MarioGame.realX) + "marioY = " + marioY);
 						
 
 						  marioY += 1;

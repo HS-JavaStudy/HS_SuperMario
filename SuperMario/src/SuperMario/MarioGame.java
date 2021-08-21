@@ -52,6 +52,7 @@ public class MarioGame extends JFrame {
 	public static Blocks blocks = new Blocks();
 
 	static public Mario mario = new Mario();
+	static public item Item = new item();
 
 	public MarioGame() {
 		// 게임을 출력할 창 지정
@@ -199,7 +200,7 @@ public class MarioGame extends JFrame {
 				
 			//
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
-		
+			Item.itemDraw(g);
 
 		}
 
