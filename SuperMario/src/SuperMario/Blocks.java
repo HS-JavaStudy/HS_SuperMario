@@ -14,19 +14,21 @@ public class Blocks extends Thread {
 	public static int blockYsize = 50;
 	public static int blockXsize = 20;
 	public Block currentBlock = new Block(); // 현재 블록
-	public item Item = MarioGame.Item;
+	static public item Item = MarioGame.Item;
 
 	public Blocks() {
 
 		blocks = new ArrayList<Block>();
 		blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
-
+		// blocks.add(new Block(542, 413, 3));
+		// blocks.add(new Block(562, 413, 3));
+		// blocks.add(new Block(584, 413, 3));
 		blocks.add(new Block(592, 413, 3));
-		blocks.add(new Block(608, 413, 3));
-		blocks.add(new Block(624, 413, 3));
-		blocks.add(new Block(640, 413, 3));
-		blocks.add(new Block(656, 413, 3));
-		// blocks.add( new Block(210, 500, 3));
+		blocks.add(new Block(612, 413, 3));
+		blocks.add(new Block(650, 613, 3));
+//		blocks.add(new Block(652, 413, 3));
+		blocks.add(new Block(672, 413, 3));
+//		 blocks.add( new Block(210, 500, 3));
 		currentBlocks = new ArrayList<Block>();
 	}
 
@@ -135,13 +137,18 @@ public class Blocks extends Thread {
 
 			}
 			if (currentBlock.item) {
-				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
-						&& MarioGame.realX <= currentBlock.x + blockXsize)
+				if (MarioGame.realX >= currentBlock.x // 7은 마리오 넓이
+						&& MarioGame.realX + 12 <= currentBlock.x + blockXsize)
 					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
-						 MarioGame.Item.mushroomEvent(currentBlock);
-						if (MarioGame.Item.getState() == Thread.State.NEW)
-							 MarioGame.Item.start();
-						System.out.println("아이템아이템아이템");
+						//Item = new item();					
+						if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
+							 MarioGame.Item.mushroomEvent(currentBlock);
+							if (MarioGame.Item.getState() == Thread.State.NEW)
+								 MarioGame.Item.start();
+							else
+								MarioGame.Item.mushroomEvent(currentBlock);
+								System.out.println("아이템아이템아이템");
+						}
 					}
 			}
 		}

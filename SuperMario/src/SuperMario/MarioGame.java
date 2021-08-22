@@ -52,7 +52,9 @@ public class MarioGame extends JFrame {
 	public static Blocks blocks = new Blocks();
 
 	static public Mario mario = new Mario();
-	static public item Item = new item();
+	static public item Item= new item();
+	//static public item Item = new item();
+	
 
 	public MarioGame() {
 		// 게임을 출력할 창 지정
