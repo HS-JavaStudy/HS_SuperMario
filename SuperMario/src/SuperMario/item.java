@@ -13,6 +13,7 @@ public class item extends Thread {
 	ArrayList<Block> currentBlocks = Blocks.currentBlocks;
 	// private Block block = new Block();
 	Image mushroomItem = new ImageIcon("src/images/버섯아이템.png").getImage();
+	
 	// g.drawImage(mushroomItem, 100,100,130,130,0,0,25,25, null);
 	Block currentBlock = new Block();
 	private static int height = 45, width = 45;
