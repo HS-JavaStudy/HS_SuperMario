@@ -25,9 +25,36 @@ public class Blocks extends Thread {
 		// blocks.add(new Block(584, 413, 3));
 		blocks.add(new Block(592, 413, 3));
 		blocks.add(new Block(612, 413, 3));
+		blocks.add(new Block(632, 413, 3));
+		blocks.add(new Block(652, 413, 3));
 		blocks.add(new Block(650, 613, 3));
+		
+		// 파이프
+		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
+
+		
+		
+		
+		blocks.add(new Block(880, 460, 3)); // 두번째 파이프
+		blocks.add(new Block(1008, 412, 3)); // 세번째 파이프
+		blocks.add(new Block(1182, 412, 3)); // 네번째 파이프
+		
+		blocks.add(new Block(1296, 365, 3));
+		blocks.add(new Block(1504, 412, 3));
+		blocks.add(new Block(1524, 412, 3));
+		
+		blocks.add(new Block(1776, 412, 3));
+		
+		blocks.add(new Block(1874, 412, 3));
+	
+		blocks.add(new Block(1962, 412, 3)); // 물음표 멱돌 띄엄띄엄 3개
+		blocks.add(new Block(2011, 412, 3));
+		blocks.add(new Block(2060, 412, 3));
+		blocks.add(new Block(2154, 412, 3));
+	
 //		blocks.add(new Block(652, 413, 3));
-		blocks.add(new Block(672, 413, 3));
+		//blocks.add(new Block(672, 413, 3));
+	
 //		 blocks.add( new Block(210, 500, 3));
 		currentBlocks = new ArrayList<Block>();
 	}
@@ -59,7 +86,34 @@ public class Blocks extends Thread {
 //			}
 //
 //		}
+	
+	public void isOnBlock() {
+		int i;
+		
+		for (i = 0; i < currentBlocks.size(); i++) {
 
+			currentBlock = currentBlocks.get(i);
+			
+			if (currentBlock.exist) {
+				
+				if (MarioGame.mario.marioY == currentBlock.y
+						- MarioGame.mario.marioHeight && MarioGame.realX + 7 >= currentBlock.x && MarioGame.realX <=
+		            currentBlock.x + Blocks.blockXsize) {
+					MarioGame.mario.setBlocking4(true);
+					//System.out.println("blocking4 true");
+					//mario.jumpRange += currentBlock.y;
+					return;
+				}
+				
+			}
+		}
+		
+		MarioGame.mario.setBlocking4(false);
+	}
+	
+
+	
+	
 	public void blockProcess() {
 		int i;
 		for (i = 0; i < blocks.size(); i++) {
@@ -95,20 +149,11 @@ public class Blocks extends Thread {
 				// System.out.println("current block i = " + i);
 				// System.out.println("current blockY = " + currentBlock.y);
 				// System.out.println("MarioGame.mario.marioY = " + MarioGame.mario.marioY);
-				if (MarioGame.mario.marioY == currentBlock.y
-						- MarioGame.mario.marioHeight /*
-														 * && MarioGame.realX >= currentBlock.x && MarioGame.realX <=
-														 * currentBlock.x + Blocks.blockXsize
-														 */) {
-					// System.out.println("blocking4 marioY = "+ MarioGame.mario.marioY +
-					// "currentBlock "+ i + "= "+ currentBlock.x);
-					MarioGame.mario.setBlocking4(true);
-					System.out.println("blocking4 true");
-				}
+				
 
 				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX <= currentBlock.x + blockXsize) {
-
+				
 					if (MarioGame.mario.marioY + 1 <= currentBlock.y + blockYsize) {
 
 						if (MarioGame.mario.marioY == currentBlock.y + blockYsize) { // 블럭 아래에서 점프 막히는 기능
@@ -129,8 +174,9 @@ public class Blocks extends Thread {
 
 						MarioGame.mario.setBlocking1(false);
 						MarioGame.mario.setFalling(false);
+					
 						// mario.setBlcoking3(false);
-						// System.out.println(">>>>>>>>>4444");
+						
 					}
 
 				}

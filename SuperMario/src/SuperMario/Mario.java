@@ -28,7 +28,7 @@ public class Mario extends Thread { // 스레드 상속
 	boolean right;
 	private boolean isOver;
 	private boolean jump = true;
-	private boolean falling;
+	public boolean falling;
 	private boolean blocking;
 	private boolean bigMario;
 	private boolean smallMario;
@@ -48,7 +48,8 @@ public class Mario extends Thread { // 스레드 상속
 	public int marioLife = 3;
 
 	private int jumpMax;
-
+	private int jumpRange;
+	
 	private int imageX, imageY;
 	private int marioDirection = 1;
 	private int extraY1, extraY2;
@@ -141,12 +142,15 @@ public class Mario extends Thread { // 스레드 상속
 
 	private void keyProcess() {
 		// 각 속성의 true, false 상태에 따라 결과 지정
-
+		
+		
 		if (up && marioY - marioSpeed > 0) {
+			
 			if (jump) {
 				setJump(false);
 				marioJump = new MarioJump();
 				marioJump.start();
+				System.out.println("점프중");
 			}
 
 		}
@@ -160,19 +164,21 @@ public class Mario extends Thread { // 스레드 상속
 
 			if (!jump) // 점프중이다
 				setFalling(true);
+			
 			if (right)
 				MarioGame.realX -= marioSpeed;
 			if (left)
 				MarioGame.realX += marioSpeed;
 
+			
 			// marioX -= 2*marioSpeed;
 
 		}
 //		if (down && marioY + marioHeight + marioSpeed < MarioGame.SCREEN_HEIGHT)
 //			marioY += marioSpeed;
 		if (left && marioX - marioSpeed > 0) {
+			
 			if (!moveS)
-
 				marioX -= marioSpeed;
 
 			MarioGame.realX -= marioSpeed;
@@ -261,69 +267,93 @@ public class Mario extends Thread { // 스레드 상속
 //			if (blocking4) {
 //				setFalling(false);
 //				setJump(true);
+//				
 //			}
 //
-			setFalling(true);
+//			setFalling(true);
 
 		}
 
 		public void run() {
 
 			jumpMax = 100;
-
+			 jumpRange = 230;
 			while (true) {
-
-				marioY -= 1;
-				if (marioY == basicY - jumpMax && up && jumpMax < 230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
+					
+				MarioGame.blocks.isOnBlock();
+				if(!blocking4) {
+				 marioY -= 1;
+				 System.out.println("올라가는중");
+				}
+				
+				else if (blocking4 && up) { 
+					 marioY -= 1;
+				
+				}
+				if (marioY == basicY - jumpMax && up && jumpMax <  230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
-
+			
 
 				if (blocking3) {
 					
 					System.out.println("blocking 3 입니다");
 					setFalling(true);
 				}
-				 if(blocking4) 
-					 setFalling(false);
-				 
-
+				
 				// setJump(true);
 				// System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX)
 				// +" marioY = " + marioY + " " + jump );
+				//테스트용 System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
 				if (marioY < basicY - jumpMax || falling) { // 최대높이만큼 점프한다면
-					setFalling(true); // 떨어지는 중. 마리오 그리기 위해 추가
-					// setJump(true);
+					
+					MarioGame.blocks.isOnBlock();
+					if (!blocking4) {
+						System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+						setFalling(true);
+					}
+					
 
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
-
 						
-						//setBlocking4(false);
-						
-	//					 System.out.println("while문 marioY = "+ marioY);
-	//					 System.out.println("dddd marioX + realX = "+ ((int)marioX +
-	//					 (int)MarioGame.realX) + "marioY = " + marioY);
-						
-
-						  marioY += 1;
+						  //marioY += 1;
+						  MarioGame.blocks.isOnBlock(); // 변화에 따라 즉각적으로 체크필요 (스레드 전환시 딜레이 오류가 발생했었음)
+						  
+						  if(blocking4) {
+							  
+							  setFalling(false);
+							  setJump(true);
+							  jumpMax = 100; // 블럭 위에서 점프 가능하도록
+							  System.out.println("blocking4 입니다");
+							  System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
+							  
+							  break;
+						  } // end of if..
+						  else {
+							  setFalling(true);
+							  marioY += 1;
+						  }
+							  System.out.println("떨어지는중 marioY = "+ marioY);
 						  //setBlocking4(false);
 						
 			
 						try {
-							//finishCheck();
+							
+							finishCheck();
 							Thread.sleep(2);
 
 						} catch (InterruptedException e) {
 							return;
 						}
 
-					}
+					} // end of if문 안의 while..
 				 
 					
 //					setBlocking4(false);
 
 					setFalling(false);
 					setJump(true);
-					break;
+					if (marioY == basicY)
+						break;
 				}
 
 				try { // 위로 솟구치는 것을 천천히
