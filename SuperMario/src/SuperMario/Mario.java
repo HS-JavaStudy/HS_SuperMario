@@ -153,7 +153,7 @@ public class Mario extends Thread { // 스레드 상속
 				setJump(false);
 				marioJump = new MarioJump();
 				marioJump.start();
-				System.out.println("점프중");
+				//System.out.println("점프중");
 			}
 
 		}
@@ -286,7 +286,7 @@ public class Mario extends Thread { // 스레드 상속
 				MarioGame.blocks.isOnBlock();
 				if(!blocking4) {
 				 marioY -= 1;
-				 System.out.println("올라가는중");
+				// System.out.println("올라가는중");
 				}
 				
 				else if (blocking4 && up) { 
@@ -335,7 +335,7 @@ public class Mario extends Thread { // 스레드 상속
 							  setFalling(true);
 							  marioY += 1;
 						  }
-							  System.out.println("떨어지는중 marioY = "+ marioY);
+						//	  System.out.println("떨어지는중 marioY = "+ marioY);
 						  //setBlocking4(false);
 						
 			

@@ -22,19 +22,18 @@ public class Monster extends Thread {
 
 		while (true) {
 			/* 마리오 realx 좌표로 생성하게했는데 a == 1000 이런식으로 하면 소환이 안돼서 범위값으로 지정함 */
-			if (MarioGame.realX >= 450 && MarioGame.realX <= 800 && MonsterCount == 0) {
+			if (MarioGame.realX >= 760 && MarioGame.realX <= 800 && MonsterCount == 0) {
 				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX + MarioGame.SCREEN_WIDTH/2);
 				MonsterCount++;
 			}
-			if (MarioGame.realX >= 550 && MarioGame.realX <= 1000 && MonsterCount == 1) {
-				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX + MarioGame.SCREEN_WIDTH/2);
-				MonsterCount++;
-			}
-			if (MarioGame.realX >= 650 && MarioGame.realX <= 1100 && MonsterCount == 2) {
-				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX + MarioGame.SCREEN_WIDTH/2);
-				MonsterCount++;
-			}
-
+			/*
+			 * if (MarioGame.realX >= 550 && MarioGame.realX <= 1000 && MonsterCount == 1) {
+			 * MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX
+			 * + MarioGame.SCREEN_WIDTH/2); MonsterCount++; } if (MarioGame.realX >= 650 &&
+			 * MarioGame.realX <= 1100 && MonsterCount == 2) { MonsterCreate(Mario.marioX +
+			 * MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX + MarioGame.SCREEN_WIDTH/2);
+			 * MonsterCount++; }
+			 */
 			try {
 				Thread.sleep(20); // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭 실행한다
 				MonsterMoveProcess();
@@ -96,8 +95,8 @@ public class Monster extends Thread {
 					&& Mario.marioX <= CurrentGoomba.get(i).MonsterX + MonsterXSize
 					&& Mario.marioY-CurrentGoomba.get(i).MonsterY <= MonsterYSize) {
 				System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); // 마리오랑 굼바랑 붙딛혔을때 마리오 죽음
-				CurrentGoomba.get(i).Conflict = true; // 클래스 Goomba에 있는 Conflict 가 트루이면 마리오 죽음 처리
-				MonsterInit();
+				//CurrentGoomba.get(i).Conflict = true; // 클래스 Goomba에 있는 Conflict 가 트루이면 마리오 죽음 처리
+				//MonsterInit();
 				break;
 			}
 			if (Mario.marioX - CurrentGoomba.get(i).MonsterX <= MonsterXSize
@@ -108,15 +107,15 @@ public class Monster extends Thread {
 			}
 			
 			
-			if (CurrentGoomba.get(i).MonsterRealX ==720) {
-				CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
-			}
-			if (CurrentGoomba.get(i).MonsterRealX ==880) {
-				CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
-			}
-			if (CurrentGoomba.get(i).MonsterRealX ==1008) {
-				CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
-			}
+			//if (CurrentGoomba.get(i).MonsterRealX ==720) {
+			//	CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
+			//}
+			//if (CurrentGoomba.get(i).MonsterRealX ==880) {
+			//	CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
+			//}
+			//if (CurrentGoomba.get(i).MonsterRealX ==1008) {
+			//	CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
+			//}
 		}
 	}
 	
