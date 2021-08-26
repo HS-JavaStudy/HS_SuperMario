@@ -1,6 +1,9 @@
 package SuperMario;
 
+import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 
 public class Blocks extends Thread {
 
@@ -9,22 +12,55 @@ public class Blocks extends Thread {
 
 	Mario mario = MarioGame.mario;
 	private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
-	public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
-
+	static public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
+	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
 	public static int blockYsize = 50;
 	public static int blockXsize = 20;
 	public Block currentBlock = new Block(); // 현재 블록
+	static public item Item = MarioGame.Item;
 
 	public Blocks() {
+
 		blocks = new ArrayList<Block>();
 		blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
-
+		// blocks.add(new Block(542, 413, 3));
+		// blocks.add(new Block(562, 413, 3));
+		// blocks.add(new Block(584, 413, 3));
 		blocks.add(new Block(592, 413, 3));
-		blocks.add(new Block(608, 413, 3));
-		blocks.add(new Block(624, 413, 3));
-		blocks.add(new Block(640, 413, 3));
-		blocks.add(new Block(656, 413, 3));
-		// blocks.add( new Block(210, 500, 3));
+		blocks.add(new Block(612, 413, 3));
+
+		blocks.add(new Block(632, 413, 3));
+		blocks.add(new Block(652, 413, 3));
+		blocks.add(new Block(650, 613, 3));
+		
+		// 파이프
+		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
+
+		
+		
+		
+		blocks.add(new Block(880, 460, 3)); // 두번째 파이프
+		blocks.add(new Block(1008, 412, 3)); // 세번째 파이프
+		blocks.add(new Block(1182, 412, 3)); // 네번째 파이프
+		
+		blocks.add(new Block(1296, 365, 3));
+		blocks.add(new Block(1504, 412, 3));
+		blocks.add(new Block(1524, 412, 3));
+		
+		blocks.add(new Block(1776, 412, 3));
+		
+		blocks.add(new Block(1874, 412, 3));
+	
+		blocks.add(new Block(1962, 412, 3)); // 물음표 멱돌 띄엄띄엄 3개
+		blocks.add(new Block(2011, 412, 3));
+		blocks.add(new Block(2060, 412, 3));
+		blocks.add(new Block(2154, 412, 3));
+	
+
+//		blocks.add(new Block(652, 413, 3));
+		//blocks.add(new Block(672, 413, 3));
+	
+//		 blocks.add( new Block(210, 500, 3));
 		currentBlocks = new ArrayList<Block>();
 	}
 
@@ -55,7 +91,34 @@ public class Blocks extends Thread {
 //			}
 //
 //		}
+	
+	public void isOnBlock() {
+		int i;
+		
+		for (i = 0; i < currentBlocks.size(); i++) {
 
+			currentBlock = currentBlocks.get(i);
+			
+			if (currentBlock.exist) {
+				
+				if (MarioGame.mario.marioY == currentBlock.y
+						- MarioGame.mario.marioHeight && MarioGame.realX + 7 >= currentBlock.x && MarioGame.realX <=
+		            currentBlock.x + Blocks.blockXsize) {
+					MarioGame.mario.setBlocking4(true);
+					//System.out.println("blocking4 true");
+					//mario.jumpRange += currentBlock.y;
+					return;
+				}
+				
+			}
+		}
+		
+		MarioGame.mario.setBlocking4(false);
+	}
+	
+
+	
+	
 	public void blockProcess() {
 		int i;
 		for (i = 0; i < blocks.size(); i++) {
@@ -88,31 +151,59 @@ public class Blocks extends Thread {
 
 			if (currentBlock.exist) {// 존재한다면 (깨진 블럭과 구별위해)
 				// currenBlock의 공간을 침범할시 ++++ 그래픽좌표와 마리오 좌표가 틀려 수정필요... 점프못하게는 가능( 첫 이벤트 블록 주변)
+				// System.out.println("current block i = " + i);
+				// System.out.println("current blockY = " + currentBlock.y);
+				// System.out.println("MarioGame.mario.marioY = " + MarioGame.mario.marioY);
+				
+
 				if (MarioGame.realX + 7 >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX <= currentBlock.x + blockXsize) {
-					if (mario.marioY +1 <= currentBlock.y + blockYsize) {
+				
+					if (MarioGame.mario.marioY + 1 <= currentBlock.y + blockYsize) {
 
-						if (mario.marioY == currentBlock.y + blockYsize) { // 블럭 아래에서 점프 막히는 기능
+						if (MarioGame.mario.marioY == currentBlock.y + blockYsize) { // 블럭 아래에서 점프 막히는 기능
 							mario.setBlocking3(true);
 							System.out.println(">>>>>>>>>33333");
 						}
-						if (mario.marioY < currentBlock.y + blockYsize
-								&& mario.marioY + mario.marioHeight > currentBlock.y) {
-							mario.setBlocking1(true); // 블럭과 부딪히는 기능 양옆
-							System.out.println(">>>>>>>>>1111"); //이것만 호출되는데 돌아가긴 하는듯..?
+						if (MarioGame.mario.marioY < currentBlock.y + blockYsize
+								&& MarioGame.mario.marioY + MarioGame.mario.marioHeight > currentBlock.y) {
+							MarioGame.mario.setBlocking1(true); // 블럭과 부딪히는 기능 양옆
+
+							System.out.println(">>>>>>>>>1111"); // 이것만 호출되는데 돌아가긴 하는듯..?
+
 						}
 
 					} else {
-						mario.setBlocking1(false);
-						mario.setFalling(false);
+
+						// System.out.println("여기 들어옴!!!!!!!!!");
+
+						MarioGame.mario.setBlocking1(false);
+						MarioGame.mario.setFalling(false);
+					
 						// mario.setBlcoking3(false);
-						//System.out.println(">>>>>>>>>4444");
+						
 					}
+
 				}
 
 			}
+			if (currentBlock.item) {
+				if (MarioGame.realX >= currentBlock.x // 7은 마리오 넓이
+						&& MarioGame.realX + 12 <= currentBlock.x + blockXsize)
+					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
+						// Item = new item();
+
+						MarioGame.Item.mushroomEvent(currentBlock);
+						if (MarioGame.Item.getState() == Thread.State.NEW)
+							MarioGame.Item.start();
+					//	else
+							//MarioGame.Item.mushroomEvent(currentBlock);
+						System.out.println("아이템아이템아이템");
+					}
+			}
 
 		}
+
 	}
 
 	public void blockActive(Block block) {
