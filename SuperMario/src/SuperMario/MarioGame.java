@@ -48,9 +48,9 @@ public class MarioGame extends JFrame {
 
 	private int screenX = 0;
 	public static Blocks blocks = new Blocks();
-
 	static public Mario mario = new Mario();
-
+	public static Monster monster = new Monster();
+	
 	public MarioGame() {
 		// 게임을 출력할 창 지정
 		init();
@@ -95,7 +95,7 @@ public class MarioGame extends JFrame {
 			public void run() { // 스레드 코드로서 JVM에 의해 호출. 반드시 오버라이딩 하여 스레드 코드를 작성하여야 한다
 				mario.start(); // Mario mario 스레드 실행을 시작하도록 요청
 				blocks.start();
-
+				monster.start();
 			}
 		};
 		loadingTimer.schedule(loadingTask, 1000);
@@ -179,7 +179,7 @@ public class MarioGame extends JFrame {
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
 			//blocks.blockDraw(g);
 			// isGameScreen = false;
-			
+			monster.gameDraw(g);
 			font = new Font("Monospaced", Font.BOLD, 30);
 			g.setFont(font);
 			g.setColor(Color.WHITE); 

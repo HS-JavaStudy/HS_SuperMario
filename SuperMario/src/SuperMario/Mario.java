@@ -21,8 +21,8 @@ public class Mario extends Thread { // 스레드 상속
 
 	private boolean up; // 키보드의 상태를 나타내는 bloolean 변수
 	private boolean down;
-	 boolean left;
-	 boolean right;
+	boolean left;
+	boolean right;
 	private boolean isOver;
 	private boolean jump = true;
 	private boolean falling;
@@ -69,7 +69,7 @@ public class Mario extends Thread { // 스레드 상속
 					
 					try {
 						Thread.sleep(delay - System.currentTimeMillis() + pretime); // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭
-																					// 실행한다
+																				// 실행한다
 						keyProcess(); // 키 프로세스 실행
 						// 이외에 여러가지 프로세스 실행하도록 할 예정
 						// playerAttackProcess();
@@ -107,7 +107,7 @@ public class Mario extends Thread { // 스레드 상속
 			}
 
 		}
-
+		if(MarioGame.realX <= 406) setMoveS(false);
 		if (blocking1) {
 			//System.out.println("Jump : " + jump);
 			if (!jump) // 점프중이다
