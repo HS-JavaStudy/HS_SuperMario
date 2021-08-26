@@ -23,6 +23,7 @@ public class item extends Thread {
 	itemFalling falling;
 
 	int speed = 1;
+	int screenSpeed = 3;
 	int direction = 1;
 	int screenX = 408;
 	int screenY = 413;
@@ -84,7 +85,9 @@ public class item extends Thread {
 		int a = 120;
 		if (isEvent) {
 			
-			g.drawImage(mushroomItem, screenX, screenY - height, screenX + width,screenY, 0, 0, 25,
+//			g.drawImage(mushroomItem, screenX, screenY - height, screenX + width,screenY, 0, 0, 25,
+//					25, null);
+			g.drawImage(mushroomItem,screenX , screenY - height, screenX + width, screenY, 0, 0, 25,
 					25, null);
 			System.out.println("realX : " + MarioGame.realX + " this.currentItem.x : " + this.currentItem.X 
 					+ " screemX : " + screenX+ " screemY : " + screenY + " isMove : " + isMove);
@@ -100,23 +103,23 @@ public class item extends Thread {
 			if (direction == 1) {
 				
 				currentItem.X += speed;
-				screenX += 2;
+				screenX += screenSpeed;
 			}
 
 			else {
 				
 				currentItem.X -= speed;
-				screenX -= 2;
+				screenX -= screenSpeed;;
 			}
 
 			if (MarioGame.mario.left ) {
 				//currentItem.X += speed;
-				screenX += 2;
+				screenX += screenSpeed;;
 			}
 
 			if (MarioGame.mario.right ) {
 				//currentItem.X -= speed;
-				screenX -= 2;
+				screenX -= screenSpeed;;
 			}
 		}
 		

@@ -144,7 +144,7 @@ public class Mario extends Thread { // 스레드 상속
 		// 각 속성의 true, false 상태에 따라 결과 지정
 
 
-		if(MarioGame.realX <= 406) setMoveS(false);
+		if(MarioGame.realX <= MarioGame.SCREEN_WIDTH/2) setMoveS(false);
 
 		
 		if (up && marioY - marioSpeed > 0) {
@@ -204,7 +204,7 @@ public class Mario extends Thread { // 스레드 상속
 		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
 			setMoveS(true);
 			// System.out.println(marioX + " " + MarioGame.realX);
-			marioSpeed = 2;
+			marioSpeed = 6;
 
 		}
 		if (!moveS) {
