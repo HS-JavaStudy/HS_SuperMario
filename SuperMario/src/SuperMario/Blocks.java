@@ -31,7 +31,7 @@ public class Blocks extends Thread {
 
 		blocks.add(new Block(632, 413, 3));
 		blocks.add(new Block(652, 413, 3));
-		blocks.add(new Block(650, 613, 3));
+		//blocks.add(new Block(650, 613, 3));
 		
 		// 파이프
 		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
