@@ -1,6 +1,9 @@
 package SuperMario;
 
+import java.awt.Image;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 
 public class Blocks extends Thread {
 
@@ -10,7 +13,7 @@ public class Blocks extends Thread {
 	Mario mario = MarioGame.mario;
 	private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
 	static public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
-
+	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
 	public static int blockYsize = 50;
 	public static int blockXsize = 20;
 	public Block currentBlock = new Block(); // 현재 블록
@@ -25,6 +28,7 @@ public class Blocks extends Thread {
 		// blocks.add(new Block(584, 413, 3));
 		blocks.add(new Block(592, 413, 3));
 		blocks.add(new Block(612, 413, 3));
+
 		blocks.add(new Block(632, 413, 3));
 		blocks.add(new Block(652, 413, 3));
 		blocks.add(new Block(650, 613, 3));
@@ -52,6 +56,7 @@ public class Blocks extends Thread {
 		blocks.add(new Block(2060, 412, 3));
 		blocks.add(new Block(2154, 412, 3));
 	
+
 //		blocks.add(new Block(652, 413, 3));
 		//blocks.add(new Block(672, 413, 3));
 	
@@ -186,17 +191,17 @@ public class Blocks extends Thread {
 				if (MarioGame.realX >= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX + 12 <= currentBlock.x + blockXsize)
 					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
-						//Item = new item();					
-						if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
-							 MarioGame.Item.mushroomEvent(currentBlock);
-							if (MarioGame.Item.getState() == Thread.State.NEW)
-								 MarioGame.Item.start();
-							else
-								MarioGame.Item.mushroomEvent(currentBlock);
-								System.out.println("아이템아이템아이템");
-						}
+						// Item = new item();
+
+						MarioGame.Item.mushroomEvent(currentBlock);
+						if (MarioGame.Item.getState() == Thread.State.NEW)
+							MarioGame.Item.start();
+					//	else
+							//MarioGame.Item.mushroomEvent(currentBlock);
+						System.out.println("아이템아이템아이템");
 					}
 			}
+
 		}
 
 	}

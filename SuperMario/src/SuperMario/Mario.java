@@ -142,7 +142,10 @@ public class Mario extends Thread { // 스레드 상속
 
 	private void keyProcess() {
 		// 각 속성의 true, false 상태에 따라 결과 지정
-		
+
+
+		if(MarioGame.realX <= 406) setMoveS(false);
+
 		
 		if (up && marioY - marioSpeed > 0) {
 			
@@ -184,8 +187,8 @@ public class Mario extends Thread { // 스레드 상속
 			MarioGame.realX -= marioSpeed;
 			marioDirection = -1;
 
-			// System.out.println( "llllllllllll marioX : " +marioX + " realX : " +
-			// MarioGame.realX);
+			 System.out.println( " realX : " +
+			 MarioGame.realX + " marioX : " + MarioGame.mario.marioX );
 
 		}
 
@@ -196,7 +199,7 @@ public class Mario extends Thread { // 스레드 상속
 			MarioGame.realX += marioSpeed;
 			marioDirection = 1;
 
-			// System.out.println( "marioX : " +marioX + " realX : " + MarioGame.realX );
+			System.out.println( "ddddddd realX : " + MarioGame.realX + "marioX : " + MarioGame.mario.marioX  );
 		}
 		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
 			setMoveS(true);
