@@ -13,48 +13,48 @@ public class Blocks extends Thread {
 	Mario mario = MarioGame.mario;
 	private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
 	static public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
-	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
+	
 	public static int blockYsize = 50;
-	public static int blockXsize = 20;
+	public static int blockXsize = 50;
 	public Block currentBlock = new Block(); // 현재 블록
 	static public item Item = MarioGame.Item;
 
 	public Blocks() {
 
 		blocks = new ArrayList<Block>();
-		blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
-		// blocks.add(new Block(542, 413, 3));
+		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
+//		 blocks.add(new Block(812, 413, 3));
 		// blocks.add(new Block(562, 413, 3));
 		// blocks.add(new Block(584, 413, 3));
-		blocks.add(new Block(592, 413, 3));
-		blocks.add(new Block(612, 413, 3));
+//		blocks.add(new Block(592, 413, 3));
+//		blocks.add(new Block(612, 413, 3));
+//
+//		blocks.add(new Block(632, 413, 3));
+//		blocks.add(new Block(652, 413, 3));
+//		//blocks.add(new Block(650, 613, 3));
+//		
+//		// 파이프
+//		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
 
-		blocks.add(new Block(632, 413, 3));
-		blocks.add(new Block(652, 413, 3));
-		//blocks.add(new Block(650, 613, 3));
-		
-		// 파이프
-		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
-
 		
 		
 		
-		blocks.add(new Block(880, 460, 3)); // 두번째 파이프
-		blocks.add(new Block(1008, 412, 3)); // 세번째 파이프
-		blocks.add(new Block(1182, 412, 3)); // 네번째 파이프
+		blocks.add(new Block(880, 460, 2)); // 두번째 파이프
+		blocks.add(new Block(1008, 412, 2)); // 세번째 파이프
+		blocks.add(new Block(1182, 412, 2)); // 네번째 파이프
 		
-		blocks.add(new Block(1296, 365, 3));
-		blocks.add(new Block(1504, 412, 3));
-		blocks.add(new Block(1524, 412, 3));
+		blocks.add(new Block(1296, 365, 2));
+		blocks.add(new Block(1504, 412, 2));
+		blocks.add(new Block(1524, 412, 2));
 		
-		blocks.add(new Block(1776, 412, 3));
+		blocks.add(new Block(1776, 412, 2));
 		
-		blocks.add(new Block(1874, 412, 3));
+		blocks.add(new Block(1874, 412, 2));
 	
-		blocks.add(new Block(1962, 412, 3)); // 물음표 멱돌 띄엄띄엄 3개
-		blocks.add(new Block(2011, 412, 3));
-		blocks.add(new Block(2060, 412, 3));
-		blocks.add(new Block(2154, 412, 3));
+		blocks.add(new Block(1962, 412, 2)); // 물음표 멱돌 띄엄띄엄 3개
+		blocks.add(new Block(2011, 412, 2));
+		blocks.add(new Block(2060, 412, 2));
+		blocks.add(new Block(2154, 412, 2));
 	
 
 //		blocks.add(new Block(652, 413, 3));
@@ -123,8 +123,8 @@ public class Blocks extends Thread {
 		int i;
 		for (i = 0; i < blocks.size(); i++) {
 			currentBlock = blocks.get(i);
-			if (currentBlock.x > MarioGame.realX - MarioGame.SCREEN_WIDTH / 5
-					&& currentBlock.x < MarioGame.realX + MarioGame.SCREEN_WIDTH / 5) // 미리 구현해둔 블럭배열에서 일정 범위 안에 있는 블럭을
+			if (currentBlock.x > MarioGame.realX - MarioGame.SCREEN_WIDTH*2 // 범위 넓힘
+					&& currentBlock.x < MarioGame.realX + MarioGame.SCREEN_WIDTH*2) // 미리 구현해둔 블럭배열에서 일정 범위 안에 있는 블럭을
 																						// 꺼내기
 			{
 
@@ -188,17 +188,17 @@ public class Blocks extends Thread {
 
 			}
 			if (currentBlock.item) {
-				if (MarioGame.realX >= currentBlock.x // 7은 마리오 넓이
-						&& MarioGame.realX + 12 <= currentBlock.x + blockXsize)
-					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
-						// Item = new item();
-
+				if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
+						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
+					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
 						MarioGame.Item.mushroomEvent(currentBlock);
+						currentBlock.setState(2);
+						blockActive(currentBlock); 
 						if (MarioGame.Item.getState() == Thread.State.NEW)
 							MarioGame.Item.start();
-					//	else
-							//MarioGame.Item.mushroomEvent(currentBlock);
-						System.out.println("아이템아이템아이템");
+						
+					
+						
 					}
 			}
 

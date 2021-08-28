@@ -14,10 +14,18 @@ class Block {
 
 	public Block() {
 	};
-
+	public Block(int x, int y) {
+		this.x = x;
+		this.y = y;
+		
+	}
 	public Block(int x, int y, int state) {
 		this.x = x;
 		this.y = y;
+		this.state = state;
+	}
+
+	public void setState(int state) {
 		this.state = state;
 	}
 
