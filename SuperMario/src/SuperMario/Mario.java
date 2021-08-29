@@ -145,7 +145,7 @@ public class Mario extends Thread { // 스레드 상속
 
 
 		if(MarioGame.realX <= MarioGame.SCREEN_WIDTH/2) setMoveS(false);
-
+	
 		
 		if (up && marioY - marioSpeed > 0) {
 			
@@ -172,7 +172,7 @@ public class Mario extends Thread { // 스레드 상속
 //				MarioGame.realX -= marioSpeed;
 //			if (left)
 //				MarioGame.realX += marioSpeed;
-//
+
 			
 			// marioX -= 2*marioSpeed;
 
@@ -183,7 +183,7 @@ public class Mario extends Thread { // 스레드 상속
 			
 			if (!moveS)
 				marioX -= marioSpeed;
-
+			
 			MarioGame.realX -= marioSpeed;
 			marioDirection = -1;
 
@@ -272,26 +272,26 @@ public class Mario extends Thread { // 스레드 상속
 		public void run() {
 
 			jumpMax = 100;
-			 
+			//basicY = 560;
+			
 			while (true) {
 					
 				MarioGame.blocks.isOnBlock();
 				if(!blocking4) {
+					
 				 marioY -= 1;
-
 				 System.out.println("올라가는중");
-				
-
+			
 				}
 				
-				else if (blocking4 && up) { 
-					
+				else if (blocking4 && up) 
 					 marioY -= 1;
-					
-				}
+				
+				
 				if (marioY == basicY - jumpMax && up && jumpMax <  230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
-			
+				
+				
 
 				if (blocking3) {
 					
@@ -305,24 +305,23 @@ public class Mario extends Thread { // 스레드 상속
 				// +" marioY = " + marioY + " " + jump );
 				//테스트용 System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
 		
-
+				
 				if (marioY < basicY - jumpMax || falling) { // 최대높이만큼 점프한다면
 					
-					
-					
+			
 					MarioGame.blocks.isOnBlock();
 					
 					if (!blocking4) {
 
-
 						setFalling(true);
-						
+						basicY = 560;
 					}
 					
 				
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 						
 						  //marioY += 1;
+						System.out.println("요기");
 						  MarioGame.blocks.isOnBlock(); // 변화에 따라 즉각적으로 체크필요 (스레드 전환시 딜레이 오류가 발생했었음)
 						  
 						  if(blocking4) {
@@ -332,7 +331,7 @@ public class Mario extends Thread { // 스레드 상속
 
 							// 블럭 위에서 점프 가능하도록
 							  jumpMax = 100;
-							  //basicY = marioY;
+							  basicY = marioY;
 							  System.out.println("blocking4 입니다");
 							  System.out.println("marioY = "+marioY+ " basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
 
@@ -340,7 +339,10 @@ public class Mario extends Thread { // 스레드 상속
 							  
 						  } // end of if..
 						  else {
-						
+							  
+							  System.out.println("여길 들어옴");
+//							  if(basicY != 560)
+//								  basicY = 560;
 							  setFalling(true);
 							  marioY += 1;
 						  }
@@ -359,22 +361,30 @@ public class Mario extends Thread { // 스레드 상속
 
 					} // end of if문 안의 while..
 				 
-					
+				
 //					setBlocking4(false);
 
 					setFalling(false);
 					setJump(true);
-					if (marioY == basicY)
-						break;
-				}
-
+					
+					if (marioY == basicY /*&& marioY == 560*/) {
+						
+						break; //전체 while문 break
+					}
+				
+					
+				}//  end of if..
+				
 				try { // 위로 솟구치는 것을 천천히
 					Thread.sleep(2);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
-		}
+				
+			} // end of while..
+			System.out.println("끝ㅌㅌㅌㅌ");
+			
+		} // end of run..
 	}
 	
 

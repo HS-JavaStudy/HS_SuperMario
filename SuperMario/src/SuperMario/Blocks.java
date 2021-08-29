@@ -53,20 +53,41 @@ public class Blocks extends Thread {
 		blocks.add(new Block(3740, 412, 2));
 		blocks.add(new Block(3790, 412, 2));
 		
+		blocks.add(new Block(3830, 217, 2));
+		blocks.add(new Block(3880, 217, 2));
+		blocks.add(new Block(3930, 217, 2));
+		blocks.add(new Block(3980, 217, 2));
+		blocks.add(new Block(4030, 217, 1)); // 이미지 상 끝의 두 블럭은 긴 블럭으로 처리
+		blocks.add(new Block(4110, 217, 1));
+	
+		blocks.add(new Block(4358, 217, 1));
+		blocks.add(new Block(4438, 217, 2));
+		blocks.add(new Block(4488, 217, 2));
+		
 		
 		blocks.add(new Block(4508, 412, 2));
 		
 		blocks.add(new Block(4802, 412, 1));
 		
-		//물음표 블럭 3개
-		blocks.add(new Block(5084, 412, 3));
-		blocks.add(new Block(5234, 412, 3));
-		blocks.add(new Block(5384, 412, 3));
+		//물음표 블럭 4개 - 블럭 좌표 위해 임의로 일반 블럭 처리해놓음
+		blocks.add(new Block(5084, 412, 2));
+		blocks.add(new Block(5226, 412, 2));
+		blocks.add(new Block(5222, 219, 2));
+		blocks.add(new Block(5380, 412, 2));
 		
 		blocks.add(new Block(5662, 412, 2));
 		
+		blocks.add(new Block(5810, 219, 1));
+		blocks.add(new Block(5890, 219, 2));
+		
+		blocks.add(new Block(6130, 219, 2));
+		blocks.add(new Block(6180, 219, 2));
+		blocks.add(new Block(6230, 219, 2));
+		blocks.add(new Block(6280, 219, 2));
+		
 		blocks.add(new Block(6194, 412, 1));
 	
+		blocks.add(new Block(6428,557,2));
 
 		currentBlocks = new ArrayList<Block>();
 	}
@@ -118,7 +139,7 @@ public class Blocks extends Thread {
 						- MarioGame.mario.marioHeight && MarioGame.realX + 21 >= currentBlock.x && MarioGame.realX <=
 		            currentBlock.x + Blocks.blockXsize) {
 					MarioGame.mario.setBlocking4(true);
-					System.out.println("blocking4 true");
+					//System.out.println("blocking4 true");
 					return;
 				}
 				
