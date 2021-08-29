@@ -13,7 +13,7 @@ public class Blocks extends Thread {
 	Mario mario = MarioGame.mario;
 	private ArrayList<Block> blocks; // 미리 블럭의 좌표와 상태를 저장해둔 block 리스트
 	static public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
-	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
+	
 	public static int blockYsize = 50;
 	public static int blockXsize = 50;
 	public Block currentBlock = new Block(); // 현재 블록
@@ -22,6 +22,7 @@ public class Blocks extends Thread {
 	public Blocks() {
 
 		blocks = new ArrayList<Block>();
+
 		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
 	
 		blocks.add(new Block(946, 413, 2));
@@ -66,6 +67,7 @@ public class Blocks extends Thread {
 		
 		blocks.add(new Block(6194, 412, 1));
 	
+
 		currentBlocks = new ArrayList<Block>();
 	}
 
@@ -97,6 +99,7 @@ public class Blocks extends Thread {
 //
 //		}
 	
+
 	public void isOnBlock() {
 		int i;
 		
@@ -127,14 +130,15 @@ public class Blocks extends Thread {
 	}
 	
 
+
 	
 	
 	public void blockProcess() {
 		int i;
 		for (i = 0; i < blocks.size(); i++) {
 			currentBlock = blocks.get(i);
-			if (currentBlock.x > MarioGame.realX - MarioGame.SCREEN_WIDTH / 5
-					&& currentBlock.x < MarioGame.realX + MarioGame.SCREEN_WIDTH / 5) // 미리 구현해둔 블럭배열에서 일정 범위 안에 있는 블럭을
+			if (currentBlock.x > MarioGame.realX - MarioGame.SCREEN_WIDTH*2 // 범위 넓힘
+					&& currentBlock.x < MarioGame.realX + MarioGame.SCREEN_WIDTH*2) // 미리 구현해둔 블럭배열에서 일정 범위 안에 있는 블럭을
 																						// 꺼내기
 			{
 
@@ -198,17 +202,25 @@ public class Blocks extends Thread {
 
 			}
 			if (currentBlock.item) {
-				if (MarioGame.realX >= currentBlock.x // 7은 마리오 넓이
-						&& MarioGame.realX + 12 <= currentBlock.x + blockXsize)
-					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
-						// Item = new item();
-
+				if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
+						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
+					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
 						MarioGame.Item.mushroomEvent(currentBlock);
+						currentBlock.setState(2);
+						blockActive(currentBlock); 
 						if (MarioGame.Item.getState() == Thread.State.NEW)
-							MarioGame.Item.start();
-					//	else
-							//MarioGame.Item.mushroomEvent(currentBlock);
-						System.out.println("아이템아이템아이템");
+							MarioGame.Item.start();	
+					}
+			}
+			else if(currentBlock.coin) {
+				if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
+						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
+					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
+						MarioGame.Item.coinEvent(currentBlock);
+						//currentBlock.setState(2);
+						//blockActive(currentBlock); 
+						if (MarioGame.Item.getState() == Thread.State.NEW)
+							MarioGame.Item.start();	
 					}
 			}
 
@@ -234,6 +246,10 @@ public class Blocks extends Thread {
 			block.setItem(true);
 			block.setExist(true);
 			break;
+		case 4:
+			block.setBroken(false);
+			block.setCoin(true);
+			block.setExist(true);
 		default:
 			break;
 		}
