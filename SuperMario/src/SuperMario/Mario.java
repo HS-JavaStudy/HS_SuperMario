@@ -19,7 +19,7 @@ public class Mario extends Thread { // 스레드 상속
 	private long pretime;
 	public static int cnt; // 프로그램 상 시간
 	public static int score; // 점수
-	public static int coin;
+	public static int coin =0 ;
 	Blocks BLK = MarioGame.blocks;
 
 	private boolean up; // 키보드의 상태를 나타내는 bloolean 변수
@@ -140,7 +140,7 @@ public class Mario extends Thread { // 스레드 상속
 
 	}
 
-	private void keyProcess() {
+	public void keyProcess() {
 		// 각 속성의 true, false 상태에 따라 결과 지정
 
 
@@ -157,7 +157,7 @@ public class Mario extends Thread { // 스레드 상속
 			}
 
 		}
-		if(MarioGame.realX <= 406) setMoveS(false);
+		//if(MarioGame.realX <= 406) setMoveS(false);
 		if (blocking1) {
 
 			
@@ -187,8 +187,7 @@ public class Mario extends Thread { // 스레드 상속
 			MarioGame.realX -= marioSpeed;
 			marioDirection = -1;
 
-//			 System.out.println( " realX : " +
-//			 MarioGame.realX + " marioX : " + MarioGame.mario.marioX );
+			// System.out.println( " realX : " +MarioGame.realX + " marioX : " + MarioGame.mario.marioX );
 
 		}
 

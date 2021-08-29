@@ -4,6 +4,7 @@ class Block {
 	boolean broken;
 	boolean item;
 	boolean exist;
+	boolean coin;
 
 	public static int blcokWidth = 20;
 	public static int blockHeight = 50;
@@ -39,5 +40,8 @@ class Block {
 
 	public void setExist(boolean exist) {
 		this.exist = exist;
+	}
+	public void setCoin(boolean coin) {
+		this.coin = coin;
 	}
 }

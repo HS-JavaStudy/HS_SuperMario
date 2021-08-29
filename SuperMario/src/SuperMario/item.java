@@ -17,6 +17,7 @@ public class item extends Thread {
 	// private Block block = new Block();
 	Image mushroomItem = new ImageIcon("src/images/버섯아이템.png").getImage();
 	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
+	Image coin = new ImageIcon("src/images/coinItem.gif").getImage(); //100X140
 	// g.drawImage(mushroomItem, 100,100,130,130,0,0,25,25, null);
 	Block currentBlock = new Block();
 	private static int height = 45, width = 45;
@@ -24,16 +25,18 @@ public class item extends Thread {
 	private boolean isMove;
 	private boolean isFalling;
 	private boolean isPaint;
+	private boolean isCoin;
 	itemFalling falling;
 	private int delay = 20;
 	private long pretime;
+	Block coinBlock = new Block();
 	int blockX = 408;
 	int speed = 4;
 	// int screenSpeed = 2;
 	int direction = 1;
 	int screenX = 408;
 	int screenY = 413;
-	
+
 	Mario mario = MarioGame.mario;
 
 	public item() {
@@ -50,8 +53,8 @@ public class item extends Thread {
 		currentItem.Y = block.y;
 		screenX = 408;
 		screenY = 413;
-		blockX = 408;
-		Block paintBlock = new Block(408, 408);
+		blockX =  408 - (MarioGame.realX - block.x);
+		Block paintBlock = new Block(blockX, block.y);
 		paintBlocks.add(paintBlock);
 		setIsEvent(true);
 		setIsMove(true);
@@ -61,6 +64,50 @@ public class item extends Thread {
 		System.out.println(
 				"realX : " + MarioGame.realX + " this.currentItem (" + this.currentItem.X + ", " + this.currentItem.Y
 						+ ") screemX : " + screenX + " marioY : " + MarioGame.mario.marioY + " isMove : " + isMove);
+
+	}
+	public void coinEvent(Block block) {
+		MarioGame.mario.coin++;
+		coinBlock = new Block( 408 - (MarioGame.realX - block.x), block.y - 70);
+		setIsCoin(true);
+		System.out.println("코인 이벤트함수 발생");
+		if (isCoin) {		
+			System.out.println("11111 coin : " + isCoin);
+			coinUp coinEvent = new coinUp();
+			coinEvent.start();
+		}
+	}
+	
+	class coinUp extends Thread {
+
+		int basicY;
+
+		coinUp() {
+			basicY = coinBlock.y;
+		}
+
+		public void run() {
+
+			
+			while (true) {
+
+				
+				while (coinBlock.y > basicY - 70) {
+					coinBlock.y -= 1;
+					
+
+					try { // 위로 솟구치는 것을 천천히
+						Thread.sleep(2);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+
+				}		
+				setIsCoin(false);
+				break;
+
+			}
+		}
 
 	}
 
@@ -82,7 +129,7 @@ public class item extends Thread {
 		while (true) {
 			
 				pretime = System.currentTimeMillis();
-				if (System.currentTimeMillis() - pretime < delay) {
+				if (System.currentTimeMillis() - pretime + 15 < delay) {
 
 					try {
 						Thread.sleep(delay - System.currentTimeMillis() + pretime); // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭
@@ -104,18 +151,21 @@ public class item extends Thread {
 	public void itemDraw(Graphics g) {
 		// System.out.println("isEvent : " + isEvent);
 		int a = 120;
-		
+		//System.out.println("2222 coin : " + isCoin);
 		if(isPaint) {
 			for(int i=0; i< paintBlocks.size(); i++) {
-				 paintBlocks.get(i).x = blockX;
+				
+				// paintBlocks.get(i).x = blockX;
 				 g.setColor(new Color(92,148,252));
-				 g.fillRect( paintBlocks.get(i).x - 20, paintBlocks.get(i).y+5, 100,  60);		
-				g.drawImage(eventedBlock, paintBlocks.get(i).x , paintBlocks.get(i).y, paintBlocks.get(i).x + 60 , paintBlocks.get(i).y + 60, 2, 0, 284, 284, null);
-			}
-			
+				 //g.fillRect( paintBlocks.get(i).x - 20, paintBlocks.get(i).y+5, 100,  60);		
+				g.drawImage(eventedBlock, paintBlocks.get(i).x , paintBlocks.get(i).y -5, paintBlocks.get(i).x +60 , paintBlocks.get(i).y + 50, 2, 0, 284, 284, null);
+			}			
 		}
 		if (isEvent) { // 움직이는 버섯 그림
 			g.drawImage(mushroomItem, screenX, screenY - height, screenX + width, screenY, 0, 0, 25, 25, null);
+		}
+		if(isCoin) {			
+			g.drawImage(coin, coinBlock.x +20, coinBlock.y, coinBlock.x +50, coinBlock.y + 30,0,0,140,140, null);					
 		}
 		
 	}
@@ -136,12 +186,15 @@ public class item extends Thread {
 		if (MarioGame.mario.left && !MarioGame.mario.blocking1) {
 			screenX += 6;
 			blockX +=6;
+			for(int i=0; i< paintBlocks.size(); i++) 
+				 paintBlocks.get(i).x += 6;
 			// currentItem.X += speed;
 		}
 		if (MarioGame.mario.right&& !MarioGame.mario.blocking1) {
 			screenX -= 6;
 			blockX -=6;
-			
+			for(int i=0; i< paintBlocks.size(); i++) 
+				 paintBlocks.get(i).x -= 6;
 			// currentItem.X += 3;
 		}
 
@@ -275,5 +328,8 @@ public class item extends Thread {
 	}
 	public void setIsPaint(boolean isPaint) {
 		this.isPaint = isPaint;
+	}
+	public void setIsCoin(boolean isCoin) {
+		this.isCoin = isCoin;
 	}
 }

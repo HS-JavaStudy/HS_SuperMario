@@ -22,45 +22,47 @@ public class Blocks extends Thread {
 	public Blocks() {
 
 		blocks = new ArrayList<Block>();
+		
 		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
-//		 blocks.add(new Block(812, 413, 3));
-		// blocks.add(new Block(562, 413, 3));
-		// blocks.add(new Block(584, 413, 3));
-//		blocks.add(new Block(592, 413, 3));
-//		blocks.add(new Block(612, 413, 3));
-//
-//		blocks.add(new Block(632, 413, 3));
-//		blocks.add(new Block(652, 413, 3));
-//		//blocks.add(new Block(650, 613, 3));
-//		
-//		// 파이프
-//		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
-
-		
-		
-		
-		blocks.add(new Block(880, 460, 2)); // 두번째 파이프
-		blocks.add(new Block(1008, 412, 2)); // 세번째 파이프
-		blocks.add(new Block(1182, 412, 2)); // 네번째 파이프
-		
-		blocks.add(new Block(1296, 365, 2));
-		blocks.add(new Block(1504, 412, 2));
-		blocks.add(new Block(1524, 412, 2));
-		
-		blocks.add(new Block(1776, 412, 2));
-		
-		blocks.add(new Block(1874, 412, 2));
-	
-		blocks.add(new Block(1962, 412, 2)); // 물음표 멱돌 띄엄띄엄 3개
-		blocks.add(new Block(2011, 412, 2));
-		blocks.add(new Block(2060, 412, 2));
-		blocks.add(new Block(2154, 412, 2));
-	
-
-//		blocks.add(new Block(652, 413, 3));
-		//blocks.add(new Block(672, 413, 3));
-	
-//		 blocks.add( new Block(210, 500, 3));
+		   
+	      blocks.add(new Block(946, 413, 4));
+	      blocks.add(new Block(996, 413, 3));
+	      blocks.add(new Block(1046, 413, 4));
+	      blocks.add(new Block(1096, 413, 3));
+	      blocks.add(new Block(1146, 413, 2));
+	      
+	        // 첫번째 파이프
+	      blocks.add(new Block(1336, 509, 1));
+	      
+	      //두번째 파이프
+	      blocks.add(new Block(1826, 460, 1));
+	      
+	      //세번째 파이프
+	      blocks.add(new Block(2210, 413, 1));
+	      
+	      // 네번째 파이프
+	      blocks.add(new Block(2738, 413, 1));
+	      
+	      
+	      blocks.add(new Block(3074, 364, 3));
+	      
+	      blocks.add(new Block(3698, 412, 2));
+	      blocks.add(new Block(3740, 412, 2));
+	      blocks.add(new Block(3790, 412, 2));
+	      
+	      
+	      blocks.add(new Block(4508, 412, 2));
+	      
+	      blocks.add(new Block(4802, 412, 1));
+	      
+	      //물음표 블럭 3개
+	      blocks.add(new Block(5084, 412, 3));
+	      blocks.add(new Block(5234, 412, 3));
+	      blocks.add(new Block(5384, 412, 3));
+	      
+	      blocks.add(new Block(5662, 412, 2));
+	      
+	      blocks.add(new Block(6194, 412, 1));
 		currentBlocks = new ArrayList<Block>();
 	}
 
@@ -92,30 +94,35 @@ public class Blocks extends Thread {
 //
 //		}
 	
-	public void isOnBlock() {
-		int i;
-		
-		for (i = 0; i < currentBlocks.size(); i++) {
+	 public void isOnBlock() {
+	      int i;
+	      
+	      for (i = 0; i < currentBlocks.size(); i++) {
 
-			currentBlock = currentBlocks.get(i);
-			
-			if (currentBlock.exist) {
-				
-				if (MarioGame.mario.marioY == currentBlock.y
-						- MarioGame.mario.marioHeight && MarioGame.realX + 7 >= currentBlock.x && MarioGame.realX <=
-		            currentBlock.x + Blocks.blockXsize) {
-					MarioGame.mario.setBlocking4(true);
-					//System.out.println("blocking4 true");
-					//mario.jumpRange += currentBlock.y;
-					return;
-				}
-				
-			}
-		}
-		
-		MarioGame.mario.setBlocking4(false);
-	}
-	
+	         currentBlock = currentBlocks.get(i);
+	         
+	         if (currentBlock.exist) {
+	            
+	            if(currentBlock.state == 1)
+	               Blocks.blockXsize = 80;
+	            else
+	               Blocks.blockXsize = 50;
+	            
+	            if (MarioGame.mario.marioY == currentBlock.y
+	                  - MarioGame.mario.marioHeight && MarioGame.realX + 21 >= currentBlock.x && MarioGame.realX <=
+	                  currentBlock.x + Blocks.blockXsize) {
+	               MarioGame.mario.setBlocking4(true);
+	               //System.out.println("blocking4 true");
+	               //mario.jumpRange += currentBlock.y;
+	               return;
+	            }
+	            
+	         }
+	      }
+	      
+	      MarioGame.mario.setBlocking4(false);
+	   }
+	   
 
 	
 	
@@ -195,10 +202,18 @@ public class Blocks extends Thread {
 						currentBlock.setState(2);
 						blockActive(currentBlock); 
 						if (MarioGame.Item.getState() == Thread.State.NEW)
-							MarioGame.Item.start();
-						
-					
-						
+							MarioGame.Item.start();	
+					}
+			}
+			else if(currentBlock.coin) {
+				if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
+						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
+					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
+						MarioGame.Item.coinEvent(currentBlock);
+						//currentBlock.setState(2);
+						//blockActive(currentBlock); 
+						if (MarioGame.Item.getState() == Thread.State.NEW)
+							MarioGame.Item.start();	
 					}
 			}
 
@@ -224,6 +239,10 @@ public class Blocks extends Thread {
 			block.setItem(true);
 			block.setExist(true);
 			break;
+		case 4:
+			block.setBroken(false);
+			block.setCoin(true);
+			block.setExist(true);
 		default:
 			break;
 		}
