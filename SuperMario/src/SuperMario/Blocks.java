@@ -15,52 +15,57 @@ public class Blocks extends Thread {
 	static public ArrayList<Block> currentBlocks; // 스크린 상에서 일정 범위안에 들어 실시간으로 그려져야 할 블록 리스트
 	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
 	public static int blockYsize = 50;
-	public static int blockXsize = 20;
+	public static int blockXsize = 50;
 	public Block currentBlock = new Block(); // 현재 블록
 	static public item Item = MarioGame.Item;
 
 	public Blocks() {
 
 		blocks = new ArrayList<Block>();
-		blocks.add(new Block(522, 413, 3)); // 테스트용 블록 좌표
-		// blocks.add(new Block(542, 413, 3));
-		// blocks.add(new Block(562, 413, 3));
-		// blocks.add(new Block(584, 413, 3));
-		blocks.add(new Block(592, 413, 3));
-		blocks.add(new Block(612, 413, 3));
-
-		blocks.add(new Block(632, 413, 3));
-		blocks.add(new Block(652, 413, 3));
-		//blocks.add(new Block(650, 613, 3));
-		
-		// 파이프
-		blocks.add(new Block(720, 509, 3)); // 첫번째 파이프
-
-		
-		
-		
-		blocks.add(new Block(880, 460, 3)); // 두번째 파이프
-		blocks.add(new Block(1008, 412, 3)); // 세번째 파이프
-		blocks.add(new Block(1182, 412, 3)); // 네번째 파이프
-		
-		blocks.add(new Block(1296, 365, 3));
-		blocks.add(new Block(1504, 412, 3));
-		blocks.add(new Block(1524, 412, 3));
-		
-		blocks.add(new Block(1776, 412, 3));
-		
-		blocks.add(new Block(1874, 412, 3));
+		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
 	
-		blocks.add(new Block(1962, 412, 3)); // 물음표 멱돌 띄엄띄엄 3개
-		blocks.add(new Block(2011, 412, 3));
-		blocks.add(new Block(2060, 412, 3));
-		blocks.add(new Block(2154, 412, 3));
+		blocks.add(new Block(946, 413, 2));
+		blocks.add(new Block(996, 413, 2));
+		blocks.add(new Block(1046, 413, 2));
+		blocks.add(new Block(1046, 220, 2));
+		
+		
+		blocks.add(new Block(1096, 413, 2));
+		blocks.add(new Block(1146, 413, 2));
+		
+        // 첫번째 파이프
+		blocks.add(new Block(1336, 509, 1));
+		
+		//두번째 파이프
+		blocks.add(new Block(1826, 460, 1));
+		
+		//세번째 파이프
+		blocks.add(new Block(2210, 413, 1));
+		
+		// 네번째 파이프
+		blocks.add(new Block(2738, 413, 1));
+		
+		
+		blocks.add(new Block(3074, 364, 3));
+		
+		blocks.add(new Block(3698, 412, 2));
+		blocks.add(new Block(3740, 412, 2));
+		blocks.add(new Block(3790, 412, 2));
+		
+		
+		blocks.add(new Block(4508, 412, 2));
+		
+		blocks.add(new Block(4802, 412, 1));
+		
+		//물음표 블럭 3개
+		blocks.add(new Block(5084, 412, 3));
+		blocks.add(new Block(5234, 412, 3));
+		blocks.add(new Block(5384, 412, 3));
+		
+		blocks.add(new Block(5662, 412, 2));
+		
+		blocks.add(new Block(6194, 412, 1));
 	
-
-//		blocks.add(new Block(652, 413, 3));
-		//blocks.add(new Block(672, 413, 3));
-	
-//		 blocks.add( new Block(210, 500, 3));
 		currentBlocks = new ArrayList<Block>();
 	}
 
@@ -101,18 +106,23 @@ public class Blocks extends Thread {
 			
 			if (currentBlock.exist) {
 				
+				if(currentBlock.state == 1)
+					Blocks.blockXsize = 80;
+				else
+					Blocks.blockXsize = 50;
+				
 				if (MarioGame.mario.marioY == currentBlock.y
-						- MarioGame.mario.marioHeight && MarioGame.realX + 7 >= currentBlock.x && MarioGame.realX <=
+						- MarioGame.mario.marioHeight && MarioGame.realX + 21 >= currentBlock.x && MarioGame.realX <=
 		            currentBlock.x + Blocks.blockXsize) {
 					MarioGame.mario.setBlocking4(true);
-					//System.out.println("blocking4 true");
-					//mario.jumpRange += currentBlock.y;
+					System.out.println("blocking4 true");
 					return;
 				}
 				
 			}
 		}
-		
+		System.out.println("blocking4 false");
+		//Mario.MarioJump.basicY = 560;
 		MarioGame.mario.setBlocking4(false);
 	}
 	

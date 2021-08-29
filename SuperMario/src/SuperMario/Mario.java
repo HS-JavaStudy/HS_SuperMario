@@ -48,7 +48,7 @@ public class Mario extends Thread { // 스레드 상속
 	public int marioLife = 3;
 
 	private int jumpMax;
-	private int jumpRange;
+	
 	
 	private int imageX, imageY;
 	private int marioDirection = 1;
@@ -168,11 +168,11 @@ public class Mario extends Thread { // 스레드 상속
 			if (!jump) // 점프중이다
 				setFalling(true);
 			
-			if (right)
-				MarioGame.realX -= marioSpeed;
-			if (left)
-				MarioGame.realX += marioSpeed;
-
+//			if (right)
+//				MarioGame.realX -= marioSpeed;
+//			if (left)
+//				MarioGame.realX += marioSpeed;
+//
 			
 			// marioX -= 2*marioSpeed;
 
@@ -267,31 +267,26 @@ public class Mario extends Thread { // 스레드 상속
 				System.out.println("같다");
 				
 			}
-//			if (blocking4) {
-//				setFalling(false);
-//				setJump(true);
-//				
-//			}
-//
-//			setFalling(true);
-
+			
 		}
 
 		public void run() {
 
 			jumpMax = 100;
-			 jumpRange = 230;
+			 
 			while (true) {
 					
 				MarioGame.blocks.isOnBlock();
 				if(!blocking4) {
 				 marioY -= 1;
 				 System.out.println("올라가는중");
+				
 				}
 				
 				else if (blocking4 && up) { 
+					
 					 marioY -= 1;
-				
+					
 				}
 				if (marioY == basicY - jumpMax && up && jumpMax <  230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
@@ -307,15 +302,20 @@ public class Mario extends Thread { // 스레드 상속
 				// System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX)
 				// +" marioY = " + marioY + " " + jump );
 				//테스트용 System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
+		
 				if (marioY < basicY - jumpMax || falling) { // 최대높이만큼 점프한다면
 					
+					
+					
 					MarioGame.blocks.isOnBlock();
+					
 					if (!blocking4) {
-						System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+
 						setFalling(true);
+						
 					}
 					
-
+				
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 						
 						  //marioY += 1;
@@ -325,13 +325,16 @@ public class Mario extends Thread { // 스레드 상속
 							  
 							  setFalling(false);
 							  setJump(true);
-							  jumpMax = 100; // 블럭 위에서 점프 가능하도록
+							// 블럭 위에서 점프 가능하도록
+							  jumpMax = 100;
+							  //basicY = marioY;
 							  System.out.println("blocking4 입니다");
-							  System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
-							  
+							  System.out.println("marioY = "+marioY+ " basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
 							  break;
+							  
 						  } // end of if..
 						  else {
+						
 							  setFalling(true);
 							  marioY += 1;
 						  }
