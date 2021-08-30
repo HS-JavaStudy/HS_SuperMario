@@ -202,7 +202,7 @@ public class MarioGame extends JFrame {
 				g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
 						0, 0, SCREEN_WIDTH , mapImage.getHeight(rootPane), null);
 				
-			//
+			Item.itemDraw(g);
 			mario.gameDraw(g); // Mario 클래스의 gameDraw() 함수 호출 - 캐릭터, 몬스터 등 그리기
 
 			//blocks.blockDraw(g);
@@ -219,7 +219,7 @@ public class MarioGame extends JFrame {
 			g.drawString("1-1", 460, 90);
 			g.drawString("TIME", 630, 65);
 			g.drawString(String.format("%04d",Mario.cnt), 628, 90);
-			Item.itemDraw(g);
+			
 
 		}
 

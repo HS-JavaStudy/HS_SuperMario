@@ -19,7 +19,7 @@ public class Mario extends Thread { // 스레드 상속
 	private long pretime;
 	public static int cnt; // 프로그램 상 시간
 	public static int score; // 점수
-	public static int coin;
+	public static int coin =0 ;
 	Blocks BLK = MarioGame.blocks;
 
 	private boolean up; // 키보드의 상태를 나타내는 bloolean 변수
@@ -33,7 +33,10 @@ public class Mario extends Thread { // 스레드 상속
 	private boolean bigMario;
 	private boolean smallMario;
 	boolean moveS;
-	private boolean blocking1 = false;
+
+
+
+	public boolean blocking1 = false;
 	private boolean blocking2 = false;
 	private boolean blocking3 = false;
 	private boolean blocking4 = false;
@@ -44,11 +47,11 @@ public class Mario extends Thread { // 스레드 상속
 	int marioX, marioY;
 	int marioWidth = 42;
 	int marioHeight = marioWidth + 5;
-	int marioSpeed = 2;
+	int marioSpeed = 6;
 	public int marioLife = 3;
 
 	private int jumpMax;
-	private int jumpRange;
+	
 	
 	private int imageX, imageY;
 	private int marioDirection = 1;
@@ -142,11 +145,14 @@ public class Mario extends Thread { // 스레드 상속
 
 	}
 
-	private void keyProcess() {
+	public void keyProcess() {
 		// 각 속성의 true, false 상태에 따라 결과 지정
 
 
 		if(MarioGame.realX <= 406) setMoveS(false);
+
+		if(MarioGame.realX <= MarioGame.SCREEN_WIDTH/2) setMoveS(false);
+	
 
 		
 		if (up && marioY - marioSpeed > 0) {
@@ -155,11 +161,11 @@ public class Mario extends Thread { // 스레드 상속
 				setJump(false);
 				marioJump = new MarioJump();
 				marioJump.start();
-				System.out.println("점프중");
+			//	System.out.println("점프중");
 			}
 
 		}
-		if(MarioGame.realX <= 406) setMoveS(false);
+		//if(MarioGame.realX <= 406) setMoveS(false);
 		if (blocking1) {
 
 			
@@ -170,10 +176,10 @@ public class Mario extends Thread { // 스레드 상속
 			if (!jump) // 점프중이다
 				setFalling(true);
 			
-			if (right)
-				MarioGame.realX -= marioSpeed;
-			if (left)
-				MarioGame.realX += marioSpeed;
+//			if (right)
+//				MarioGame.realX -= marioSpeed;
+//			if (left)
+//				MarioGame.realX += marioSpeed;
 
 			
 			// marioX -= 2*marioSpeed;
@@ -185,12 +191,27 @@ public class Mario extends Thread { // 스레드 상속
 			
 			if (!moveS)
 				marioX -= marioSpeed;
-
+			
 			MarioGame.realX -= marioSpeed;
 			marioDirection = -1;
-
-			 System.out.println( " realX : " +
-			 MarioGame.realX + " marioX : " + MarioGame.mario.marioX );
+			MarioGame.blocks.isOnBlock();
+			if (!blocking4 && !up) {
+				setFalling(true);
+				while(marioY != 560) {
+					
+					marioY += 1;
+					MarioGame.blocks.isOnBlock();
+					if (blocking4) break;
+					
+					try {
+						Thread.sleep(2);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				setFalling(false);
+			}
+			// System.out.println( " realX : " +MarioGame.realX + " marioX : " + MarioGame.mario.marioX );
 
 		}
 
@@ -200,8 +221,25 @@ public class Mario extends Thread { // 스레드 상속
 
 			MarioGame.realX += marioSpeed;
 			marioDirection = 1;
-
-			System.out.println( "ddddddd realX : " + MarioGame.realX + "marioX : " + MarioGame.mario.marioX  );
+			MarioGame.blocks.isOnBlock();
+			if (!blocking4 && !up) {
+				setFalling(true);
+				while(marioY != 560) {
+					
+					marioY += 1;
+					MarioGame.blocks.isOnBlock();
+					if (blocking4) break;
+					
+					try {
+						Thread.sleep(2);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				setFalling(false);
+			}
+		
+			//System.out.println( "ddddddd realX : " + MarioGame.realX + "marioX : " + MarioGame.mario.marioX  );
 		}
 		if (marioX + MarioGame.SCREEN_WIDTH / 2 >= MarioGame.SCREEN_WIDTH) { // 중앙에 오도록
 			setMoveS(true);
@@ -212,7 +250,7 @@ public class Mario extends Thread { // 스레드 상속
 		if (!moveS) {
 			marioSpeed = 4;
 		}
-
+	
 	}
 
 	public void gameDraw(Graphics g) {
@@ -269,35 +307,31 @@ public class Mario extends Thread { // 스레드 상속
 				System.out.println("같다");
 				
 			}
-//			if (blocking4) {
-//				setFalling(false);
-//				setJump(true);
-//				
-//			}
-//
-//			setFalling(true);
-
+			
 		}
 
 		public void run() {
 
 			jumpMax = 100;
-			 jumpRange = 230;
+			
+			
 			while (true) {
 					
 				MarioGame.blocks.isOnBlock();
 				if(!blocking4) {
+					
 				 marioY -= 1;
 				 System.out.println("올라가는중");
+			
 				}
 				
-				else if (blocking4 && up) { 
+				else if (blocking4 && up) 
 					 marioY -= 1;
 				
-				}
 				if (marioY == basicY - jumpMax && up && jumpMax <  230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
 					jumpMax += 15;
-			
+				
+				
 
 				if (blocking3) {
 					
@@ -305,42 +339,54 @@ public class Mario extends Thread { // 스레드 상속
 					setFalling(true);
 				}
 				
+
 				// setJump(true);
 				// System.out.println(" marioX + realX = "+ ((int)marioX + (int)MarioGame.realX)
 				// +" marioY = " + marioY + " " + jump );
 				//테스트용 System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
+		
+				
 				if (marioY < basicY - jumpMax || falling) { // 최대높이만큼 점프한다면
 					
+			
 					MarioGame.blocks.isOnBlock();
+					
 					if (!blocking4) {
-						System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+
 						setFalling(true);
+						basicY = 560;
 					}
 					
-
+				
 					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 						
 						  //marioY += 1;
+						System.out.println("요기");
 						  MarioGame.blocks.isOnBlock(); // 변화에 따라 즉각적으로 체크필요 (스레드 전환시 딜레이 오류가 발생했었음)
 						  
 						  if(blocking4) {
 							  
 							  setFalling(false);
 							  setJump(true);
-							  jumpMax = 100; // 블럭 위에서 점프 가능하도록
+
+							// 블럭 위에서 점프 가능하도록
+							  jumpMax = 100;
+							  basicY = marioY;
 							  System.out.println("blocking4 입니다");
-							  System.out.println("marioY = "+marioY+ "basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
-							  
+							  System.out.println("marioY = "+marioY+ " basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
+
 							  break;
+							  
 						  } // end of if..
 						  else {
+							  
+							  System.out.println("여길 들어옴");
 							  setFalling(true);
 							  marioY += 1;
 						  }
-							  System.out.println("떨어지는중 marioY = "+ marioY);
+							//  System.out.println("떨어지는중 marioY = "+ marioY);
 						  //setBlocking4(false);
 						
-			
 						try {
 							
 							finishCheck();
@@ -352,22 +398,31 @@ public class Mario extends Thread { // 스레드 상속
 
 					} // end of if문 안의 while..
 				 
-					
+				
 //					setBlocking4(false);
 
 					setFalling(false);
 					setJump(true);
-					if (marioY == basicY)
-						break;
-				}
-
+					
+					if (marioY == basicY /*&& marioY == 560*/) {
+						
+						break; //전체 while문 break
+					}
+				
+					
+				}//  end of if..
+				
 				try { // 위로 솟구치는 것을 천천히
 					Thread.sleep(2);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
-		}
+				
+			} // end of while..
+			
+			System.out.println("끝ㅌㅌㅌㅌ");
+			
+		} // end of run..
 	}
 	
 
@@ -424,7 +479,7 @@ public class Mario extends Thread { // 스레드 상속
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 111, 32 - extraY1, 126,
 						48 - extraY2, null);
 		} else {
-			g.drawRect(marioX, marioY, marioWidth, marioHeight);
+			//g.drawRect(marioX, marioY, marioWidth, marioHeight);
 		}
 
 		if (!right && !left && !up && !down && !falling) // 가만히 있을 경우
@@ -435,7 +490,8 @@ public class Mario extends Thread { // 스레드 상속
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, imageX + 15,
 						imageY - extraY1, imageX, imageY + 16 - extraY2, null);
 		else {
-			g.drawRect(marioX, marioY, marioWidth, marioHeight);
+			//
+		//	g.drawRect(marioX, marioY, marioWidth, marioHeight);
 		}
 	}
 	
