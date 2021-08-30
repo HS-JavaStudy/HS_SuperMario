@@ -25,10 +25,17 @@ public class Blocks extends Thread {
 
 		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
 	
+<<<<<<< HEAD
 		blocks.add(new Block(946, 413, 4));
 		blocks.add(new Block(996, 413, 3));
 		blocks.add(new Block(1046, 413, 4));
 		blocks.add(new Block(1046, 220, 2));
+=======
+		blocks.add(new Block(946, 413, 2));
+		blocks.add(new Block(996, 413, 4));
+		blocks.add(new Block(1046, 413, 2));
+		blocks.add(new Block(1046, 220, 4));
+>>>>>>> master
 		
 		
 		blocks.add(new Block(1096, 413, 2));
