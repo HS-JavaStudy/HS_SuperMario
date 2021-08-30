@@ -196,7 +196,12 @@ public class Mario extends Thread { // 스레드 상속
 			marioDirection = -1;
 			MarioGame.blocks.isOnBlock();
 			if (!blocking4 && !up) {
-				setFalling(true);
+				
+				
+				
+				if (smallMario && marioY != 560) {
+					setFalling(true);
+					
 				while(marioY != 560) {
 					
 					marioY += 1;
@@ -211,6 +216,28 @@ public class Mario extends Thread { // 스레드 상속
 				}
 				setFalling(false);
 			}
+				
+			else if (bigMario && marioY != 523) {
+				
+				setFalling(true);
+				
+				while(marioY != 523) {
+					
+					marioY += 1;
+					MarioGame.blocks.isOnBlock();
+					if (blocking4) break;
+					
+					try {
+						Thread.sleep(2);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				setFalling(false);
+			}
+				
+				
+			}
 			// System.out.println( " realX : " +MarioGame.realX + " marioX : " + MarioGame.mario.marioX );
 
 		}
@@ -223,7 +250,12 @@ public class Mario extends Thread { // 스레드 상속
 			marioDirection = 1;
 			MarioGame.blocks.isOnBlock();
 			if (!blocking4 && !up) {
-				setFalling(true);
+				
+				
+				
+				if (smallMario && marioY != 560) {
+					setFalling(true);
+					
 				while(marioY != 560) {
 					
 					marioY += 1;
@@ -237,6 +269,28 @@ public class Mario extends Thread { // 스레드 상속
 					}
 				}
 				setFalling(false);
+			}
+				
+			else if (bigMario && marioY != 523) {
+				
+				setFalling(true);
+				
+				while(marioY != 523) {
+					
+					marioY += 1;
+					MarioGame.blocks.isOnBlock();
+					if (blocking4) break;
+					
+					try {
+						Thread.sleep(2);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				setFalling(false);
+			}
+				
+				
 			}
 		
 			//System.out.println( "ddddddd realX : " + MarioGame.realX + "marioX : " + MarioGame.mario.marioX  );
@@ -286,6 +340,7 @@ public class Mario extends Thread { // 스레드 상속
 //		
 //		}
 
+	
 	class MarioJump extends Thread {
 
 		private int basicX, basicY;
@@ -354,11 +409,15 @@ public class Mario extends Thread { // 스레드 상속
 					if (!blocking4) {
 
 						setFalling(true);
-						basicY = 560;
+						if (smallMario)
+							basicY = 560;
+						
+						else if (bigMario)
+							basicY = 523;
 					}
 					
 				
-					while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
+					while(marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
 						
 						  //marioY += 1;
 						System.out.println("요기");
@@ -376,7 +435,7 @@ public class Mario extends Thread { // 스레드 상속
 							  System.out.println("marioY = "+marioY+ " basicY = "+basicY+ " basicY-jumpMax = "+(basicY - jumpMax));
 
 							  break;
-							  
+					
 						  } // end of if..
 						  else {
 							  
@@ -423,6 +482,62 @@ public class Mario extends Thread { // 스레드 상속
 			System.out.println("끝ㅌㅌㅌㅌ");
 			
 		} // end of run..
+		
+		
+		class BlockOnJump extends Thread {
+			
+			int basic;
+			
+			BlockOnJump(int basic){
+				
+				this.basic = basic;
+			}
+			
+			public void run() {
+				
+				setFalling(false);
+			    setJump(true);
+				 
+			    while (true) {
+						
+						 marioY -= 1;
+						
+						if (marioY == basic - jumpMax && up && jumpMax <  230) // 일정 지점까지 스페이스는 계속 누르고 있으면 추가점프
+							jumpMax += 15;
+				
+				
+						if (marioY < basic - jumpMax || falling) {
+				
+							
+							while (marioY < basicY) { // 다시 처음 y로 돌아올 때 까지 떨어지기
+							
+								 
+									  setFalling(true);
+									  marioY += 1;
+							
+								try {
+									
+									finishCheck();
+									Thread.sleep(2);
+
+								} catch (InterruptedException e) {
+									return;
+								}
+
+							} // end of if문 안의 while..
+							
+							
+						}
+						if (marioY == basic) break;
+							
+				} // end of 전체 while..
+						
+			    
+			  } // end of run..
+			
+		} // end of jumponBlock thread..
+			
+		
 	}
 	
 
