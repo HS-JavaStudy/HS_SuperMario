@@ -14,6 +14,7 @@ public class item extends Thread {
 	item currentItem = this;
 	ArrayList<Block> currentBlocks = Blocks.currentBlocks;
 	ArrayList<Block> paintBlocks = new ArrayList<Block>();
+	ArrayList<Block> brokenBlocks = new ArrayList<Block>();
 	// private Block block = new Block();
 	Image mushroomItem = new ImageIcon("src/images/버섯아이템.png").getImage();
 	Image eventedBlock = new ImageIcon("src/images/blockEvented.png").getImage(); // 284
@@ -26,10 +27,12 @@ public class item extends Thread {
 	private boolean isFalling;
 	private boolean isPaint;
 	private boolean isCoin;
+	private boolean isBroken;
 	itemFalling falling;
 	private int delay = 20;
 	private long pretime;
 	Block coinBlock = new Block();
+	Block brokenBlock = new Block(408,413);
 	int blockX = 408;
 	int speed = 4;
 	// int screenSpeed = 2;
@@ -42,6 +45,7 @@ public class item extends Thread {
 	public item() {
 		setIsEvent(false);
 		setIsFalling(true);
+		setIsBroken(false);
 		screenX = 408;
 		screenY = 413;
 	}
@@ -61,10 +65,7 @@ public class item extends Thread {
 		setIsMove(true);
 		setIsPaint(true);
 		System.out.println("머쉬룸 이벤트함수 발생");
-		// System.out.println("currentItemX : " + currentItem.X);
-		System.out.println(
-				"realX : " + MarioGame.realX + " this.currentItem (" + this.currentItem.X + ", " + this.currentItem.Y
-						+ ") screemX : " + screenX + " marioY : " + MarioGame.mario.marioY + " isMove : " + isMove);
+		
 
 	}
 	public void coinEvent(Block block) {
@@ -77,6 +78,12 @@ public class item extends Thread {
 			coinUp coinEvent = new coinUp();
 			coinEvent.start();
 		}
+	}
+	public void brokenEvent(Block block) {
+		brokenBlock = new Block(408 - (MarioGame.realX - block.x), 413);
+		setIsBroken(true);
+		System.out.println("부쉬기 이벤트 발생");
+		brokenBlocks.add(brokenBlock);
 	}
 	
 	class coinUp extends Thread {
@@ -155,13 +162,7 @@ public class item extends Thread {
 		//System.out.println("2222 coin : " + isCoin);
 		if(isPaint) {
 			for(int i=0; i< paintBlocks.size(); i++) {
-				
-				// paintBlocks.get(i).x = blockX;
-				 g.setColor(new Color(92,148,252));
-				 //g.fillRect( paintBlocks.get(i).x - 20, paintBlocks.get(i).y+5, 100,  60);		
-
-				 System.out.println("그려지는 블록" + i+ " x좌표 = "+ paintBlocks.get(i).x);
-
+			 g.setColor(new Color(92,148,252));
 				 g.drawImage(eventedBlock, paintBlocks.get(i).x , paintBlocks.get(i).y -5, paintBlocks.get(i).x +60 , paintBlocks.get(i).y + 50, 2, 0, 284, 284, null);
 			}			
 		}
@@ -170,6 +171,14 @@ public class item extends Thread {
 		}
 		if(isCoin) {			
 			g.drawImage(coin, coinBlock.x +20, coinBlock.y, coinBlock.x +50, coinBlock.y + 30,0,0,140,140, null);					
+		}
+		if(isBroken) {
+			for(int i=0; i< brokenBlocks.size(); i++) {
+				 g.setColor(new Color(92,148,252));
+				 g.fillRect(brokenBlocks.get(i).x,brokenBlocks.get(i).y -5, 60,  55);	
+			}
+			
+			
 		}
 		
 	}
@@ -192,14 +201,16 @@ public class item extends Thread {
 			blockX +=6;
 			for(int i=0; i< paintBlocks.size(); i++) 
 				 paintBlocks.get(i).x += 6;
-			// currentItem.X += speed;
+			for(int i=0; i< brokenBlocks.size(); i++)
+				brokenBlocks.get(i).x += 6;
 		}
 		if (MarioGame.mario.right&& !MarioGame.mario.blocking1) {
 			screenX -= 6;
 			blockX -=6;
 			for(int i=0; i< paintBlocks.size(); i++) 
 				 paintBlocks.get(i).x -= 6;
-			// currentItem.X += 3;
+			for(int i=0; i< brokenBlocks.size(); i++)
+				brokenBlocks.get(i).x -= 6;
 		}
 
 		// 일정 범위 밖으로 가면 버섯 삭제
@@ -335,5 +346,8 @@ public class item extends Thread {
 	}
 	public void setIsCoin(boolean isCoin) {
 		this.isCoin = isCoin;
+	}
+	public void setIsBroken(boolean isBroken) {
+		this.isBroken = isBroken;
 	}
 }

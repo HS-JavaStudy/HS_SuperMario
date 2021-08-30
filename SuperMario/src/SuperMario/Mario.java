@@ -153,7 +153,7 @@ public class Mario extends Thread { // 스레드 상속
 
 		if(MarioGame.realX <= MarioGame.SCREEN_WIDTH/2) setMoveS(false);
 	
-
+		
 		
 		if (up && marioY - marioSpeed > 0) {
 			

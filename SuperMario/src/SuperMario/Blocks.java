@@ -26,7 +26,7 @@ public class Blocks extends Thread {
 		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
 	
 
-		blocks.add(new Block(946, 413, 4));
+		blocks.add(new Block(946, 413, 2));
 		blocks.add(new Block(996, 413, 3));
 		blocks.add(new Block(1046, 413, 4));
 		blocks.add(new Block(1046, 220, 2));
@@ -235,17 +235,30 @@ public class Blocks extends Thread {
 							MarioGame.Item.start();	
 					}
 			}
-			else if(currentBlock.coin) {
+			
+			 if(currentBlock.broken) {
+				
 				if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
-					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
-						MarioGame.Item.coinEvent(currentBlock);
+					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
+						MarioGame.Item.brokenEvent(currentBlock);
 						//currentBlock.setState(2);
 						//blockActive(currentBlock); 
 						if (MarioGame.Item.getState() == Thread.State.NEW)
 							MarioGame.Item.start();	
 					}
 			}
+			 if(currentBlock.coin) {
+					if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
+							&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
+						if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
+							MarioGame.Item.coinEvent(currentBlock);
+							//currentBlock.setState(2);
+							//blockActive(currentBlock); 
+							if (MarioGame.Item.getState() == Thread.State.NEW)
+								MarioGame.Item.start();	
+						}
+				}
 
 		}
 
@@ -270,7 +283,7 @@ public class Blocks extends Thread {
 			block.setExist(true);
 			break;
 		case 4:
-			block.setBroken(false);
+			block.setBroken(true);
 			block.setCoin(true);
 			block.setExist(true);
 		default:
