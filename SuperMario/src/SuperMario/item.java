@@ -55,6 +55,7 @@ public class item extends Thread {
 		screenY = 413;
 		blockX =  408 - (MarioGame.realX - block.x);
 		Block paintBlock = new Block(blockX, block.y);
+		
 		paintBlocks.add(paintBlock);
 		setIsEvent(true);
 		setIsMove(true);
@@ -158,7 +159,8 @@ public class item extends Thread {
 				// paintBlocks.get(i).x = blockX;
 				 g.setColor(new Color(92,148,252));
 				 //g.fillRect( paintBlocks.get(i).x - 20, paintBlocks.get(i).y+5, 100,  60);		
-				g.drawImage(eventedBlock, paintBlocks.get(i).x , paintBlocks.get(i).y -5, paintBlocks.get(i).x +60 , paintBlocks.get(i).y + 50, 2, 0, 284, 284, null);
+				 //System.out.println("그려지는 블록" + i+ " x좌표 = "+ paintBlocks.get(i).x);
+				 g.drawImage(eventedBlock, paintBlocks.get(i).x , paintBlocks.get(i).y -5, paintBlocks.get(i).x +60 , paintBlocks.get(i).y + 50, 2, 0, 284, 284, null);
 			}			
 		}
 		if (isEvent) { // 움직이는 버섯 그림

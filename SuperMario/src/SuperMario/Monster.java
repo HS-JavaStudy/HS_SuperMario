@@ -12,7 +12,7 @@ import java.math.*;
 public class Monster extends Thread {
 
 	Mario Mario = MarioGame.mario;
-	private ArrayList<Goomba> CurrentGoomba = new ArrayList<Goomba>();; // 굼바 생성을 위한 좌표
+	private ArrayList<Goomba> CurrentGoomba = new ArrayList<Goomba>(); // 굼바 생성을 위한 좌표
 	public static int MonsterYSize = 70; // 몬스터 X 크기
 	public static int MonsterXSize = 70; // 몬스터 Y 크기
 	public Goomba Goomba;
@@ -57,8 +57,10 @@ public class Monster extends Thread {
 				CurrentGoomba.remove(i);
 				continue; // 굼바가 죽었을때 아래 연산을 안하게만들고 어레이 리스트에서 삭제 하여 프로세스 처리를 조금 감소시킴
 			}
+
 //			System.out.println(MarioGame.realX);
 //			System.out.println("Goomba RealX         " + this.CurrentGoomba.get(i).MonsterRealX + "          Goomba printX        " + CurrentGoomba.get(i).MonsterX );
+
 			if (this.CurrentGoomba.get(i).Direction == true) { //굼바 방향 왼쪽이동
 				if (Mario.right == true) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
 					this.CurrentGoomba.get(i).MonsterRealX -= 2; 

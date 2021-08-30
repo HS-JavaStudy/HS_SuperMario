@@ -22,47 +22,73 @@ public class Blocks extends Thread {
 	public Blocks() {
 
 		blocks = new ArrayList<Block>();
-		
+
 		blocks.add(new Block(762, 413, 3)); // 테스트용 블록 좌표
-		   
-	      blocks.add(new Block(946, 413, 4));
-	      blocks.add(new Block(996, 413, 3));
-	      blocks.add(new Block(1046, 413, 4));
-	      blocks.add(new Block(1096, 413, 3));
-	      blocks.add(new Block(1146, 413, 2));
-	      
-	        // 첫번째 파이프
-	      blocks.add(new Block(1336, 509, 1));
-	      
-	      //두번째 파이프
-	      blocks.add(new Block(1826, 460, 1));
-	      
-	      //세번째 파이프
-	      blocks.add(new Block(2210, 413, 1));
-	      
-	      // 네번째 파이프
-	      blocks.add(new Block(2738, 413, 1));
-	      
-	      
-	      blocks.add(new Block(3074, 364, 3));
-	      
-	      blocks.add(new Block(3698, 412, 2));
-	      blocks.add(new Block(3740, 412, 2));
-	      blocks.add(new Block(3790, 412, 2));
-	      
-	      
-	      blocks.add(new Block(4508, 412, 2));
-	      
-	      blocks.add(new Block(4802, 412, 1));
-	      
-	      //물음표 블럭 3개
-	      blocks.add(new Block(5084, 412, 3));
-	      blocks.add(new Block(5234, 412, 3));
-	      blocks.add(new Block(5384, 412, 3));
-	      
-	      blocks.add(new Block(5662, 412, 2));
-	      
-	      blocks.add(new Block(6194, 412, 1));
+	
+		blocks.add(new Block(946, 413, 2));
+		blocks.add(new Block(996, 413, 2));
+		blocks.add(new Block(1046, 413, 2));
+		blocks.add(new Block(1046, 220, 2));
+		
+		
+		blocks.add(new Block(1096, 413, 2));
+		blocks.add(new Block(1146, 413, 2));
+		
+        // 첫번째 파이프
+		blocks.add(new Block(1336, 509, 1));
+		
+		//두번째 파이프
+		blocks.add(new Block(1826, 460, 1));
+		
+		//세번째 파이프
+		blocks.add(new Block(2210, 413, 1));
+		
+		// 네번째 파이프
+		blocks.add(new Block(2738, 413, 1));
+		
+		
+		blocks.add(new Block(3074, 364, 3));
+		
+		blocks.add(new Block(3698, 412, 2));
+		blocks.add(new Block(3740, 412, 2));
+		blocks.add(new Block(3790, 412, 2));
+		
+		blocks.add(new Block(3830, 217, 2));
+		blocks.add(new Block(3880, 217, 2));
+		blocks.add(new Block(3930, 217, 2));
+		blocks.add(new Block(3980, 217, 2));
+		blocks.add(new Block(4030, 217, 1)); // 이미지 상 끝의 두 블럭은 긴 블럭으로 처리
+		blocks.add(new Block(4110, 217, 1));
+	
+		blocks.add(new Block(4358, 217, 1));
+		blocks.add(new Block(4438, 217, 2));
+		blocks.add(new Block(4488, 217, 2));
+		
+		
+		blocks.add(new Block(4508, 412, 2));
+		
+		blocks.add(new Block(4802, 412, 1));
+		
+		//물음표 블럭 4개 - 블럭 좌표 위해 임의로 일반 블럭 처리해놓음
+		blocks.add(new Block(5084, 412, 2));
+		blocks.add(new Block(5226, 412, 2));
+		blocks.add(new Block(5222, 219, 2));
+		blocks.add(new Block(5380, 412, 2));
+		
+		blocks.add(new Block(5662, 412, 2));
+		
+		blocks.add(new Block(5810, 219, 1));
+		blocks.add(new Block(5890, 219, 2));
+		
+		blocks.add(new Block(6130, 219, 2));
+		blocks.add(new Block(6180, 219, 2));
+		blocks.add(new Block(6230, 219, 2));
+		blocks.add(new Block(6280, 219, 2));
+		
+		blocks.add(new Block(6194, 412, 1));
+	
+		blocks.add(new Block(6428,557,2));
+
 		currentBlocks = new ArrayList<Block>();
 	}
 
@@ -94,35 +120,37 @@ public class Blocks extends Thread {
 //
 //		}
 	
-	 public void isOnBlock() {
-	      int i;
-	      
-	      for (i = 0; i < currentBlocks.size(); i++) {
 
-	         currentBlock = currentBlocks.get(i);
-	         
-	         if (currentBlock.exist) {
-	            
-	            if(currentBlock.state == 1)
-	               Blocks.blockXsize = 80;
-	            else
-	               Blocks.blockXsize = 50;
-	            
-	            if (MarioGame.mario.marioY == currentBlock.y
-	                  - MarioGame.mario.marioHeight && MarioGame.realX + 21 >= currentBlock.x && MarioGame.realX <=
-	                  currentBlock.x + Blocks.blockXsize) {
-	               MarioGame.mario.setBlocking4(true);
-	               //System.out.println("blocking4 true");
-	               //mario.jumpRange += currentBlock.y;
-	               return;
-	            }
-	            
-	         }
-	      }
-	      
-	      MarioGame.mario.setBlocking4(false);
-	   }
-	   
+	public void isOnBlock() {
+		int i;
+		
+		for (i = 0; i < currentBlocks.size(); i++) {
+
+			currentBlock = currentBlocks.get(i);
+			
+			if (currentBlock.exist) {
+				
+				if(currentBlock.state == 1)
+					Blocks.blockXsize = 80;
+				else
+					Blocks.blockXsize = 50;
+				
+				if (MarioGame.mario.marioY == currentBlock.y
+						- MarioGame.mario.marioHeight && MarioGame.realX + 21 >= currentBlock.x && MarioGame.realX <=
+		            currentBlock.x + Blocks.blockXsize) {
+					MarioGame.mario.setBlocking4(true);
+					//System.out.println("blocking4 true");
+					return;
+				}
+				
+			}
+		}
+		System.out.println("blocking4 false");
+		//Mario.MarioJump.basicY = 560;
+		MarioGame.mario.setBlocking4(false);
+	}
+	
+
 
 	
 	
