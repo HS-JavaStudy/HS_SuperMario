@@ -117,13 +117,13 @@ public class Mario extends Thread { // 스레드 상속
 			changeBig();
 			extraY1 = 32;
 			extraY2 = 16;
-			setbigMario(false);
+			setsmallMario(false);
 		}
 		if (smallMario) {
 			changeSmall();
 			extraY1 = 0;
 			extraY2 = 0;
-			setsmallMario(false);
+			setbigMario(false);
 		}
 	}
 
@@ -383,8 +383,9 @@ public class Mario extends Thread { // 스레드 상속
 							  System.out.println("여길 들어옴");
 							  setFalling(true);
 							  marioY += 1;
+							System.out.println("떨어지는중 marioY = "+ marioY);
 						  }
-							//  System.out.println("떨어지는중 marioY = "+ marioY);
+							
 						  //setBlocking4(false);
 						
 						try {

@@ -159,7 +159,7 @@ public class item extends Thread {
 				// paintBlocks.get(i).x = blockX;
 				 g.setColor(new Color(92,148,252));
 				 //g.fillRect( paintBlocks.get(i).x - 20, paintBlocks.get(i).y+5, 100,  60);		
-				 //System.out.println("그려지는 블록" + i+ " x좌표 = "+ paintBlocks.get(i).x);
+				//System.out.println("그려지는 블록" + i+ " x좌표 = "+ paintBlocks.get(i).x);
 				 g.drawImage(eventedBlock, paintBlocks.get(i).x , paintBlocks.get(i).y -5, paintBlocks.get(i).x +60 , paintBlocks.get(i).y + 50, 2, 0, 284, 284, null);
 			}			
 		}
