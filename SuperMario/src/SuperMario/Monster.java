@@ -110,7 +110,7 @@ public class Monster extends Thread {
 			}
 			else if ((Math.abs(MarioGame.realX + 20 - CurrentGoomba.get(i).MonsterRealX) <= 4
 					|| Math.abs(CurrentGoomba.get(i).MonsterRealX + 50 - MarioGame.realX) <= 4)
-					&& Mario.marioY-CurrentGoomba.get(i).MonsterY >= 20) {
+					&& Mario.marioY-CurrentGoomba.get(i).MonsterY >= -40) {
 				System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); // 마리오랑 굼바랑 붙딛혔을때 마리오 죽음
 				CurrentGoomba.get(i).Conflict = true; // 클래스 Goomba에 있는 Conflict 가 트루이면 마리오 죽음 처리
 				System.out.println(Mario.getsmallMario());
