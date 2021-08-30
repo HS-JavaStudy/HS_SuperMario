@@ -71,28 +71,28 @@ public class Monster extends Thread {
 
 			if (this.CurrentGoomba.get(i).Direction == true) { //굼바 방향 왼쪽이동
 
-				if (Mario.right == true) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX -= 2;
-					this.CurrentGoomba.get(i).MonsterX -= 8;
-				} else if (Mario.left == true) { // 마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX -= 2;
-					this.CurrentGoomba.get(i).MonsterX += 4;
-				} else { // 마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX -= 2;
-					this.CurrentGoomba.get(i).MonsterX -= 2;
-				}
-			} else { // 굼바 방향 오른쪽이동
-				if (Mario.right == true) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX += 2;
-					this.CurrentGoomba.get(i).MonsterX -= 4;
-				} else if (Mario.left == true) { // 마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX += 2;
-					this.CurrentGoomba.get(i).MonsterX += 8;
-				} else { // 마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX += 2;
-					this.CurrentGoomba.get(i).MonsterX += 2;
-				}
-			}
+	            if (Mario.MarioXTemp < MarioGame.realX) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+	               this.CurrentGoomba.get(i).MonsterRealX -= 2;
+	               this.CurrentGoomba.get(i).MonsterX -= 8;
+	            } else if (Mario.MarioXTemp > MarioGame.realX) { // 마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+	               this.CurrentGoomba.get(i).MonsterRealX -= 2;
+	               this.CurrentGoomba.get(i).MonsterX += 4;
+	            } else { // 마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
+	               this.CurrentGoomba.get(i).MonsterRealX -= 2;
+	               this.CurrentGoomba.get(i).MonsterX -= 2;
+	            }
+	         } else { // 굼바 방향 오른쪽이동
+	            if (Mario.MarioXTemp < MarioGame.realX) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+	               this.CurrentGoomba.get(i).MonsterRealX += 2;
+	               this.CurrentGoomba.get(i).MonsterX -= 4;
+	            } else if (Mario.MarioXTemp > MarioGame.realX) { // 마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+	               this.CurrentGoomba.get(i).MonsterRealX += 2;
+	               this.CurrentGoomba.get(i).MonsterX += 8;
+	            } else { // 마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
+	               this.CurrentGoomba.get(i).MonsterRealX += 2;
+	               this.CurrentGoomba.get(i).MonsterX += 2;
+	            }
+	         }
 		}
 	}
 

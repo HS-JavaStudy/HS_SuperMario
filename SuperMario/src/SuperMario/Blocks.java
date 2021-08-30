@@ -229,21 +229,21 @@ public class Blocks extends Thread {
 						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
 					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) { //이벤트 블록 영역 안에 들어왔다					
 						MarioGame.Item.mushroomEvent(currentBlock);
-						currentBlock.setState(2);
+						currentBlock.setState(1);
 						blockActive(currentBlock); 
 						if (MarioGame.Item.getState() == Thread.State.NEW)
 							MarioGame.Item.start();	
 					}
 			}
 			
-			 if(currentBlock.broken) {
+			else if(currentBlock.broken) {
 				
 				if (MarioGame.realX + MarioGame.mario.marioWidth /2>= currentBlock.x // 7은 마리오 넓이
 						&& MarioGame.realX + MarioGame.mario.marioWidth /2 <= currentBlock.x + blockXsize)
 					if (MarioGame.mario.marioY <= currentBlock.y + blockYsize) {
 						MarioGame.Item.brokenEvent(currentBlock);
-						//currentBlock.setState(2);
-						//blockActive(currentBlock); 
+						currentBlock.setState(1);
+						blockActive(currentBlock); 
 						if (MarioGame.Item.getState() == Thread.State.NEW)
 							MarioGame.Item.start();	
 					}

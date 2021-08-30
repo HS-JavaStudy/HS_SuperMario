@@ -21,7 +21,7 @@ public class Mario extends Thread { // 스레드 상속
 	public static int score; // 점수
 	public static int coin =0 ;
 	Blocks BLK = MarioGame.blocks;
-
+	int MarioXTemp =0;
 	private boolean up; // 키보드의 상태를 나타내는 bloolean 변수
 	private boolean down;
 	boolean left;
@@ -154,7 +154,7 @@ public class Mario extends Thread { // 스레드 상속
 			MarioDie();
 			return;
 		}
-
+		 MarioXTemp = MarioGame.realX;
 		if(MarioGame.realX <= 406) setMoveS(false);
 
 		if(MarioGame.realX <= MarioGame.SCREEN_WIDTH/2) setMoveS(false);
@@ -350,7 +350,7 @@ public class Mario extends Thread { // 스레드 상속
 	class MarioJump extends Thread {
 
 		private int basicX, basicY;
-
+	
 		MarioJump() {
 			basicX = marioX;
 			basicY = marioY;

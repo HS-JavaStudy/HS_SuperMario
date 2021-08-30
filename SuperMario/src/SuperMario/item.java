@@ -175,7 +175,7 @@ public class item extends Thread {
 		if(isBroken) {
 			for(int i=0; i< brokenBlocks.size(); i++) {
 				 g.setColor(new Color(92,148,252));
-				 g.fillRect(brokenBlocks.get(i).x,brokenBlocks.get(i).y -5, 60,  55);	
+				 g.fillRect(brokenBlocks.get(i).x + 5,brokenBlocks.get(i).y -5, 55,  55);	
 			}
 			
 			
@@ -199,20 +199,28 @@ public class item extends Thread {
 		if (MarioGame.mario.left && !MarioGame.mario.blocking1 ) {
 			screenX += 6;
 			blockX +=6;
-			for(int i=0; i< paintBlocks.size(); i++) 
-				 paintBlocks.get(i).x += 6;
-			for(int i=0; i< brokenBlocks.size(); i++)
-				brokenBlocks.get(i).x += 6;
+			System.out.println("しししししししししししししししししししし");
+			
 		}
 		if (MarioGame.mario.right&& !MarioGame.mario.blocking1) {
 			screenX -= 6;
 			blockX -=6;
+			
+		}
+
+		if(MarioGame.realX >MarioGame.mario.MarioXTemp && !MarioGame.mario.blocking1) {
 			for(int i=0; i< paintBlocks.size(); i++) 
 				 paintBlocks.get(i).x -= 6;
 			for(int i=0; i< brokenBlocks.size(); i++)
 				brokenBlocks.get(i).x -= 6;
 		}
-
+		if(MarioGame.realX <MarioGame.mario.MarioXTemp && !MarioGame.mario.blocking1) {
+			for(int i=0; i< paintBlocks.size(); i++) 
+				 paintBlocks.get(i).x += 6;
+			for(int i=0; i< brokenBlocks.size(); i++)
+				brokenBlocks.get(i).x += 6;
+		}
+		
 		// 析舛 骨是 鉱生稽 亜檎 獄叱 肢薦
 		if (currentItem.X >= MarioGame.realX + 500 || currentItem.X <= MarioGame.realX - 500)
 			reset();
