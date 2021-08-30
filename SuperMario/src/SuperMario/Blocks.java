@@ -137,7 +137,7 @@ public class Blocks extends Thread {
 
 				if (!currentBlocks.contains(currentBlock)) // 현재블럭들 리스트에 포함되지 않았다면
 				{
-					blockActive(currentBlock); // 현재 블럭을 활성화
+					blockActive(currentBlock); // 현재 블럭을 활성화ㄴ
 					currentBlocks.add(currentBlock); // 현재블럭 리스트에 추가
 
 				}
