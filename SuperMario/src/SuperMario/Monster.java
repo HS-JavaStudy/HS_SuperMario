@@ -18,24 +18,30 @@ public class Monster extends Thread {
 	public Goomba Goomba;
 	private Image GoombaImage = new ImageIcon("src/images/GoombaLeft.png").getImage();
 	int MonsterCount = 0;
+
 	public void run() {
 
 		while (true) {
 			/* 마리오 realx 좌표로 생성하게했는데 a == 1000 이런식으로 하면 소환이 안돼서 범위값으로 지정함 */
-			if (MarioGame.realX >= 760 && MarioGame.realX <= 800 && MonsterCount == 0) {
-				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX + MarioGame.SCREEN_WIDTH/2);
+			if (MarioGame.realX >= 1350 && MarioGame.realX <= 1352 && MonsterCount == 0) {
+				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH / 2, 560,
+						MarioGame.realX + MarioGame.SCREEN_WIDTH / 2);
 				MonsterCount++;
 			}
-			/*
-			 * if (MarioGame.realX >= 550 && MarioGame.realX <= 1000 && MonsterCount == 1) {
-			 * MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX
-			 * + MarioGame.SCREEN_WIDTH/2); MonsterCount++; } if (MarioGame.realX >= 650 &&
-			 * MarioGame.realX <= 1100 && MonsterCount == 2) { MonsterCreate(Mario.marioX +
-			 * MarioGame.SCREEN_WIDTH/2 , 555, MarioGame.realX + MarioGame.SCREEN_WIDTH/2);
-			 * MonsterCount++; }
-			 */
+
+			if (MarioGame.realX >= 2200 && MarioGame.realX <= 3260 && MonsterCount == 1) {
+				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH / 2, 560,
+						MarioGame.realX + MarioGame.SCREEN_WIDTH / 2);
+				MonsterCount++;
+			}
+			if (MarioGame.realX >= 2750 && MarioGame.realX <= 1600 && MonsterCount == 2) {
+				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH / 2, 560,
+						MarioGame.realX + MarioGame.SCREEN_WIDTH / 2);
+				MonsterCount++;
+			}
+
 			try {
-				Thread.sleep(20); // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭 실행한다
+				Thread.sleep(20) ; // 스레드가 잠을 자는 시간. 잠을 자는 동안 catch 블럭 실행한다
 				MonsterMoveProcess();
 				MonsterEventProcess();
 			} catch (InterruptedException e) {
@@ -51,33 +57,32 @@ public class Monster extends Thread {
 
 	public void MonsterMoveProcess() {
 		// for문 안에있는 굼바가 객체 안에 Exist == True 일때 실행
-		for (int i = 0; i < this.CurrentGoomba.size() && this.CurrentGoomba.get(i).Exist == true; i++) {
+		for (int i = 0; i < this.CurrentGoomba.size() ; i++) {
 			if (this.CurrentGoomba.get(i).Exist == false) {
-				CurrentGoomba.remove(i);
 				continue; // 굼바가 죽었을때 아래 연산을 안하게만들고 어레이 리스트에서 삭제 하여 프로세스 처리를 조금 감소시킴
 			}
 			System.out.println(MarioGame.realX);
-			System.out.println("Goomba RealX         " + this.CurrentGoomba.get(i).MonsterRealX + "          Goomba printX        " + CurrentGoomba.get(i).MonsterX );
-			if (this.CurrentGoomba.get(i).Direction == true) { //굼바 방향 왼쪽이동
+			System.out.println("Goomba RealX         " + this.CurrentGoomba.get(i).MonsterRealX
+					+ "          Goomba printX        " + CurrentGoomba.get(i).MonsterX);
+			if (this.CurrentGoomba.get(i).Direction == true) { // 굼바 방향 왼쪽이동
 				if (Mario.right == true) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX -= 2; 
+					this.CurrentGoomba.get(i).MonsterRealX -= 2;
 					this.CurrentGoomba.get(i).MonsterX -= 8;
-				} else if (Mario.left == true) { //마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX -= 2; 
+				} else if (Mario.left == true) { // 마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+					this.CurrentGoomba.get(i).MonsterRealX -= 2;
 					this.CurrentGoomba.get(i).MonsterX += 4;
-				} else { //마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
+				} else { // 마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
 					this.CurrentGoomba.get(i).MonsterRealX -= 2;
 					this.CurrentGoomba.get(i).MonsterX -= 2;
 				}
-			} 
-			else { //굼바 방향 오른쪽이동
-				if (Mario.right == true) { // 마리오 오른쪽으로 움직일때  print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX += 2; 
+			} else { // 굼바 방향 오른쪽이동
+				if (Mario.right == true) { // 마리오 오른쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+					this.CurrentGoomba.get(i).MonsterRealX += 2;
 					this.CurrentGoomba.get(i).MonsterX -= 4;
-				} else if (Mario.left == true) { //마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
-					this.CurrentGoomba.get(i).MonsterRealX += 2; 
+				} else if (Mario.left == true) { // 마리오 왼쪽으로 움직일때 print 굼바 좌표 realx 굼바 좌표
+					this.CurrentGoomba.get(i).MonsterRealX += 2;
 					this.CurrentGoomba.get(i).MonsterX += 8;
-				} else { //마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
+				} else { // 마리오 가만히 있을때 print 굼바 좌표 realx 굼바 좌표
 					this.CurrentGoomba.get(i).MonsterRealX += 2;
 					this.CurrentGoomba.get(i).MonsterX += 2;
 				}
@@ -85,45 +90,48 @@ public class Monster extends Thread {
 		}
 	}
 
-	
 	public void MonsterEventProcess() {
-		for (int i = 0; i < this.CurrentGoomba.size() ; i++) {
-			if(this.CurrentGoomba.get(i).Exist == false) {
+		for (int i = 0; i < this.CurrentGoomba.size(); i++) {
+			if (this.CurrentGoomba.get(i).Exist == false) {
 				continue;
 			}
-			if (Mario.marioX >= CurrentGoomba.get(i).MonsterX
-					&& Mario.marioX <= CurrentGoomba.get(i).MonsterX + MonsterXSize
-					&& Mario.marioY-CurrentGoomba.get(i).MonsterY <= MonsterYSize) {
+			if ((Math.abs(MarioGame.realX+20 - CurrentGoomba.get(i).MonsterRealX) <= 4
+					|| Math.abs(CurrentGoomba.get(i).MonsterRealX+50 - MarioGame.realX) <=4)
+					&& Mario.marioY == CurrentGoomba.get(i).MonsterY) {
 				System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); // 마리오랑 굼바랑 붙딛혔을때 마리오 죽음
-				//CurrentGoomba.get(i).Conflict = true; // 클래스 Goomba에 있는 Conflict 가 트루이면 마리오 죽음 처리
-				//MonsterInit();
+				CurrentGoomba.get(i).Conflict = true; // 클래스 Goomba에 있는 Conflict 가 트루이면 마리오 죽음 처리
+				if(Mario.getsmallMario() ==false) {
+						MonsterInit(); // 스몰마리오일때 게임오버
+						Mario.MarioDie();
+						MarioGame.isLoadingScreen = true;
+						MarioGame.isGameScreen = false;
+				}
+				else {
+					Mario.setbigMario(true);
+					Mario.setsmallMario(false);// 큰마리오일때 크기..?
+				}
 				break;
 			}
-			if (Mario.marioX - CurrentGoomba.get(i).MonsterX <= MonsterXSize
+			else if (Mario.marioX+20 - CurrentGoomba.get(i).MonsterX <= 50
 					&& Mario.marioX - CurrentGoomba.get(i).MonsterX >= 0
-					&& CurrentGoomba.get(i).MonsterY - Mario.marioY >= MonsterYSize
-					&&CurrentGoomba.get(i).MonsterY - Mario.marioY <= MonsterYSize+4) {
-					this.CurrentGoomba.get(i).Exist = false; // 몬스터 죽이기
+					&& CurrentGoomba.get(i).MonsterY - Mario.marioY >= 40
+					&& CurrentGoomba.get(i).MonsterY - Mario.marioY <= 46) {
+				this.CurrentGoomba.get(i).Exist = false; // 몬스터 죽이기
+				this.CurrentGoomba.get(i).MarioKillMonster = true;
+				Mario.KillMonster(this.CurrentGoomba.get(i).MarioKillMonster);
+				System.out.println("@@@@@@@");
+				continue;
 			}
-			
-			
-			//if (CurrentGoomba.get(i).MonsterRealX ==720) {
-			//	CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
-			//}
-			//if (CurrentGoomba.get(i).MonsterRealX ==880) {
-			//	CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
-			//}
-			//if (CurrentGoomba.get(i).MonsterRealX ==1008) {
-			//	CurrentGoomba.get(i).Direction = !CurrentGoomba.get(i).Direction; 
-			//}
+			MonsterBlock(CurrentGoomba.get(i).MonsterRealX,i);
+			MonsterFalling(i);
 		}
 	}
-	
-	
+
 	public void MonsterInit() { // 모든 값을 재 설정 하는 함수 마리오가 죽었을때 다시 시작하는 것 처럼 다시 초기화
 		this.MonsterCount = 0;
 		this.CurrentGoomba.clear();
 	}
+
 
 	
 	
@@ -131,17 +139,17 @@ public class Monster extends Thread {
 	public void MonsterDraw(Graphics g) {
 
 		if (MarioGame.mario.cnt % 45 < 23) {
-			for (int i = 0; i < this.CurrentGoomba.size() && this.CurrentGoomba.get(i).Exist == true; i++) {
-				if(this.CurrentGoomba.get(i).Exist == false) 
+			for (int i = 0; i < this.CurrentGoomba.size(); i++) {
+				if (this.CurrentGoomba.get(i).Exist == false)
 					continue;
-				
+
 				GoombaImage = new ImageIcon("src/images/GoombaLeft.png").getImage();
 				g.drawImage(GoombaImage, this.CurrentGoomba.get(i).MonsterX, this.CurrentGoomba.get(i).MonsterY,
 						MonsterXSize, MonsterYSize, null);
 			}
 		} else {
-			for (int i = 0; i < this.CurrentGoomba.size() && this.CurrentGoomba.get(i).Exist == true; i++) {
-				if(this.CurrentGoomba.get(i).Exist == false) 
+			for (int i = 0; i < this.CurrentGoomba.size() ; i++) {
+				if (this.CurrentGoomba.get(i).Exist == false)
 					continue;
 				GoombaImage = new ImageIcon("src/images/GoombaRight.png").getImage();
 				g.drawImage(GoombaImage, this.CurrentGoomba.get(i).MonsterX, this.CurrentGoomba.get(i).MonsterY,
@@ -149,7 +157,26 @@ public class Monster extends Thread {
 			}
 		}
 	}
-
+	
+	public void MonsterFalling(int idx) {
+		if(CurrentGoomba.get(idx).Falling == true)
+			CurrentGoomba.get(idx).MonsterY+=6;
+		if(CurrentGoomba.get(idx).MonsterY >= 678)
+			CurrentGoomba.get(idx).Exist =false;
+	}
+	
+	
+	
+	
+	public void MonsterBlock(int MonsterX,int idx) {
+		if(MonsterX == 1420 || MonsterX == 1784 ||MonsterX == 1900 ||MonsterX == 2170||MonsterX ==2276||MonsterX ==2696||MonsterX ==2822 ||MonsterX == 6386) //몬스터 블록 부딛히는 좌표
+			CurrentGoomba.get(idx).Direction = !CurrentGoomba.get(idx).Direction;
+		if(MonsterX == 3296 || MonsterX == 3374) // 몬스터 떨어지는 폭포 좌표
+			CurrentGoomba.get(idx).Falling = true;
+	}
+	
+	
+	
 	public void gameDraw(Graphics g) {
 		MonsterDraw(g); // MarioGame 클라스의 paint()함수 안에 있는 gameDraw() 함수
 	}

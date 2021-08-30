@@ -197,7 +197,7 @@ public class MarioGame extends JFrame {
 			// 마리오가 일정 x좌표에 도달하면(정중앙) 마리오의 x좌표는 스피드만큼 감소시키고, realX는 스피드만큼 계속 증가
 			// 그림이 끝나는 지점이 문제..
 			if(mario.moveS)g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
-					realX - 408, 0, realX + SCREEN_WIDTH- 408, mapImage.getHeight(rootPane), null);
+					realX - 408, 0, realX + SCREEN_WIDTH - 408, mapImage.getHeight(rootPane), null);
 			else
 				g.drawImage(mapImage, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, // 맵
 						0, 0, SCREEN_WIDTH , mapImage.getHeight(rootPane), null);

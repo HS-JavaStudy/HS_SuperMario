@@ -8,7 +8,7 @@ class Goomba {
 	int MonsterRealX; //몬스터 실제 좌표
 	boolean Falling;  //버섯도 떨어지는걸 구현해야함
 	boolean Direction;  // 몬스터 방향 True 면 왼쪽 False 면 오른쪽
-	
+	boolean MarioKillMonster;
 	
 	public Goomba(int x, int y ,int MonsterRealX) { //몬스터 생성자
 		this.MonsterX = x;
@@ -18,6 +18,7 @@ class Goomba {
 		this.Conflict = false;
 		this.Falling = false;
 		this.Direction = true;
+		this.MarioKillMonster = false;
 	}
 	
 	public void GoombaDie() {
