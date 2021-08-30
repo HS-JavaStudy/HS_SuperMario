@@ -39,7 +39,7 @@ public class Mario extends Thread { // 스레드 상속
 	public boolean blocking1 = false;
 	private boolean blocking2 = false;
 	private boolean blocking3 = false;
-	private boolean blocking4 = false;
+	public boolean blocking4 = false;
 	private boolean MarioDie = false;
 
 	Image allImage = new ImageIcon("src/images/allMario.png").getImage();
