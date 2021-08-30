@@ -33,14 +33,16 @@ public class Mario extends Thread { // 스레드 상속
 	private boolean bigMario;
 	private boolean smallMario;
 	boolean moveS;
-
-
+	int MarioYDie = 0;
+	
 
 	public boolean blocking1 = false;
 	private boolean blocking2 = false;
 	private boolean blocking3 = false;
+
 	public boolean blocking4 = false;
-	private boolean MarioDie = false;
+	public boolean MarioDie = false;
+
 
 	Image allImage = new ImageIcon("src/images/allMario.png").getImage();
 
@@ -124,6 +126,7 @@ public class Mario extends Thread { // 스레드 상속
 			extraY1 = 0;
 			extraY2 = 0;
 			setbigMario(false);
+
 		}
 	}
 
@@ -147,7 +150,10 @@ public class Mario extends Thread { // 스레드 상속
 
 	public void keyProcess() {
 		// 각 속성의 true, false 상태에 따라 결과 지정
-
+		if (MarioDie == true) {
+			MarioDie();
+			return;
+		}
 
 		if(MarioGame.realX <= 406) setMoveS(false);
 
@@ -208,11 +214,11 @@ public class Mario extends Thread { // 스레드 상속
 					MarioGame.blocks.isOnBlock();
 					if (blocking4) break;
 					
-					try {
-						Thread.sleep(2);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+//					try {
+//						Thread.sleep(2);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+					//}
 				}
 				setFalling(false);
 			}
@@ -371,7 +377,8 @@ public class Mario extends Thread { // 스레드 상속
 			
 			
 			while (true) {
-					
+ 
+				
 				MarioGame.blocks.isOnBlock();
 				if(!blocking4) {
 					
@@ -549,12 +556,11 @@ public class Mario extends Thread { // 스레드 상속
 
 //x80 , y 플러스 32
 		if (MarioDie == true) {
-			for (; this.marioY <= MarioGame.SCREEN_HEIGHT; this.marioY += 2) {
-				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, imageX + 15,
-						imageY - extraY1, imageX, imageY + 16 - extraY2, null);
-			}
+			g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 161, 32 - extraY1,173,
+					48 - extraY2, null);
+				return;
 		}
-		if (up || falling) {
+		else if (up || falling) {
 			if (marioDirection == 1) {
 
 				g.drawImage(allImage, marioX, marioY, marioX + marioWidth, marioY + marioHeight, 144, 32 - extraY1, 158,
@@ -618,10 +624,19 @@ public class Mario extends Thread { // 스레드 상속
 	
 	
 	public void MarioDie() {
-		marioLife--;
-		this.MarioDie = true;
-		reset();
-
+		MarioYDie++;
+		if (MarioYDie <= 10)
+			marioY-= 4;
+		else
+			marioY+= 4;
+		System.out.println(marioY);
+		if(this.marioY >= 678) {
+			marioLife--;
+			reset();
+			MarioGame.isLoadingScreen = true;
+			MarioGame.isGameScreen = false;
+			MarioYDie = 0;
+		}
 	}
 	
 	public boolean isOver() {

@@ -18,7 +18,7 @@ public class Monster extends Thread {
 	public Goomba Goomba;
 	private Image GoombaImage = new ImageIcon("src/images/GoombaLeft.png").getImage();
 	int MonsterCount = 0;
-
+	int TimeCount = 0;
 	public void run() {
 
 		while (true) {
@@ -34,7 +34,7 @@ public class Monster extends Thread {
 						MarioGame.realX + MarioGame.SCREEN_WIDTH / 2);
 				MonsterCount++;
 			}
-			if (MarioGame.realX >= 2750 && MarioGame.realX <= 1600 && MonsterCount == 2) {
+			if (MarioGame.realX >= 4500 && MarioGame.realX <= 4700 && MonsterCount == 2) {
 				MonsterCreate(Mario.marioX + MarioGame.SCREEN_WIDTH / 2, 560,
 						MarioGame.realX + MarioGame.SCREEN_WIDTH / 2);
 				MonsterCount++;
@@ -101,22 +101,29 @@ public class Monster extends Thread {
 			if (this.CurrentGoomba.get(i).Exist == false) {
 				continue;
 			}
-			if ((Math.abs(MarioGame.realX + 20 - CurrentGoomba.get(i).MonsterRealX) <= 4
+			if(CurrentGoomba.get(i).Conflict == true) {// 무적시간
+				System.out.println(TimeCount++);
+				if (TimeCount > 100) {
+					TimeCount = 0 ;
+					CurrentGoomba.get(i).Conflict = false;
+				}
+			}
+			else if ((Math.abs(MarioGame.realX + 20 - CurrentGoomba.get(i).MonsterRealX) <= 4
 					|| Math.abs(CurrentGoomba.get(i).MonsterRealX + 50 - MarioGame.realX) <= 4)
-					&& Mario.marioY == CurrentGoomba.get(i).MonsterY) {
+					&& Mario.marioY-CurrentGoomba.get(i).MonsterY >= -40) {
 				System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"); // 마리오랑 굼바랑 붙딛혔을때 마리오 죽음
 				CurrentGoomba.get(i).Conflict = true; // 클래스 Goomba에 있는 Conflict 가 트루이면 마리오 죽음 처리
-				if (Mario.getsmallMario() == false) {
+				System.out.println(Mario.getsmallMario());
+				if (Mario.getsmallMario() == true) {
 					MonsterInit(); // 스몰마리오일때 게임오버
-					Mario.MarioDie();
-					MarioGame.isLoadingScreen = true;
-					MarioGame.isGameScreen = false;
+					Mario.MarioDie = true;
 				} else {
-					Mario.setbigMario(true);
-					Mario.setsmallMario(false);// 큰마리오일때 크기..?
+					Mario.setbigMario(false);
+					Mario.setsmallMario(true);// 큰마리오일때 크기..?
 				}
 				break;
-			} else if (Mario.marioX + 20 - CurrentGoomba.get(i).MonsterX <= 50
+			}
+			if (Mario.marioX + 20 - CurrentGoomba.get(i).MonsterX <= 50
 					&& Mario.marioX - CurrentGoomba.get(i).MonsterX >= 0
 					&& CurrentGoomba.get(i).MonsterY - Mario.marioY >= 40
 					&& CurrentGoomba.get(i).MonsterY - Mario.marioY <= 46) {
@@ -169,7 +176,7 @@ public class Monster extends Thread {
 		if (MonsterX == 1420 || MonsterX == 1784 || MonsterX == 1900 || MonsterX == 2170 || MonsterX == 2276
 				|| MonsterX == 2696 || MonsterX == 2822 || MonsterX == 6386) // 몬스터 블록 부딛히는 좌표
 			CurrentGoomba.get(idx).Direction = !CurrentGoomba.get(idx).Direction;
-		if (MonsterX == 3296 || MonsterX == 3374) // 몬스터 떨어지는 폭포 좌표
+		if (MonsterX == 3296 || MonsterX == 3374 ||MonsterX ==4224 ) // 몬스터 떨어지는 폭포 좌표
 			CurrentGoomba.get(idx).Falling = true;
 	}
 
